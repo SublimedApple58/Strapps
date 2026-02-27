@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  --app-bg: #1f2024;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--app-bg);
+  color: #ffffff;
+  font-family: var(--font-azeret-mono), "Azeret Mono", monospace;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.font-rounded {
+  font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
+}
+
+.font-impact {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+
+.font-azeret {
+  font-family: var(--font-azeret-mono), "Azeret Mono", monospace;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
