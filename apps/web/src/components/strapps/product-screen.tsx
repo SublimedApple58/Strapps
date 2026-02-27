@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { InfoFooterCard, StrappsPageShell, StrappsTopBar } from "./common";
+import { InfoFooterCard, StrappsPageShell } from "./common";
 
 export type ProductVariant = "first" | "salda" | "early" | "last";
 
@@ -62,8 +62,6 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
 
   return (
     <StrappsPageShell>
-      <StrappsTopBar />
-
       <section className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
         <div>
           <p className="font-azeret text-xs uppercase tracking-[0.2em] text-[#f00707]">{cfg.title}</p>

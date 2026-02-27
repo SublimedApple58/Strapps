@@ -48,12 +48,7 @@ const tiers = [
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#121317] text-white">
-      <div className="mx-auto w-full max-w-6xl px-4 pb-12 pt-6 sm:px-6 lg:px-8 lg:pt-10">
-        <header className="mb-8 flex items-center justify-between rounded-2xl border border-white/10 bg-[#f00707] px-4 py-3 sm:px-6">
-          <p className="font-rounded text-sm tracking-wide">STRAPPS</p>
-          <p className="font-azeret text-xs uppercase tracking-[0.16em] text-white/80">Drop 01</p>
-        </header>
-
+      <div className="mx-auto w-full max-w-6xl px-4 pb-12 pt-24 sm:px-6 lg:px-8">
         <section className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
           <div>
             <p className="font-azeret text-xs uppercase tracking-[0.2em] text-[#f00707]">No hype, solo prodotto</p>
