@@ -1,102 +1,64 @@
+import Image from "next/image";
 import Link from "next/link";
-import { FrameViewport } from "./frame-viewport";
 import { InfoFooterCard, StrappsTopBar } from "./common";
 
-const imgShoeBlack = "/figma/shop/shoe-black.png";
-const imgShoeWhite = "/figma/shop/shoe-white.png";
-
-const imgLine18 = "/figma/shop/line-18.svg";
-const imgLine28 = "/figma/shop/line-28.svg";
-const imgLine33 = "/figma/shop/line-33.svg";
-const imgLine34 = "/figma/shop/line-34.svg";
-const imgLine36 = "/figma/shop/line-36.svg";
-const imgLine40 = "/figma/shop/line-40.svg";
-const imgVector2 = "/figma/shop/vector-2.svg";
+const VARIANT_IMAGE = {
+  first: "/figma/shop/shoe-black.png",
+  salda: "/figma/shop/shoe-white.png",
+  early: "/figma/shop/shoe-white.png",
+  last: "/figma/shop/shoe-black.png",
+} as const;
 
 export type ProductVariant = "first" | "salda" | "early" | "last";
 
 type ProductConfig = {
-  frameHeight: number;
+  title: string;
+  subtitle: string;
   timer: string;
-  ctaText: string;
+  price: string;
   checkoutHref: string;
-  selectorTop: number;
-  ctaTop: number;
-  ctaLeft: number;
-  infoCardTop: number;
-  infoContentTop: number;
-  infoCardLeft?: number;
-  infoContentLeft?: number;
-  showHeroShoes: boolean;
-  showStrapSwatches: boolean;
-  showLockPanel: boolean;
-  showExtendButton: boolean;
+  locked: boolean;
+  lockLabel?: string;
 };
 
 export const PRODUCT_CONFIGS: Record<ProductVariant, ProductConfig> = {
   first: {
-    frameHeight: 1898,
+    title: "FIRST 60",
+    subtitle: "Accesso iniziale al drop con ticket attivo per 30 minuti.",
     timer: "30m 00s",
-    ctaText: "ACQUISTA 189,99€",
+    price: "189,99€",
     checkoutHref: "/checkout/first",
-    selectorTop: 611,
-    ctaTop: 870,
-    ctaLeft: 86,
-    infoCardTop: 1223,
-    infoContentTop: 1246,
-    showHeroShoes: false,
-    showStrapSwatches: false,
-    showLockPanel: true,
-    showExtendButton: false,
+    locked: true,
+    lockLabel: "Blocca il prezzo per 30 giorni: +49,00€",
   },
   salda: {
-    frameHeight: 1491,
+    title: "SALDA 140",
+    subtitle: "Estendi il tuo blocco e finalizza in anticipo il drop successivo.",
     timer: "30G 24H 59M",
-    ctaText: "SALDA 140,99€",
+    price: "140,99€",
     checkoutHref: "/checkout/early",
-    selectorTop: 614,
-    ctaTop: 883,
-    ctaLeft: 85,
-    infoCardTop: 986,
-    infoContentTop: 1009,
-    infoCardLeft: 26,
-    infoContentLeft: 38,
-    showHeroShoes: true,
-    showStrapSwatches: true,
-    showLockPanel: false,
-    showExtendButton: false,
+    locked: false,
   },
   early: {
-    frameHeight: 1549,
+    title: "EARLY 140",
+    subtitle: "Seconda finestra disponibile dopo il completamento del primo lotto.",
     timer: "30G 24H 59M",
-    ctaText: "SALDA 140,99€",
+    price: "219,99€",
     checkoutHref: "/checkout/early",
-    selectorTop: 630,
-    ctaTop: 906,
-    ctaLeft: 88,
-    infoCardTop: 1040,
-    infoContentTop: 1063,
-    showHeroShoes: true,
-    showStrapSwatches: true,
-    showLockPanel: false,
-    showExtendButton: false,
+    locked: false,
   },
   last: {
-    frameHeight: 1662,
+    title: "LAST 90",
+    subtitle: "Ultimo batch del drop: quantità limitata e priorità spedizione.",
     timer: "30m 00s",
-    ctaText: "ACQUISTA 239,99€",
+    price: "239,99€",
     checkoutHref: "/checkout/last",
-    selectorTop: 622,
-    ctaTop: 881,
-    ctaLeft: 80,
-    infoCardTop: 1151,
-    infoContentTop: 1174,
-    showHeroShoes: true,
-    showStrapSwatches: true,
-    showLockPanel: true,
-    showExtendButton: true,
+    locked: true,
+    lockLabel: "Estendi il blocco ora: +49,00€",
   },
 };
+
+const sizes = ["38", "39", "40", "41", "42", "43"];
 
 type ProductScreenProps = {
   variant: ProductVariant;
@@ -104,133 +66,82 @@ type ProductScreenProps = {
 
 export function ProductScreen({ variant }: ProductScreenProps) {
   const cfg = PRODUCT_CONFIGS[variant];
-  const designHeight = cfg.frameHeight - 44;
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden bg-[#1f2024] px-2 py-6 sm:px-6 sm:py-10">
-      <FrameViewport designHeight={designHeight}>
-        <div
-          className="relative w-[375px] -translate-y-[44px] overflow-hidden bg-black text-white"
-          style={{ height: `${cfg.frameHeight}px` }}
-        >
-          <StrappsTopBar />
+    <main className="min-h-screen bg-[#121317] text-white">
+      <div className="mx-auto w-full max-w-6xl px-4 pb-12 pt-6 sm:px-6 lg:px-8 lg:pt-10">
+        <StrappsTopBar />
 
-          <p className="font-impact absolute left-1/2 top-[143px] -translate-x-1/2 text-[20px] tracking-[-0.333px]">
-            TEMPO RIMANENTE
-          </p>
-          <p className="font-impact absolute left-1/2 top-[173px] -translate-x-1/2 text-[48px] tracking-[-0.333px] text-[#f00707]">
-            {cfg.timer}
-          </p>
+        <section className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
+          <div>
+            <p className="font-azeret text-xs uppercase tracking-[0.2em] text-[#f00707]">{cfg.title}</p>
+            <h1 className="font-impact mt-3 text-4xl leading-tight sm:text-5xl">STRAPPS V1</h1>
+            <p className="font-azeret mt-4 max-w-xl text-sm leading-relaxed text-white/80 sm:text-base">{cfg.subtitle}</p>
 
-          {cfg.showHeroShoes && (
-            <>
-              <div className="absolute left-[84px] top-[257px] h-[313px] w-[333px] overflow-hidden">
-                <img src={imgShoeBlack} alt="Sneaker nera" className="h-full w-full object-cover" />
-              </div>
-              <div className="absolute left-[323px] top-[257px] h-[313px] w-[333px] overflow-hidden">
-                <img src={imgShoeWhite} alt="Sneaker bianca" className="h-full w-full object-cover" />
-              </div>
-            </>
-          )}
-
-          <section className="absolute left-[30px] w-[190px]" style={{ top: `${cfg.selectorTop}px` }}>
-            <p className="font-impact text-[15px] tracking-[-0.333px]">SCEGLI IL COLORE DELLA SCARPA</p>
-            <div className="mt-[8px] flex gap-[14px]">
-              <div className="h-[25px] w-[25px] bg-[#d9d9d9]" />
-              <div className="h-[25px] w-[25px] bg-[#1e1e1e]" />
+            <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5">
+              <p className="font-impact text-sm tracking-wide text-white/80">TEMPO RIMANENTE</p>
+              <p className="font-impact mt-1 text-4xl text-[#f00707]">{cfg.timer}</p>
             </div>
 
-            <p className="font-impact mt-[18px] text-[15px] tracking-[-0.333px]">SCEGLI IL COLORE DELLO STRAPPO</p>
-            {cfg.showStrapSwatches && (
-              <div className="mt-[8px] flex gap-[14px]">
-                <div className="h-[25px] w-[25px] bg-[#d9d9d9]" />
-                <div className="h-[25px] w-[25px] bg-[#1e1e1e]" />
+            <div className="mt-6 grid gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 sm:grid-cols-2">
+              <div>
+                <p className="font-azeret text-xs uppercase tracking-[0.16em] text-white/70">Colore scarpa</p>
+                <div className="mt-2 flex gap-3">
+                  <button type="button" className="h-8 w-8 rounded-full border border-white/60 bg-white" aria-label="Bianco" />
+                  <button type="button" className="h-8 w-8 rounded-full border border-white/30 bg-black" aria-label="Nero" />
+                </div>
               </div>
-            )}
+              <div>
+                <p className="font-azeret text-xs uppercase tracking-[0.16em] text-white/70">Taglia</p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {sizes.map((size) => (
+                    <button
+                      key={size}
+                      type="button"
+                      className="font-azeret rounded-full border border-white/30 px-3 py-1 text-xs"
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
 
-            <p className="font-impact mt-[18px] text-[15px] tracking-[-0.333px]">SELEZIONA LA TAGLIA</p>
-            <p className="font-impact mt-[6px] text-[15px] tracking-[-0.333px]">38 -39 -40 -41 -42 -43</p>
-          </section>
-
-          <Link
-            href={cfg.checkoutHref}
-            className="font-impact absolute flex h-[42px] w-[200px] items-center justify-center rounded-[20px] bg-[#f00707] text-[15px] tracking-[-0.333px]"
-            style={{ left: `${cfg.ctaLeft}px`, top: `${cfg.ctaTop}px` }}
-          >
-            {cfg.ctaText}
-          </Link>
-
-          {cfg.showLockPanel && (
-            <div
-              className="absolute left-[20px] h-[102px] w-[335px] rounded-[52px] border border-[#272727] bg-black"
-              style={{ top: variant === "last" ? "974px" : "957px" }}
-            >
-              <p className="font-impact absolute left-1/2 top-[31px] w-[280px] -translate-x-1/2 text-center text-[14px] tracking-[-0.333px]">
-                Blocca la tua scarpa a questo prezzo per 30 giorni
-              </p>
-
-              {cfg.showExtendButton ? (
-                <Link
-                  href="/prodotto/salda"
-                  className="font-impact absolute left-[99px] top-[56px] flex h-[27px] w-[129px] items-center justify-center rounded-[20px] bg-[#f00707] text-[10px] tracking-[-0.333px]"
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <Link
+                href={cfg.checkoutHref}
+                className="font-azeret inline-flex rounded-full bg-[#f00707] px-6 py-3 text-sm font-black italic"
+              >
+                Acquista {cfg.price}
+              </Link>
+              {cfg.locked && cfg.lockLabel ? (
+                <button
+                  type="button"
+                  className="font-azeret rounded-full border border-white/30 px-5 py-3 text-xs font-bold uppercase tracking-wide"
                 >
-                  ESTENDI 49,00€
-                </Link>
-              ) : (
-                <p className="font-azeret absolute left-1/2 top-[88px] -translate-x-1/2 text-[5px] tracking-[-0.333px] text-white/80">
-                  Scalati dal saldo finale*
-                </p>
-              )}
+                  {cfg.lockLabel}
+                </button>
+              ) : null}
             </div>
-          )}
+          </div>
 
-          <InfoFooterCard
-            cardTop={cfg.infoCardTop}
-            contentTop={cfg.infoContentTop}
-            cardLeft={cfg.infoCardLeft}
-            contentLeft={cfg.infoContentLeft}
-          />
+          <div className="relative mx-auto w-full max-w-md overflow-hidden rounded-3xl border border-white/10 bg-black/30 p-3">
+            <Image
+              src={VARIANT_IMAGE[variant]}
+              alt="Sneaker STRAPPS"
+              width={900}
+              height={640}
+              className="h-auto w-full rounded-2xl object-cover"
+              priority
+            />
+            <p className="font-azeret mt-3 text-center text-xs uppercase tracking-[0.16em] text-white/70">
+              Prototipo prodotto - {cfg.title}
+            </p>
+          </div>
+        </section>
 
-          {variant === "first" && (
-            <>
-              <div className="absolute left-[244px] top-[1027px] h-[994px] w-[897px]">
-                <img src={imgVector2} alt="" aria-hidden className="h-full w-full" />
-              </div>
-              <div className="absolute left-[281px] top-[775px] h-[113px] w-[836px] -rotate-[7.7deg] origin-top-left">
-                <img src={imgLine28} alt="" aria-hidden className="h-full w-full" />
-              </div>
-              <div className="absolute left-[274px] top-[1788px] h-[59px] w-[193px] rotate-[17deg] origin-top-left">
-                <img src={imgLine18} alt="" aria-hidden className="h-full w-full" />
-              </div>
-            </>
-          )}
-
-          {variant === "salda" && (
-            <div className="absolute left-[262px] top-[751px] h-[153px] w-[302px] -rotate-[26.87deg] origin-top-left">
-              <img src={imgLine40} alt="" aria-hidden className="h-full w-full" />
-            </div>
-          )}
-
-          {variant === "early" && (
-            <div className="absolute left-[251px] top-[736px] h-[175px] w-[465px] -rotate-[20.62deg] origin-top-left">
-              <img src={imgLine36} alt="" aria-hidden className="h-full w-full" />
-            </div>
-          )}
-
-          {variant === "last" && (
-            <>
-              <div className="absolute left-[-1728px] top-[-95px] h-[881px] w-[1819px] -rotate-[154.16deg] origin-top-left">
-                <img src={imgLine33} alt="" aria-hidden className="h-full w-full" />
-              </div>
-              <div className="absolute left-[-818px] top-[1017px] h-[869px] w-[818px] rotate-[133.27deg] origin-top-left">
-                <img src={imgLine34} alt="" aria-hidden className="h-full w-full" />
-              </div>
-            </>
-          )}
-
-          <div className="absolute bottom-[12px] left-1/2 h-[5px] w-[135px] -translate-x-1/2 rounded-[10px] bg-[#dadada]" />
-        </div>
-      </FrameViewport>
-    </div>
+        <InfoFooterCard />
+      </div>
+    </main>
   );
 }
