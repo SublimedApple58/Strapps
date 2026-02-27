@@ -1,4 +1,4 @@
-import { InfoFooterCard, StrappsPageShell, StrappsTopBar } from "./common";
+import { InfoFooterCard, StrappsPageShell } from "./common";
 
 export type CheckoutVariant = "first" | "early" | "last";
 
@@ -23,8 +23,6 @@ export function CheckoutScreen({ variant }: { variant: CheckoutVariant }) {
 
   return (
     <StrappsPageShell>
-      <StrappsTopBar />
-
       <section className="grid gap-6 lg:grid-cols-[1.05fr_1fr]">
         <article className="rounded-3xl border border-white/10 bg-white/5 p-6">
           <p className="font-azeret text-xs uppercase tracking-[0.2em] text-[#f00707]">Checkout</p>
