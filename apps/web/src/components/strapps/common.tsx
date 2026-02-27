@@ -1,4 +1,17 @@
 import Link from "next/link";
+import { type ReactNode } from "react";
+
+type StrappsPageShellProps = {
+  children: ReactNode;
+};
+
+export function StrappsPageShell({ children }: StrappsPageShellProps) {
+  return (
+    <main className="min-h-screen bg-[#121317] text-white">
+      <div className="mx-auto w-full max-w-6xl px-4 pb-12 pt-6 sm:px-6 lg:px-8 lg:pt-10">{children}</div>
+    </main>
+  );
+}
 
 export function StrappsTopBar() {
   return (
@@ -6,7 +19,15 @@ export function StrappsTopBar() {
       <Link href="/" className="font-rounded text-sm tracking-wide">
         STRAPPS
       </Link>
-      <p className="font-azeret text-xs uppercase tracking-[0.16em] text-white/80">Drop 01</p>
+      <nav className="font-azeret flex items-center gap-3 text-[11px] uppercase tracking-[0.16em] text-white/90 sm:gap-4">
+        <Link href="/prodotto/first" className="transition hover:text-white/70">
+          Product
+        </Link>
+        <Link href="/checkout/first" className="transition hover:text-white/70">
+          Checkout
+        </Link>
+        <span className="text-white/70">Drop 01</span>
+      </nav>
     </header>
   );
 }
