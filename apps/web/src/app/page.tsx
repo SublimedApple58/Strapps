@@ -1,31 +1,31 @@
 import Image from "next/image";
 import Link from "next/link";
+import { AccessTierCountdown } from "@/components/strapps/access-tier-countdown";
 import { NewsletterCountdown } from "@/components/strapps/newsletter-countdown";
 
 const HERO_IMAGE = "/hero_image.png";
 const HERO_MENU_ICON = "/figma/home-v2/menu.svg";
 const NEWSLETTER_ARROW = "/figma/home-v2/arrow.svg";
 
-const tiers = [
+const accessOptions = [
   {
+    id: "first" as const,
     name: "FIRST 60",
-    price: "189,99€",
-    details: ["Ticket valido 30 minuti", "Rimasti: 60"],
+    details: ["189.99€", "Tiket valido 30 minuti", "rimasti: 60"],
     href: "/prodotto/first",
     cta: "SBLOCCA 1€",
-    active: true,
   },
   {
+    id: "early" as const,
     name: "EARLY 140",
-    price: "219,99€",
-    details: ["Si attiva alla chiusura del livello precedente"],
+    details: ["219.99€", "Si attiva alla chiusura del livello", "precedente"],
     href: "/prodotto/early",
     cta: "SBLOCCA 1€",
   },
   {
+    id: "last" as const,
     name: "LAST 90",
-    price: "239,99€",
-    details: ["Si attiva alla chiusura del livello precedente"],
+    details: ["239.99€", "Si attiva alla chiusura del livello", "precedente."],
     href: "/prodotto/last",
     cta: "VAI",
   },
@@ -64,10 +64,10 @@ export default function Home() {
             </nav>
           </details>
 
-          <h1 className="font-azeret relative z-10 mt-[21px] text-[20px] leading-[1.2] tracking-[-0.333px] text-white">
+          <h1 className="font-azeret relative z-20 mt-[21px] text-[20px] leading-[1.2] tracking-[-0.333px] text-white">
             IN THE STRAPPS ERA
           </h1>
-          <p className="font-azeret relative z-10 mt-4 text-[12px] leading-none tracking-[-0.333px] text-[#f00707]">
+          <p className="font-azeret relative z-20 mt-4 text-[12px] leading-none tracking-[-0.333px] text-[#f00707]">
             E IL MOMENTO DEGLI STRAPPI.
           </p>
 
@@ -154,9 +154,7 @@ export default function Home() {
 
         <section id="newsletter" className="mt-14">
           <div className="mx-auto w-[calc(100vw-52px)] max-w-[660px]">
-            <div className="h-[3px] w-full rounded-full bg-[#f00707]" />
-
-            <p className="font-azeret mt-[46px] text-center text-[15px] font-black italic leading-[1.2] tracking-[-0.333px] text-[#f00707]">
+            <p className="font-azeret text-center text-[15px] font-black italic leading-[1.2] tracking-[-0.333px] text-[#f00707]">
               ISCRIVITI ALLA NEWSLETTER PER NON
               <br />
               PERDERTI IL LANCIO
@@ -190,31 +188,40 @@ export default function Home() {
         </section>
 
         <section className="mt-14">
-          <h2 className="font-impact text-center text-3xl text-[#f00707]">SCEGLI IL TUO ACCESSO</h2>
-          <div className="mt-7 grid gap-4 lg:grid-cols-3">
-            {tiers.map((tier) => (
-              <article
-                key={tier.name}
-                className="rounded-2xl border p-5 backdrop-blur-sm"
-                style={{
-                  borderColor: tier.active ? "rgba(240, 7, 7, 0.7)" : "rgba(255, 255, 255, 0.15)",
-                  backgroundColor: tier.active ? "rgba(240, 7, 7, 0.08)" : "rgba(255, 255, 255, 0.03)",
-                }}
-              >
-                <h3 className="font-azeret text-sm font-black italic">{tier.name}</h3>
-                <p className="font-azeret mt-2 text-lg font-bold">{tier.price}</p>
-                <ul className="font-azeret mt-3 space-y-1 text-sm text-white/75">
-                  {tier.details.map((detail) => (
-                    <li key={detail}>{detail}</li>
-                  ))}
-                </ul>
-                <Link
-                  href={tier.href}
-                  className="font-azeret mt-5 inline-flex rounded-full bg-white/10 px-4 py-2 text-sm font-black italic hover:bg-white/20"
-                >
-                  {tier.cta}
-                </Link>
-              </article>
+          <h2 className="font-impact text-center text-[20px] font-normal tracking-[-0.333px] text-[#f00707]">
+            SCEGLI IL TUO ACCESSO
+          </h2>
+
+          <div className="mt-[52px]">
+            {accessOptions.map((option, index) => (
+              <div key={option.id}>
+                <article className="mx-auto w-[calc(100vw-68px)] max-w-[660px]">
+                  <h3 className="font-azeret text-[13px] font-black italic tracking-[-0.333px]">{option.name}</h3>
+                  <p className="font-azeret mt-[15px] text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
+                    {option.details.map((line) => (
+                      <span key={line} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </p>
+
+                  <Link
+                    href={option.href}
+                    className="font-azeret mx-auto mt-[31px] flex h-[35px] w-[150px] items-center justify-center rounded-[20px] border border-white/30 bg-[linear-gradient(180deg,rgba(28,31,44,0.55)_0%,rgba(10,10,14,0.72)_100%)] text-[13px] font-black italic tracking-[-0.333px] shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_10px_16px_rgba(0,0,0,0.35)] backdrop-blur-[6px]"
+                  >
+                    {option.cta}
+                  </Link>
+
+                  <AccessTierCountdown
+                    tier={option.id}
+                    className="font-rounded mt-4 text-center text-[12px] font-bold tracking-[-0.333px] text-white"
+                  />
+                </article>
+
+                {index < accessOptions.length - 1 && (
+                  <div className="relative left-1/2 mt-10 h-px w-screen -translate-x-1/2 bg-white" />
+                )}
+              </div>
             ))}
           </div>
         </section>
