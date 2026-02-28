@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Azeret_Mono } from "next/font/google";
+import { SiteFooter } from "@/components/strapps/site-footer";
 import "./globals.css";
 
 const azeretMono = Azeret_Mono({
@@ -21,7 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="it">
-      <body className={`${azeretMono.variable} antialiased`}>{children}</body>
+      <body className={`${azeretMono.variable} antialiased`}>
+        {children}
+        <SiteFooter />
+      </body>
     </html>
   );
 }
