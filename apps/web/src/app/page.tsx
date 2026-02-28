@@ -68,7 +68,7 @@ export default function Home() {
               SOLO SU ISCRIZIONE
             </p>
             <Link
-              href="/prodotto/first"
+              href="#scegli-il-tuo-accesso"
               className="font-impact mx-auto mt-[13px] flex h-[42px] w-[200px] items-center justify-center rounded-[40px] bg-[#f00707] text-[15px] tracking-[-0.333px] text-white"
             >
               ISCRIVITI AL DROP
@@ -91,7 +91,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mt-14">
+        <section id="scegli-il-tuo-accesso" className="mt-14">
           <div className="mx-auto w-[calc(100vw-52px)] max-w-[660px]">
             <div className="h-[3px] w-full rounded-full bg-[#f00707]" />
 
