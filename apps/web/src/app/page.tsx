@@ -81,18 +81,20 @@ export default function Home() {
             />
           </div>
 
-          <p className="font-impact mt-8 text-center text-[20px] tracking-[-0.333px] text-white">STRAPPS V1</p>
-          <p className="font-azeret mt-[23px] text-center text-[12px] tracking-[-0.333px] text-white">
-            SOLO SU ISCRIZIONE
-          </p>
-          <Link
-            href="/prodotto/first"
-            className="font-impact mx-auto mt-[13px] flex h-[42px] w-[200px] items-center justify-center rounded-[40px] bg-[#f00707] text-[15px] tracking-[-0.333px] text-white"
-          >
-            ISCRIVITI AL DROP
-          </Link>
+          <div className="relative z-10 -mt-[46px]">
+            <p className="font-impact text-center text-[20px] tracking-[-0.333px] text-white">STRAPPS V1</p>
+            <p className="font-azeret mt-[23px] text-center text-[12px] tracking-[-0.333px] text-white">
+              SOLO SU ISCRIZIONE
+            </p>
+            <Link
+              href="/prodotto/first"
+              className="font-impact mx-auto mt-[13px] flex h-[42px] w-[200px] items-center justify-center rounded-[40px] bg-[#f00707] text-[15px] tracking-[-0.333px] text-white"
+            >
+              ISCRIVITI AL DROP
+            </Link>
+          </div>
 
-          <div className="mt-24 px-2">
+          <div className="mt-[61px] mx-auto w-[calc(100vw-68px)] max-w-[322px]">
             <p className="font-azeret text-[12px] leading-[1.25] tracking-[-0.333px] text-white">
               STIAMO RIDISEGNANDO IL PASSATO PER CHI SE NE FREGA DEL FUTURO
             </p>
