@@ -51,17 +51,33 @@ export default function Home() {
     <main className="min-h-screen overflow-x-hidden bg-black text-white">
       <div className="mx-auto w-full max-w-6xl px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pt-12">
         <section className="mx-auto w-full max-w-[390px]">
-          <div className="relative flex h-[42px] items-center rounded-[10px] bg-[#f00707] px-4">
-            <p className="font-rounded text-[13px] tracking-[-0.333px] text-white">STRAPPS</p>
-            <Image
-              src={HERO_MENU_ICON}
-              alt=""
-              width={24}
-              height={6}
-              aria-hidden
-              className="absolute left-1/2 top-1/2 h-[6px] w-[24px] -translate-x-1/2 -translate-y-1/2"
-            />
-          </div>
+          <details className="group relative">
+            <summary
+              className="relative flex h-[42px] cursor-pointer list-none items-center rounded-[10px] bg-[#f00707] px-4 [&::-webkit-details-marker]:hidden"
+              aria-label="Apri menu"
+            >
+              <p className="font-rounded text-[13px] tracking-[-0.333px] text-white">STRAPPS</p>
+              <Image
+                src={HERO_MENU_ICON}
+                alt=""
+                width={24}
+                height={6}
+                aria-hidden
+                className="absolute left-1/2 top-1/2 h-[6px] w-[24px] -translate-x-1/2 -translate-y-1/2"
+              />
+            </summary>
+            <nav className="font-azeret absolute left-0 right-0 top-[46px] z-20 hidden rounded-[10px] border border-white/20 bg-black/95 p-2 text-[12px] tracking-[-0.333px] text-white group-open:block">
+              <Link href="/" className="block rounded-[8px] px-3 py-2 hover:bg-white/10">
+                Home
+              </Link>
+              <Link href="/prodotto/first" className="block rounded-[8px] px-3 py-2 hover:bg-white/10">
+                Prodotto
+              </Link>
+              <Link href="/checkout/first" className="block rounded-[8px] px-3 py-2 hover:bg-white/10">
+                Checkout
+              </Link>
+            </nav>
+          </details>
 
           <h1 className="font-azeret mt-[21px] text-[20px] leading-[1.2] tracking-[-0.333px] text-white">
             IN THE STRAPPS ERA
@@ -70,18 +86,18 @@ export default function Home() {
             E IL MOMENTO DEGLI STRAPPI.
           </p>
 
-          <div className="relative left-1/2 mt-6 aspect-[375/490] w-screen -translate-x-1/2 overflow-hidden sm:w-full">
+          <div className="relative left-1/2 -mt-[12px] aspect-[375/490] w-screen -translate-x-1/2 overflow-hidden sm:w-full">
             <Image
               src={HERO_IMAGE}
               alt="Sneaker STRAPPS bianca e nera"
               fill
               sizes="(max-width: 640px) 100vw, 390px"
-              className="object-cover object-center"
+              className="object-cover object-center scale-[1.12]"
               priority
             />
           </div>
 
-          <div className="relative z-10 -mt-[46px]">
+          <div className="relative z-10 -mt-[72px]">
             <p className="font-impact text-center text-[20px] tracking-[-0.333px] text-white">STRAPPS V1</p>
             <p className="font-azeret mt-[23px] text-center text-[12px] tracking-[-0.333px] text-white">
               SOLO SU ISCRIZIONE
