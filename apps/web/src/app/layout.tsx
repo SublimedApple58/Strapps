@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Azeret_Mono } from "next/font/google";
-import { GlobalTopBar } from "@/components/strapps/global-top-bar";
 import "./globals.css";
 
 const azeretMono = Azeret_Mono({
@@ -22,10 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="it">
-      <body className={`${azeretMono.variable} antialiased`}>
-        <GlobalTopBar />
-        {children}
-      </body>
+      <body className={`${azeretMono.variable} antialiased`}>{children}</body>
     </html>
   );
 }

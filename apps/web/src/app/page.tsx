@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const HERO_IMAGE = "/figma/home-v2/hero.png";
+const HERO_IMAGE = "/hero_image.png";
 const HERO_MENU_ICON = "/figma/home-v2/menu.svg";
 
 const features = [
@@ -48,11 +48,11 @@ const tiers = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="min-h-screen overflow-x-hidden bg-black text-white">
       <div className="mx-auto w-full max-w-6xl px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pt-12">
-        <section className="mx-auto w-full max-w-[390px]">
-          <div className="relative rounded-[18px] bg-[#f00707] px-5 py-4">
-            <p className="font-rounded text-[42px] leading-none tracking-[-0.333px] text-white">STRAPPS</p>
+        <section className="mx-auto w-full max-w-[390px] overflow-hidden">
+          <div className="relative flex h-[42px] items-center rounded-[18px] bg-[#f00707] px-4">
+            <p className="font-rounded text-[13px] tracking-[-0.333px] text-white">STRAPPS</p>
             <Image
               src={HERO_MENU_ICON}
               alt=""
@@ -63,29 +63,29 @@ export default function Home() {
             />
           </div>
 
-          <h1 className="font-azeret mt-12 whitespace-nowrap text-[58px] leading-[1.03] tracking-[-0.333px] text-white">
+          <h1 className="font-azeret mt-12 text-[20px] leading-[1.2] tracking-[-0.333px] text-white">
             IN THE STRAPPS ERA
           </h1>
-          <p className="font-azeret mt-4 text-[22px] leading-none tracking-[-0.333px] text-[#f00707]">
+          <p className="font-azeret mt-4 text-[12px] leading-none tracking-[-0.333px] text-[#f00707]">
             E IL MOMENTO DEGLI STRAPPI.
           </p>
 
-          <div className="relative mt-6">
+          <div className="relative mt-6 h-[700px] overflow-hidden">
             <Image
               src={HERO_IMAGE}
               alt="Sneaker STRAPPS bianca e nera"
-              width={1280}
-              height={1221}
-              className="h-auto w-full object-cover"
+              fill
+              sizes="(max-width: 640px) 100vw, 390px"
+              className="object-cover object-center scale-[1.35]"
               priority
             />
           </div>
 
-          <p className="font-impact mt-8 text-center text-[58px] tracking-[-0.333px] text-white">STRAPPS V1</p>
-          <p className="font-azeret mt-5 text-center text-[17px] tracking-[-0.333px] text-white">SOLO SU ISCRIZIONE</p>
+          <p className="font-impact mt-8 text-center text-[20px] tracking-[-0.333px] text-white">STRAPPS V1</p>
+          <p className="font-azeret mt-5 text-center text-[12px] tracking-[-0.333px] text-white">SOLO SU ISCRIZIONE</p>
           <Link
             href="/prodotto/first"
-            className="font-impact mx-auto mt-8 flex h-[64px] w-[220px] items-center justify-center rounded-[40px] bg-[#f00707] text-[16px] tracking-[-0.333px] text-white"
+            className="font-impact mx-auto mt-8 flex h-[42px] w-[200px] items-center justify-center rounded-[40px] bg-[#f00707] text-[15px] tracking-[-0.333px] text-white"
           >
             ISCRIVITI AL DROP
           </Link>
