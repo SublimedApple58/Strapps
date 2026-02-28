@@ -3,6 +3,7 @@ import Link from "next/link";
 import { AccessTierCta } from "@/components/strapps/access-tier-cta";
 import { AccessTierCountdown } from "@/components/strapps/access-tier-countdown";
 import { NewsletterCountdown } from "@/components/strapps/newsletter-countdown";
+import { ScrollToNewsletterButton } from "@/components/strapps/scroll-to-newsletter-button";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
 
 const HERO_IMAGE = "/hero_image.png";
@@ -67,12 +68,10 @@ export default function Home() {
             <p className="font-azeret mt-[23px] text-center text-[12px] tracking-[-0.333px] text-white">
               SOLO SU ISCRIZIONE
             </p>
-            <Link
-              href="#newsletter-title"
+            <ScrollToNewsletterButton
               className="font-impact mx-auto mt-[13px] flex h-[42px] w-[200px] items-center justify-center rounded-[40px] bg-[#f00707] text-[15px] tracking-[-0.333px] text-white"
-            >
-              ISCRIVITI AL DROP
-            </Link>
+              label="ISCRIVITI AL DROP"
+            />
           </div>
 
           <div className="mt-[61px] mx-auto w-[calc(100vw-68px)] max-w-[322px]">
