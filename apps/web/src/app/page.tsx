@@ -2,17 +2,18 @@ import Image from "next/image";
 import Link from "next/link";
 
 const HERO_IMAGE = "/figma/home-v2/hero.png";
+const HERO_MENU_ICON = "/figma/home-v2/menu.svg";
 
 const features = [
   {
     title: "DROP SU RICHIESTA",
     description:
-      "Produciamo solo ciò che viene ordinato. Niente magazzino, niente overproduction.",
+      "Produciamo solo cio che viene ordinato. Niente magazzino, niente overproduction.",
   },
   {
     title: "PRODUZIONE TRACCIATA",
     description:
-      "Aggiornamenti via email durante ogni fase del drop. Sai sempre a che punto è la tua scarpa.",
+      "Aggiornamenti via email durante ogni fase del drop. Sai sempre a che punto e la tua scarpa.",
   },
   {
     title: "PAGAMENTI VERIFICATI",
@@ -47,48 +48,66 @@ const tiers = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#121317] text-white">
-      <div className="mx-auto w-full max-w-6xl px-4 pb-12 pt-24 sm:px-6 lg:px-8">
-        <section className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
-          <div>
-            <p className="font-azeret text-xs uppercase tracking-[0.2em] text-[#f00707]">No hype, solo prodotto</p>
-            <h1 className="font-impact mt-3 text-4xl leading-tight text-white sm:text-5xl">
-              Ridisegniamo il passato per chi se ne frega del futuro
-            </h1>
-            <p className="font-azeret mt-4 max-w-xl text-sm leading-relaxed text-white/80 sm:text-base">
-              Ogni uscita è già piena di cose: non aggiungerci anche i lacci. STRAPPS ti dà controllo in un
-              gesto: o ti allacci al passato, o tiri un altro strappo.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link
-                href="/prodotto/first"
-                className="font-azeret inline-flex rounded-full bg-[#f00707] px-5 py-3 text-sm font-black italic"
-              >
-                Accedi al drop
-              </Link>
-              <a
-                href="#newsletter"
-                className="font-azeret inline-flex rounded-full border border-white/30 px-5 py-3 text-sm font-black italic"
-              >
-                Avvisami al lancio
-              </a>
-            </div>
+    <main className="min-h-screen bg-black text-white">
+      <div className="mx-auto w-full max-w-6xl px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pt-12">
+        <section className="mx-auto w-full max-w-[390px]">
+          <div className="relative rounded-[18px] bg-[#f00707] px-5 py-4">
+            <p className="font-rounded text-[42px] leading-none tracking-[-0.333px] text-white">STRAPPS</p>
+            <Image
+              src={HERO_MENU_ICON}
+              alt=""
+              width={24}
+              height={6}
+              aria-hidden
+              className="absolute left-1/2 top-1/2 h-[6px] w-[24px] -translate-x-1/2 -translate-y-1/2"
+            />
           </div>
 
-          <div className="relative mx-auto w-full max-w-md overflow-hidden rounded-3xl border border-white/10 bg-black/30 p-3">
+          <h1 className="font-azeret mt-12 whitespace-nowrap text-[58px] leading-[1.03] tracking-[-0.333px] text-white">
+            IN THE STRAPPS ERA
+          </h1>
+          <p className="font-azeret mt-4 text-[22px] leading-none tracking-[-0.333px] text-[#f00707]">
+            E IL MOMENTO DEGLI STRAPPI.
+          </p>
+
+          <div className="relative mt-6">
             <Image
               src={HERO_IMAGE}
-              alt="Sneakers STRAPPS"
-              width={900}
-              height={640}
-              className="h-auto w-full rounded-2xl object-cover"
+              alt="Sneaker STRAPPS bianca e nera"
+              width={1280}
+              height={1221}
+              className="h-auto w-full object-cover"
               priority
             />
+          </div>
+
+          <p className="font-impact mt-8 text-center text-[58px] tracking-[-0.333px] text-white">STRAPPS V1</p>
+          <p className="font-azeret mt-5 text-center text-[17px] tracking-[-0.333px] text-white">SOLO SU ISCRIZIONE</p>
+          <Link
+            href="/prodotto/first"
+            className="font-impact mx-auto mt-8 flex h-[64px] w-[220px] items-center justify-center rounded-[40px] bg-[#f00707] text-[16px] tracking-[-0.333px] text-white"
+          >
+            ISCRIVITI AL DROP
+          </Link>
+
+          <div className="mt-24 px-2">
+            <p className="font-azeret text-[12px] leading-[1.25] tracking-[-0.333px] text-white">
+              STIAMO RIDISEGNANDO IL PASSATO PER CHI SE NE FREGA DEL FUTURO
+            </p>
+            <p className="font-azeret mt-10 text-[12px] leading-[1.25] tracking-[-0.333px] text-white">
+              Ogni uscita e gia piena di cose:
+              <br />
+              non aggiungerci anche i lacci.
+              <br />
+              <br />
+              STRAPPS ti da controllo in 1 gesto:
+              <br />O ti allacci al passato o tiri un altro strappo
+            </p>
           </div>
         </section>
 
         <section className="mt-14 border-y border-white/10 py-10">
-          <h2 className="font-azeret text-center text-2xl font-black italic text-[#f00707]">COS&apos;È STRAPPS</h2>
+          <h2 className="font-azeret text-center text-2xl font-black italic text-[#f00707]">COS&apos;E STRAPPS</h2>
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {features.map((feature) => (
               <article key={feature.title} className="rounded-2xl border border-white/10 bg-white/5 p-5">
