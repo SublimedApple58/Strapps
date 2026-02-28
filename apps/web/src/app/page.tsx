@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { AccessTierCta } from "@/components/strapps/access-tier-cta";
 import { AccessTierCountdown } from "@/components/strapps/access-tier-countdown";
 import { NewsletterCountdown } from "@/components/strapps/newsletter-countdown";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
@@ -192,12 +193,12 @@ export default function Home() {
                     ))}
                   </div>
 
-                  <Link
+                  <AccessTierCta
+                    tier={option.id}
                     href={option.href}
+                    label={option.cta}
                     className="font-azeret mx-auto mt-[31px] flex h-[35px] w-[150px] items-center justify-center rounded-[20px] border border-white/30 bg-[linear-gradient(180deg,rgba(28,31,44,0.55)_0%,rgba(10,10,14,0.72)_100%)] text-[13px] font-black italic tracking-[-0.333px] shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_10px_16px_rgba(0,0,0,0.35)] backdrop-blur-[6px]"
-                  >
-                    {option.cta}
-                  </Link>
+                  />
 
                   <AccessTierCountdown
                     tier={option.id}
@@ -210,6 +211,36 @@ export default function Home() {
                 )}
               </div>
             ))}
+          </div>
+        </section>
+
+        <section className="mt-14 pb-8">
+          <div className="mx-auto w-[calc(100vw-52px)] max-w-[760px] rounded-[44px] bg-[#f00707] px-[34px] py-12 text-white">
+            <p className="font-impact text-[20px] font-normal tracking-[-0.333px]">STRAPPS</p>
+            <p className="font-azeret mt-12 text-[12px] font-normal tracking-[-0.333px]">info@strapps.it</p>
+
+            <p className="font-azeret mt-16 text-[15px] font-normal tracking-[-0.333px]">I nostri social</p>
+            <div className="font-azeret mt-3 space-y-2 text-[12px] font-normal tracking-[-0.333px]">
+              <p>Instagram</p>
+              <p>Tiktok</p>
+            </div>
+
+            <div className="mt-14 h-px w-full bg-white" />
+
+            <div className="font-azeret mt-10 space-y-4 text-[12px] font-normal tracking-[-0.333px]">
+              <Link href="/privacy-policy" className="block">
+                Privacy &amp; Policy
+              </Link>
+              <Link href="/cookie-policy" className="block">
+                Cookie e Condizioni
+              </Link>
+              <Link href="/termini-e-condizioni" className="block">
+                Termini e Condizioni
+              </Link>
+              <Link href="/resi-rimborsi-e-taglie" className="block">
+                Resi, Rimborsi e Taglie
+              </Link>
+            </div>
           </div>
         </section>
       </div>
