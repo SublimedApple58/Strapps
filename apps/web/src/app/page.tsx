@@ -192,10 +192,12 @@ export default function Home() {
             SCEGLI IL TUO ACCESSO
           </h2>
 
-          <div className="mt-[52px]">
+          <div className="mt-[58px]">
             {accessOptions.map((option, index) => (
               <div key={option.id}>
-                <article className="mx-auto w-[calc(100vw-68px)] max-w-[660px]">
+                <article
+                  className={`mx-auto w-[calc(100vw-68px)] max-w-[660px] ${index > 0 ? "mt-[58px]" : ""}`}
+                >
                   <h3 className="font-azeret text-[13px] font-black italic tracking-[-0.333px]">{option.name}</h3>
                   <p className="font-azeret mt-[15px] text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
                     {option.details.map((line) => (
@@ -214,7 +216,7 @@ export default function Home() {
 
                   <AccessTierCountdown
                     tier={option.id}
-                    className="font-rounded mt-4 text-center text-[12px] font-bold tracking-[-0.333px] text-white"
+                    className="font-rounded mt-[8px] text-center text-[12px] font-bold tracking-[-0.333px] text-white"
                   />
                 </article>
 
