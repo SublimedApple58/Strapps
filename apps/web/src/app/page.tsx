@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { AccessTierCountdown } from "@/components/strapps/access-tier-countdown";
 import { NewsletterCountdown } from "@/components/strapps/newsletter-countdown";
+import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
 
 const HERO_IMAGE = "/hero_image.png";
-const HERO_MENU_ICON = "/figma/home-v2/menu.svg";
 const NEWSLETTER_ARROW = "/figma/home-v2/arrow.svg";
 
 const accessOptions = [
@@ -41,33 +41,7 @@ export default function Home() {
     <main className="min-h-screen overflow-x-hidden bg-black text-white">
       <div className="mx-auto w-full max-w-6xl px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pt-12">
         <section className="mx-auto w-full max-w-[390px]">
-          <details className="hero-menu group relative z-[500]">
-            <summary
-              className="relative flex h-[42px] cursor-pointer list-none items-center rounded-[10px] bg-[#f00707] px-4 [&::-webkit-details-marker]:hidden"
-              aria-label="Apri menu"
-            >
-              <p className="font-rounded text-[13px] tracking-[-0.333px] text-white">STRAPPS</p>
-              <Image
-                src={HERO_MENU_ICON}
-                alt=""
-                width={24}
-                height={6}
-                aria-hidden
-                className="absolute left-1/2 top-1/2 h-[6px] w-[24px] -translate-x-1/2 -translate-y-1/2"
-              />
-            </summary>
-            <nav className="hero-menu-panel font-azeret absolute left-0 right-0 top-[46px] z-[600] rounded-[10px] border border-[#f00707] bg-[#f00707] p-2 text-[12px] tracking-[-0.333px] text-white shadow-[0_12px_28px_rgba(0,0,0,0.45)]">
-              <Link href="/" className="block rounded-[8px] px-3 py-2 hover:bg-black/15">
-                Home
-              </Link>
-              <Link href="/prodotto/first" className="block rounded-[8px] px-3 py-2 hover:bg-black/15">
-                Prodotto
-              </Link>
-              <Link href="/checkout/first" className="block rounded-[8px] px-3 py-2 hover:bg-black/15">
-                Checkout
-              </Link>
-            </nav>
-          </details>
+          <SiteNavMenu />
 
           <h1 className="font-azeret relative z-20 mt-[21px] text-[20px] leading-[1.2] tracking-[-0.333px] text-white">
             IN THE STRAPPS ERA
