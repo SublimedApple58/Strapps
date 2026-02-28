@@ -68,7 +68,7 @@ export default function Home() {
               SOLO SU ISCRIZIONE
             </p>
             <Link
-              href="#scegli-il-tuo-accesso"
+              href="#newsletter-title"
               className="font-impact mx-auto mt-[13px] flex h-[42px] w-[200px] items-center justify-center rounded-[40px] bg-[#f00707] text-[15px] tracking-[-0.333px] text-white"
             >
               ISCRIVITI AL DROP
@@ -134,7 +134,10 @@ export default function Home() {
 
         <section id="newsletter" className="mt-14">
           <div className="mx-auto w-[calc(100vw-52px)] max-w-[660px]">
-            <p className="font-azeret text-center text-[15px] font-black italic leading-[1.2] tracking-[-0.333px] text-[#f00707]">
+            <p
+              id="newsletter-title"
+              className="font-azeret text-center text-[15px] font-black italic leading-[1.2] tracking-[-0.333px] text-[#f00707]"
+            >
               ISCRIVITI ALLA NEWSLETTER PER NON
               <br />
               PERDERTI IL LANCIO
