@@ -11,21 +11,26 @@ const accessOptions = [
   {
     id: "first" as const,
     name: "FIRST 60",
-    details: ["189.99€", "Tiket valido 30 minuti", "rimasti: 60"],
+    price: "189.99€",
+    originalPrice: "239.99€",
+    lines: ["Tiket valido 30 minuti", "rimasti: 60"],
     href: "/prodotto/first",
     cta: "SBLOCCA 1€",
   },
   {
     id: "early" as const,
     name: "EARLY 140",
-    details: ["219.99€", "Si attiva alla chiusura del livello", "precedente"],
+    price: "219.99€",
+    originalPrice: "239.99€",
+    lines: ["Si attiva alla chiusura del livello", "precedente"],
     href: "/prodotto/early",
     cta: "SBLOCCA 1€",
   },
   {
     id: "last" as const,
     name: "LAST 90",
-    details: ["239.99€", "Si attiva alla chiusura del livello", "precedente."],
+    price: "239.99€",
+    lines: ["Si attiva alla chiusura del livello", "precedente."],
     href: "/prodotto/last",
     cta: "VAI",
   },
@@ -36,7 +41,7 @@ export default function Home() {
     <main className="min-h-screen overflow-x-hidden bg-black text-white">
       <div className="mx-auto w-full max-w-6xl px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pt-12">
         <section className="mx-auto w-full max-w-[390px]">
-          <details className="hero-menu group relative">
+          <details className="hero-menu group relative z-[500]">
             <summary
               className="relative flex h-[42px] cursor-pointer list-none items-center rounded-[10px] bg-[#f00707] px-4 [&::-webkit-details-marker]:hidden"
               aria-label="Apri menu"
@@ -51,14 +56,14 @@ export default function Home() {
                 className="absolute left-1/2 top-1/2 h-[6px] w-[24px] -translate-x-1/2 -translate-y-1/2"
               />
             </summary>
-            <nav className="hero-menu-panel font-azeret absolute left-0 right-0 top-[46px] z-20 rounded-[10px] border border-white/20 bg-black/95 p-2 text-[12px] tracking-[-0.333px] text-white">
-              <Link href="/" className="block rounded-[8px] px-3 py-2 hover:bg-white/10">
+            <nav className="hero-menu-panel font-azeret absolute left-0 right-0 top-[46px] z-[600] rounded-[10px] border border-[#f00707] bg-[#f00707] p-2 text-[12px] tracking-[-0.333px] text-white shadow-[0_12px_28px_rgba(0,0,0,0.45)]">
+              <Link href="/" className="block rounded-[8px] px-3 py-2 hover:bg-black/15">
                 Home
               </Link>
-              <Link href="/prodotto/first" className="block rounded-[8px] px-3 py-2 hover:bg-white/10">
+              <Link href="/prodotto/first" className="block rounded-[8px] px-3 py-2 hover:bg-black/15">
                 Prodotto
               </Link>
-              <Link href="/checkout/first" className="block rounded-[8px] px-3 py-2 hover:bg-white/10">
+              <Link href="/checkout/first" className="block rounded-[8px] px-3 py-2 hover:bg-black/15">
                 Checkout
               </Link>
             </nav>
@@ -199,13 +204,19 @@ export default function Home() {
                   className={`mx-auto w-[calc(100vw-68px)] max-w-[660px] ${index > 0 ? "mt-[58px]" : ""}`}
                 >
                   <h3 className="font-azeret text-[13px] font-black italic tracking-[-0.333px]">{option.name}</h3>
-                  <p className="font-azeret mt-[15px] text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
-                    {option.details.map((line) => (
+                  <div className="font-azeret mt-[15px] text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
+                    <p className="flex items-baseline gap-2">
+                      <span>{option.price}</span>
+                      {option.originalPrice ? (
+                        <span className="text-white/55 line-through decoration-white/60">{option.originalPrice}</span>
+                      ) : null}
+                    </p>
+                    {option.lines.map((line) => (
                       <span key={line} className="block">
                         {line}
                       </span>
                     ))}
-                  </p>
+                  </div>
 
                   <Link
                     href={option.href}

@@ -47,6 +47,10 @@ a {
   display: none;
 }
 
+.hero-menu[open] {
+  z-index: 900;
+}
+
 .hero-menu[open] .hero-menu-panel {
   display: block;
 }
