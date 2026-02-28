@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import { NewsletterCountdown } from "@/components/strapps/newsletter-countdown";
 
 const HERO_IMAGE = "/hero_image.png";
 const HERO_MENU_ICON = "/figma/home-v2/menu.svg";
+const NEWSLETTER_ARROW = "/figma/home-v2/arrow.svg";
 
 const tiers = [
   {
@@ -120,7 +122,7 @@ export default function Home() {
             <div className="mt-[46px] space-y-[62px]">
               <article>
                 <h3 className="font-azeret text-[13px] font-black italic tracking-[-0.333px]">DROP SU RICHIESTA</h3>
-                <p className="font-azeret mt-5 text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
+                <p className="font-azeret mt-[15px] text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
                   Produciamo solo cio che viene ordinato.
                   <br />
                   Niente magazzino, niente overproduction.
@@ -129,7 +131,7 @@ export default function Home() {
 
               <article>
                 <h3 className="font-azeret text-[13px] font-black italic tracking-[-0.333px]">PRODUZIONE TRACCIATA</h3>
-                <p className="font-azeret mt-5 text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
+                <p className="font-azeret mt-[15px] text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
                   Aggiornamenti via email durante ogni fase del drop.
                   <br />
                   Sai sempre a che punto e la tua scarpa.
@@ -138,7 +140,7 @@ export default function Home() {
 
               <article>
                 <h3 className="font-azeret text-[13px] font-black italic tracking-[-0.333px]">PAGAMENTI VERIFICATI</h3>
-                <p className="font-azeret mt-5 text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
+                <p className="font-azeret mt-[15px] text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
                   Pagamento sicuro + ricevuta immediata.
                   <br />
                   Contatti reali e assistenza diretta.
@@ -150,26 +152,41 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="newsletter" className="mt-14 rounded-3xl border border-[#f00707]/40 bg-black/40 p-6 sm:p-8">
-          <p className="font-azeret text-center text-lg font-black italic text-[#f00707]">
-            ISCRIVITI ALLA NEWSLETTER PER NON PERDERTI IL LANCIO
-          </p>
-          <form className="mx-auto mt-6 flex w-full max-w-xl flex-col gap-3 sm:flex-row">
-            <input
-              type="email"
-              required
-              placeholder="POSTA EMAIL"
-              aria-label="Email newsletter"
-              className="font-azeret h-12 flex-1 rounded-full border border-white/20 bg-white px-5 text-sm text-black placeholder:text-neutral-500 focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="font-azeret h-12 rounded-full bg-[#f00707] px-6 text-sm font-black italic"
-            >
-              Avvisami
-            </button>
-          </form>
-          <p className="font-rounded mt-4 text-center text-xs text-white/70">Chiude tra: 6g 23h 59m</p>
+        <section id="newsletter" className="mt-14">
+          <div className="mx-auto w-[calc(100vw-52px)] max-w-[660px]">
+            <div className="h-[3px] w-full rounded-full bg-[#f00707]" />
+
+            <p className="font-azeret mt-[46px] text-center text-[15px] font-black italic leading-[1.2] tracking-[-0.333px] text-[#f00707]">
+              ISCRIVITI ALLA NEWSLETTER PER NON
+              <br />
+              PERDERTI IL LANCIO
+            </p>
+
+            <p className="font-azeret mt-[46px] text-[15px] font-black italic tracking-[-0.333px] text-white">
+              FATTI AVVISARE*
+            </p>
+
+            <form className="relative mt-4">
+              <input
+                type="email"
+                required
+                placeholder="POSTA EMAIL"
+                aria-label="Email newsletter"
+                className="font-azeret h-[51px] w-full rounded-[26px] bg-[#d9d9d9] px-5 pr-[66px] text-[12px] text-black placeholder:text-[#5f5f5f] focus:outline-none"
+              />
+              <button
+                type="submit"
+                aria-label="Invia email"
+                className="absolute right-[4px] top-1/2 flex h-[44px] w-[44px] -translate-y-1/2 items-center justify-center rounded-full bg-black"
+              >
+                <Image src={NEWSLETTER_ARROW} alt="" aria-hidden width={25} height={14} className="h-[14px] w-[25px]" />
+              </button>
+            </form>
+
+            <NewsletterCountdown className="font-rounded mt-4 text-center text-[12px] font-bold tracking-[-0.333px] text-white" />
+
+            <div className="mt-[46px] h-[3px] w-full rounded-full bg-[#f00707]" />
+          </div>
         </section>
 
         <section className="mt-14">
