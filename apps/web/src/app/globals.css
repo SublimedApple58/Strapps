@@ -42,3 +42,11 @@ a {
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.hero-menu .hero-menu-panel {
+  display: none;
+}
+
+.hero-menu[open] .hero-menu-panel {
+  display: block;
+}

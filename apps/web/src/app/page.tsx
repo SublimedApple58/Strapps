@@ -4,23 +4,6 @@ import Link from "next/link";
 const HERO_IMAGE = "/hero_image.png";
 const HERO_MENU_ICON = "/figma/home-v2/menu.svg";
 
-const features = [
-  {
-    title: "DROP SU RICHIESTA",
-    description:
-      "Produciamo solo cio che viene ordinato. Niente magazzino, niente overproduction.",
-  },
-  {
-    title: "PRODUZIONE TRACCIATA",
-    description:
-      "Aggiornamenti via email durante ogni fase del drop. Sai sempre a che punto e la tua scarpa.",
-  },
-  {
-    title: "PAGAMENTI VERIFICATI",
-    description: "Pagamento sicuro, ricevuta immediata, contatti reali e assistenza diretta.",
-  },
-];
-
 const tiers = [
   {
     name: "FIRST 60",
@@ -51,7 +34,7 @@ export default function Home() {
     <main className="min-h-screen overflow-x-hidden bg-black text-white">
       <div className="mx-auto w-full max-w-6xl px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pt-12">
         <section className="mx-auto w-full max-w-[390px]">
-          <details className="group relative">
+          <details className="hero-menu group relative">
             <summary
               className="relative flex h-[42px] cursor-pointer list-none items-center rounded-[10px] bg-[#f00707] px-4 [&::-webkit-details-marker]:hidden"
               aria-label="Apri menu"
@@ -66,7 +49,7 @@ export default function Home() {
                 className="absolute left-1/2 top-1/2 h-[6px] w-[24px] -translate-x-1/2 -translate-y-1/2"
               />
             </summary>
-            <nav className="font-azeret absolute left-0 right-0 top-[46px] z-20 hidden rounded-[10px] border border-white/20 bg-black/95 p-2 text-[12px] tracking-[-0.333px] text-white group-open:block">
+            <nav className="hero-menu-panel font-azeret absolute left-0 right-0 top-[46px] z-20 rounded-[10px] border border-white/20 bg-black/95 p-2 text-[12px] tracking-[-0.333px] text-white">
               <Link href="/" className="block rounded-[8px] px-3 py-2 hover:bg-white/10">
                 Home
               </Link>
@@ -79,10 +62,10 @@ export default function Home() {
             </nav>
           </details>
 
-          <h1 className="font-azeret mt-[21px] text-[20px] leading-[1.2] tracking-[-0.333px] text-white">
+          <h1 className="font-azeret relative z-10 mt-[21px] text-[20px] leading-[1.2] tracking-[-0.333px] text-white">
             IN THE STRAPPS ERA
           </h1>
-          <p className="font-azeret mt-4 text-[12px] leading-none tracking-[-0.333px] text-[#f00707]">
+          <p className="font-azeret relative z-10 mt-4 text-[12px] leading-none tracking-[-0.333px] text-[#f00707]">
             E IL MOMENTO DEGLI STRAPPI.
           </p>
 
@@ -126,15 +109,44 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mt-14 border-y border-white/10 py-10">
-          <h2 className="font-azeret text-center text-2xl font-black italic text-[#f00707]">COS&apos;E STRAPPS</h2>
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {features.map((feature) => (
-              <article key={feature.title} className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                <h3 className="font-azeret text-sm font-black italic">{feature.title}</h3>
-                <p className="font-azeret mt-3 text-sm leading-relaxed text-white/80">{feature.description}</p>
+        <section className="mt-14">
+          <div className="mx-auto w-[calc(100vw-52px)] max-w-[660px]">
+            <div className="h-[3px] w-full rounded-full bg-[#f00707]" />
+
+            <h2 className="font-azeret mt-[46px] text-center text-[20px] font-black italic tracking-[-0.333px] text-[#f00707]">
+              COS&apos;E STRAPPS
+            </h2>
+
+            <div className="mt-[46px] space-y-[62px]">
+              <article>
+                <h3 className="font-azeret text-[13px] font-black italic tracking-[-0.333px]">DROP SU RICHIESTA</h3>
+                <p className="font-azeret mt-5 text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
+                  Produciamo solo cio che viene ordinato.
+                  <br />
+                  Niente magazzino, niente overproduction.
+                </p>
               </article>
-            ))}
+
+              <article>
+                <h3 className="font-azeret text-[13px] font-black italic tracking-[-0.333px]">PRODUZIONE TRACCIATA</h3>
+                <p className="font-azeret mt-5 text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
+                  Aggiornamenti via email durante ogni fase del drop.
+                  <br />
+                  Sai sempre a che punto e la tua scarpa.
+                </p>
+              </article>
+
+              <article>
+                <h3 className="font-azeret text-[13px] font-black italic tracking-[-0.333px]">PAGAMENTI VERIFICATI</h3>
+                <p className="font-azeret mt-5 text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
+                  Pagamento sicuro + ricevuta immediata.
+                  <br />
+                  Contatti reali e assistenza diretta.
+                </p>
+              </article>
+            </div>
+
+            <div className="mt-[46px] h-[3px] w-full rounded-full bg-[#f00707]" />
           </div>
         </section>
 
