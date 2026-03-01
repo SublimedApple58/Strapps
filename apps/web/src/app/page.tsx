@@ -2,11 +2,11 @@ import Image from "next/image";
 import { AccessTierCta } from "@/components/strapps/access-tier-cta";
 import { AccessTierCountdown } from "@/components/strapps/access-tier-countdown";
 import { NewsletterCountdown } from "@/components/strapps/newsletter-countdown";
+import { NewsletterSignup } from "@/components/strapps/newsletter-signup";
 import { ScrollToNewsletterButton } from "@/components/strapps/scroll-to-newsletter-button";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
 
 const HERO_IMAGE = "/hero_image.png";
-const NEWSLETTER_ARROW = "/figma/home-v2/arrow.svg";
 
 const accessOptions = [
   {
@@ -145,22 +145,7 @@ export default function Home() {
               FATTI AVVISARE*
             </p>
 
-            <form className="relative mt-4">
-              <input
-                type="email"
-                required
-                placeholder="POSTA EMAIL"
-                aria-label="Email newsletter"
-                className="font-azeret h-[51px] w-full rounded-[26px] bg-[#d9d9d9] px-5 pr-[66px] text-[12px] text-black placeholder:text-[#5f5f5f] focus:outline-none"
-              />
-              <button
-                type="submit"
-                aria-label="Invia email"
-                className="absolute right-[4px] top-1/2 flex h-[44px] w-[44px] -translate-y-1/2 items-center justify-center rounded-full bg-black"
-              >
-                <Image src={NEWSLETTER_ARROW} alt="" aria-hidden width={25} height={14} className="h-[14px] w-[25px]" />
-              </button>
-            </form>
+            <NewsletterSignup />
 
             <NewsletterCountdown className="font-rounded mt-4 text-center text-[12px] font-bold tracking-[-0.333px] text-white" />
 
