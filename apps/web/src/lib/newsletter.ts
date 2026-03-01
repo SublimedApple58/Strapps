@@ -66,20 +66,33 @@ function isAlreadySubscribedError(error: unknown): boolean {
 
 export async function subscribeToNewsletter(rawEmail: string): Promise<NewsletterSubscribeResult> {
   const resendApiKey = requiredEnv("RESEND_API_KEY");
-  const audienceId = requiredEnv("RESEND_AUDIENCE_ID");
+  const audienceId = process.env.RESEND_AUDIENCE_ID?.trim();
+  const segmentId = process.env.RESEND_SEGMENT_ID?.trim();
   const fromEmail = requiredEnv("NEWSLETTER_FROM_EMAIL");
   const fromName = requiredEnv("NEWSLETTER_FROM_NAME");
   const replyTo = requiredEnv("NEWSLETTER_REPLY_TO");
+
+  if (!audienceId && !segmentId) {
+    throw new NewsletterConfigError(
+      "Missing environment variable: provide RESEND_SEGMENT_ID (preferred) or RESEND_AUDIENCE_ID",
+    );
+  }
 
   const resend = new Resend(resendApiKey);
   const email = normalizeNewsletterEmail(rawEmail);
   const strapper = deriveStrapperName(email);
 
-  const contactResult = await resend.contacts.create({
-    audienceId,
-    email,
-    firstName: strapper,
-  });
+  const contactResult = segmentId
+    ? await resend.contacts.create({
+        email,
+        firstName: strapper,
+        segments: [{ id: segmentId }],
+      })
+    : await resend.contacts.create({
+        audienceId: audienceId!,
+        email,
+        firstName: strapper,
+      });
 
   if (contactResult.error) {
     if (isAlreadySubscribedError(contactResult.error)) {
