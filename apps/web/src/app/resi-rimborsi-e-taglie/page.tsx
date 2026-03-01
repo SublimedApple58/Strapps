@@ -47,7 +47,7 @@ export default function ResiRimborsiETagliePage() {
           <br />
           impediscono la vendita ad altri utenti
         </p>
-        <p>Per loro natura rappresentano servizi digitali e di prenotazione gia erogati.</p>
+        <p>Per loro natura rappresentano servizi digitali e di prenotazione già erogati.</p>
         <p>Il ticket di accesso e l&apos;estensione del prezzo sono pertanto non rimborsabili in nessun caso.</p>
       </ReturnSection>
 

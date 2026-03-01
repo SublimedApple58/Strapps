@@ -78,7 +78,7 @@ export default function Home() {
               STIAMO RIDISEGNANDO IL PASSATO PER CHI SE NE FREGA DEL FUTURO
             </p>
             <p className="font-azeret mt-10 text-[12px] leading-[1.25] tracking-[-0.333px] text-white">
-              Ogni uscita e gia piena di cose:
+              Ogni uscita e già piena di cose:
               <br />
               non aggiungerci anche i lacci.
               <br />
@@ -112,7 +112,7 @@ export default function Home() {
                 <p className="font-azeret mt-[15px] text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
                   Aggiornamenti via email durante ogni fase del drop.
                   <br />
-                  Sai sempre a che punto e la tua scarpa.
+                  Sai sempre a che punto è la tua scarpa.
                 </p>
               </article>
 
