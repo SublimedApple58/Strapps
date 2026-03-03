@@ -45,10 +45,10 @@ export default function Home() {
           <SiteNavMenu />
 
           <h1 className="font-azeret relative z-20 mt-[21px] text-[20px] leading-[1.2] tracking-[-0.333px] text-white">
-            IN THE STRAPPS ERA
+            IN UN MONDO DI NODI
           </h1>
           <p className="font-azeret relative z-20 mt-4 text-[12px] leading-none tracking-[-0.333px] text-[#f00707]">
-            E IL MOMENTO DEGLI STRAPPI.
+            È IL MOMENTO DELLO STRAPPO
           </p>
 
           <div className="relative left-1/2 -mt-[12px] aspect-[375/490] w-screen -translate-x-1/2 overflow-hidden sm:w-full">
