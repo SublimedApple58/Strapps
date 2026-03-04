@@ -62,7 +62,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="relative z-10 -mt-[72px]">
+          <div className="relative z-10 -mt-[96px]">
             <p className="font-impact text-center text-[20px] tracking-[-0.333px] text-white">STRAPPS V1</p>
             <p className="font-azeret mt-[23px] text-center text-[12px] tracking-[-0.333px] text-white">
               SOLO SU ISCRIZIONE
