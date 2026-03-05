@@ -13,6 +13,11 @@ const azeretMono = Azeret_Mono({
 export const metadata: Metadata = {
   title: "STRAPPS | Home",
   description: "STRAPPS ecommerce landing page",
+  icons: {
+    icon: "/strapps.png",
+    shortcut: "/strapps.png",
+    apple: "/strapps.png",
+  },
 };
 
 export default function RootLayout({
