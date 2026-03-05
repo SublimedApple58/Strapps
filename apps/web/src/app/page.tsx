@@ -14,7 +14,7 @@ const accessOptions = [
     name: "FIRST 60",
     price: "189.99€",
     originalPrice: "239.99€",
-    lines: ["Tiket valido 30 minuti", "rimasti: 60"],
+    lines: ["Ticket valido 30 minuti", "rimasti: 60"],
     href: "/prodotto/first",
     cta: "SBLOCCA 1€",
   },
@@ -64,8 +64,8 @@ export default function Home() {
 
           <div className="relative z-10 -mt-[120px]">
             <p className="font-impact text-center text-[20px] tracking-[-0.333px] text-white">STRAPPS V1</p>
-            <p className="font-azeret mt-[23px] text-center text-[12px] tracking-[-0.333px] text-white">
-              SOLO SU ISCRIZIONE
+            <p className="font-azeret mt-[23px] text-center text-[11px] font-bold tracking-[-0.333px] text-white">
+              esci di casa <span className="text-[#f00707]">in 3 secondi</span>
             </p>
             <ScrollToNewsletterButton
               className="font-impact mx-auto mt-[13px] flex h-[42px] w-[200px] items-center justify-center rounded-[40px] bg-[#f00707] text-[15px] tracking-[-0.333px] text-white"
@@ -78,12 +78,12 @@ export default function Home() {
               STIAMO RIDISEGNANDO IL PASSATO PER CHI SE NE FREGA DEL FUTURO
             </p>
             <p className="font-azeret mt-10 text-[12px] leading-[1.25] tracking-[-0.333px] text-white">
-              Ogni uscita e già piena di cose:
+              Ogni uscita è già piena di cose:
               <br />
               non aggiungerci anche i lacci.
               <br />
               <br />
-              STRAPPS ti da controllo in 1 gesto:
+              STRAPPS V1 ti dà controllo in 1 gesto senza nodi:
               <br />O ti allacci al passato o tiri un altro strappo
             </p>
           </div>
@@ -94,14 +94,14 @@ export default function Home() {
             <div className="h-[3px] w-full rounded-full bg-[#f00707]" />
 
             <h2 className="font-azeret mt-[46px] text-center text-[20px] font-black italic tracking-[-0.333px] text-[#f00707]">
-              COS&apos;E STRAPPS
+              COS&apos;È STRAPPS
             </h2>
 
             <div className="mt-[46px] space-y-[62px]">
               <article>
                 <h3 className="font-azeret text-[13px] font-black italic tracking-[-0.333px]">DROP SU RICHIESTA</h3>
                 <p className="font-azeret mt-[15px] text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
-                  Produciamo solo cio che viene ordinato.
+                  Produciamo solo ciò che viene ordinato.
                   <br />
                   Niente magazzino, niente overproduction.
                 </p>
@@ -157,6 +157,17 @@ export default function Home() {
           <h2 className="font-impact text-center text-[20px] font-normal tracking-[-0.333px] text-[#f00707]">
             SCEGLI IL TUO ACCESSO
           </h2>
+
+          <div className="mx-auto mt-8 w-[calc(100vw-68px)] max-w-[660px] text-center">
+            <p className="font-azeret text-[12px] font-semibold leading-[1.2] tracking-[-0.333px] text-white">
+              1€ - accedi (non rimborsabile) al livello
+              <br />
+              Accesso valido per 30 minuti
+            </p>
+            <p className="font-azeret mt-6 text-[11px] font-light leading-[1.2] tracking-[-0.333px] text-white">
+              Consegna garantita entro il 07/07
+            </p>
+          </div>
 
           <div className="mt-[58px]">
             {accessOptions.map((option, index) => (

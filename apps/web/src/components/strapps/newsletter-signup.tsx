@@ -68,7 +68,7 @@ export function NewsletterSignup() {
       if ("status" in payload && payload.status === "already_subscribed") {
         setModal({
           type: "already_subscribed",
-          message: `Ciao ${payload.displayName}! Sei gia iscritt* alla newsletter.`,
+          message: `Ciao ${payload.displayName}! Sei già iscritt* alla newsletter.`,
         });
         return;
       }
