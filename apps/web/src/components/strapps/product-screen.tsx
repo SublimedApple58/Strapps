@@ -1,129 +1,143 @@
+import Image from "next/image";
 import Link from "next/link";
-import { InfoFooterCard, StrappsPageShell } from "./common";
+import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
 
-export type ProductVariant = "first" | "salda" | "early" | "last";
+export type ProductVariant = "first" | "early" | "last";
 
 type ProductConfig = {
-  title: string;
-  subtitle: string;
-  timer: string;
+  tier: string;
   price: string;
   checkoutHref: string;
-  locked: boolean;
-  lockLabel?: string;
-  highlight: string;
 };
 
 export const PRODUCT_CONFIGS: Record<ProductVariant, ProductConfig> = {
   first: {
-    title: "FIRST 60",
-    subtitle: "Accesso iniziale al drop con ticket attivo per 30 minuti.",
-    timer: "30m 00s",
+    tier: "FIRST 60",
     price: "189,99€",
     checkoutHref: "/checkout/first",
-    locked: true,
-    lockLabel: "Blocca il prezzo per 30 giorni: +49,00€",
-    highlight: "Finestra rapida con priorità checkout.",
-  },
-  salda: {
-    title: "SALDA 140",
-    subtitle: "Estendi il tuo blocco e finalizza in anticipo il drop successivo.",
-    timer: "30G 24H 59M",
-    price: "140,99€",
-    checkoutHref: "/checkout/early",
-    locked: false,
-    highlight: "Ideale per chi vuole pianificare l'acquisto.",
   },
   early: {
-    title: "EARLY 140",
-    subtitle: "Seconda finestra disponibile dopo il completamento del primo lotto.",
-    timer: "30G 24H 59M",
+    tier: "EARLY 140",
     price: "219,99€",
     checkoutHref: "/checkout/early",
-    locked: false,
-    highlight: "Secondo batch con disponibilità controllata.",
   },
   last: {
-    title: "LAST 90",
-    subtitle: "Ultimo batch del drop: quantità limitata e priorità spedizione.",
-    timer: "30m 00s",
+    tier: "LAST 90",
     price: "239,99€",
     checkoutHref: "/checkout/last",
-    locked: true,
-    lockLabel: "Estendi il blocco ora: +49,00€",
-    highlight: "Ultima release del drop con urgenza massima.",
   },
 };
 
+const shoeColors = [
+  { label: "Bianco", bg: "#d9d9d9" },
+  { label: "Nero", bg: "#1e1e1e" },
+];
+
+const strapColors = [
+  { label: "Bianco", bg: "#d9d9d9" },
+  { label: "Nero", bg: "#1e1e1e" },
+];
+
 const sizes = ["38", "39", "40", "41", "42", "43"];
+
+const productImages = ["/hero_image.png", "/hero_image.png"];
 
 export function ProductScreen({ variant }: { variant: ProductVariant }) {
   const cfg = PRODUCT_CONFIGS[variant];
 
   return (
-    <StrappsPageShell>
-      <section className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
-        <div>
-          <p className="font-azeret text-xs uppercase tracking-[0.2em] text-[#f00707]">{cfg.title}</p>
-          <h1 className="font-impact mt-3 text-4xl leading-tight sm:text-5xl">STRAPPS V1</h1>
-          <p className="font-azeret mt-4 max-w-xl text-sm leading-relaxed text-white/80 sm:text-base">{cfg.subtitle}</p>
+    <main className="min-h-screen bg-black pb-20 text-white">
+      <div className="mx-auto w-full max-w-[390px] pt-8">
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            <article className="rounded-2xl border border-white/10 bg-white/5 p-5">
-              <p className="font-impact text-sm tracking-wide text-white/80">TEMPO RIMANENTE</p>
-              <p className="font-impact mt-1 text-4xl text-[#f00707]">{cfg.timer}</p>
-            </article>
-            <article className="rounded-2xl border border-white/10 bg-white/5 p-5">
-              <p className="font-impact text-sm tracking-wide text-white/80">PREZZO DROP</p>
-              <p className="font-impact mt-1 text-4xl text-[#f00707]">{cfg.price}</p>
-            </article>
-          </div>
-
-          <div className="mt-6 grid gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 sm:grid-cols-2">
-            <div>
-              <p className="font-azeret text-xs uppercase tracking-[0.16em] text-white/70">Colore scarpa</p>
-              <div className="mt-2 flex gap-3">
-                <button type="button" className="h-8 w-8 rounded-full border border-white/60 bg-white" aria-label="Bianco" />
-                <button type="button" className="h-8 w-8 rounded-full border border-white/30 bg-black" aria-label="Nero" />
-              </div>
-            </div>
-            <div>
-              <p className="font-azeret text-xs uppercase tracking-[0.16em] text-white/70">Taglia</p>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {sizes.map((size) => (
-                  <button key={size} type="button" className="font-azeret rounded-full border border-white/30 px-3 py-1 text-xs">
-                    {size}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-7 flex flex-wrap items-center gap-3">
-            <Link href={cfg.checkoutHref} className="font-azeret inline-flex rounded-full bg-[#f00707] px-6 py-3 text-sm font-black italic">
-              Acquista {cfg.price}
-            </Link>
-            {cfg.locked && cfg.lockLabel ? (
-              <button type="button" className="font-azeret rounded-full border border-white/30 px-5 py-3 text-xs font-bold uppercase tracking-wide">
-                {cfg.lockLabel}
-              </button>
-            ) : null}
-          </div>
+        {/* Nav */}
+        <div className="px-[20px]">
+          <SiteNavMenu />
         </div>
 
-        <article className="rounded-3xl border border-[#f00707]/30 bg-gradient-to-b from-[#2a0b0b] to-black/70 p-6 sm:p-8">
-          <p className="font-azeret text-xs uppercase tracking-[0.2em] text-[#f00707]">Product notes</p>
-          <h2 className="font-impact mt-3 text-3xl">Esperienza coerente alla Home</h2>
-          <p className="font-azeret mt-4 text-sm leading-relaxed text-white/80">{cfg.highlight}</p>
-          <ul className="font-azeret mt-6 space-y-2 text-sm text-white/80">
-            <li>• Layout pulito, senza immagini fragili o mancanti.</li>
-            <li>• CTA chiara verso checkout con pricing sempre visibile.</li>
-            <li>• Stesso linguaggio visivo dark + rosso della landing.</li>
-          </ul>
-        </article>
-      </section>
+        {/* Timer */}
+        <div className="mt-[37px] px-[20px] text-center">
+          <p className="font-impact text-[20px] tracking-[-0.333px]">TEMPO RIMANENTE</p>
+          <p className="font-impact text-[48px] tracking-[-0.333px] text-[#f00707]">30m 00s</p>
+        </div>
 
-      <InfoFooterCard />
-    </StrappsPageShell>
+        {/* Image slider — full bleed, swipe invisibile, niente frecce */}
+        <div className="relative left-1/2 mt-[19px] flex w-screen -translate-x-1/2 snap-x snap-mandatory overflow-x-auto hide-scrollbar">
+          {productImages.map((src, i) => (
+            <div key={i} className="relative aspect-[333/313] w-screen flex-none snap-start overflow-hidden">
+              <Image
+                src={src}
+                alt={`STRAPPS V1 - foto ${i + 1}`}
+                fill
+                sizes="100vw"
+                className="object-cover"
+                priority={i === 0}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Selezioni e CTA */}
+        <div className="mt-[58px] px-[20px]">
+
+          {/* Colore scarpa */}
+          <p className="font-impact text-[15px] tracking-[-0.333px]">SCEGLI IL COLORE DELLA SCARPA</p>
+          <div className="mt-[11px] flex gap-[10px]">
+            {shoeColors.map((c) => (
+              <button
+                key={c.label}
+                type="button"
+                aria-label={c.label}
+                className="h-[25px] w-[25px] rounded-[2px]"
+                style={{ backgroundColor: c.bg }}
+              />
+            ))}
+          </div>
+
+          {/* Colore strappo */}
+          <p className="font-impact mt-[27px] text-[15px] tracking-[-0.333px]">SCEGLI IL COLORE DELLO STRAPPO</p>
+          <div className="mt-[11px] flex gap-[10px]">
+            {strapColors.map((c) => (
+              <button
+                key={c.label}
+                type="button"
+                aria-label={c.label}
+                className="h-[25px] w-[25px] rounded-[2px]"
+                style={{ backgroundColor: c.bg }}
+              />
+            ))}
+          </div>
+
+          {/* Taglia */}
+          <p className="font-impact mt-[26px] text-[15px] tracking-[-0.333px]">SELEZIONA LA TAGLIA</p>
+          <p className="font-impact mt-[20px] text-[15px] tracking-[-0.333px]">{sizes.join(" - ")}</p>
+
+          {/* CTA acquisto */}
+          <div className="mt-[54px] flex flex-col items-center gap-[23px]">
+            <Link
+              href={cfg.checkoutHref}
+              className="font-impact flex h-[42px] w-[200px] items-center justify-center rounded-[20px] bg-[#f00707] text-[15px] tracking-[-0.333px] text-white"
+            >
+              ACQUISTA {cfg.price}
+            </Link>
+            <p className="font-azeret text-center text-[7px] tracking-[-0.333px]">
+              Rimborso garantito entro 14 giorni dalla consegna*
+            </p>
+          </div>
+
+          {/* Lock price card */}
+          <div className="mt-[51px] flex h-[102px] w-full items-center justify-center rounded-[52px] border border-white/15 bg-black">
+            <div className="px-6 text-center">
+              <p className="font-impact text-[14px] leading-snug tracking-[-0.333px]">
+                Blocca la tua scarpa a questo prezzo per 30 giorni
+              </p>
+              <p className="font-azeret mt-[8px] text-[5px] tracking-[-0.333px]">
+                Scalati dal saldo finale*
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
   );
 }
