@@ -24,7 +24,7 @@ const strapColors: { id: StrapColor; label: string; bg: string }[] = [
 
 const sizes = ["38", "39", "40", "41", "42", "43"];
 
-export function ProductScreen({ variant }: { variant: ProductVariant }) {
+export function ProductScreen({ variant, defaultEmail }: { variant: ProductVariant; defaultEmail?: string }) {
   const cfg = PRODUCT_CONFIGS[variant];
 
   const [shoeColor, setShoeColor] = useState<ShoeColor>("bianco");
@@ -33,9 +33,11 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
 
   const images = PRODUCT_IMAGES[shoeColor][strapColor];
 
+  const emailParam = defaultEmail ? `&email=${encodeURIComponent(defaultEmail)}` : "";
   const checkoutHref =
     `${cfg.checkoutHref}?scarpa=${shoeColor}&strappo=${strapColor}` +
-    (selectedSize ? `&taglia=${selectedSize}` : "");
+    (selectedSize ? `&taglia=${selectedSize}` : "") +
+    emailParam;
 
   return (
     <main className="min-h-screen bg-black pb-20 text-white">

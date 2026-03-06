@@ -30,6 +30,7 @@ type CheckoutScreenProps = {
   scarpa?: string;
   strappo?: string;
   taglia?: string;
+  defaultEmail?: string;
 };
 
 async function redirectToStripe(
@@ -62,7 +63,7 @@ async function redirectToStripe(
   window.location.href = url;
 }
 
-export function CheckoutScreen({ variant, scarpa, strappo, taglia }: CheckoutScreenProps) {
+export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail }: CheckoutScreenProps) {
   const cfg = CHECKOUT_CONFIGS[variant];
 
   const shoeColor: ShoeColor = validShoeColors.includes(scarpa as ShoeColor)
@@ -76,7 +77,7 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia }: CheckoutScr
   const shoeLabel = shoeColor === "bianco" ? "Bianco" : "Nero";
   const strapLabel = strapColor === "bianco" ? "Bianco" : "Nero";
 
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(defaultEmail ?? "");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
