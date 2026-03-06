@@ -44,10 +44,11 @@ export default async function CheckoutSuccessPage({ searchParams }: SuccessPageP
     },
   };
 
-  const msg = (paymentType && messages[paymentType]) ?? {
+  const defaultMsg = {
     title: "PAGAMENTO CONFERMATO",
     body: "Grazie per il tuo acquisto. Ti abbiamo inviato una email di conferma.",
   };
+  const msg = (paymentType ? messages[paymentType] : null) ?? defaultMsg;
 
   return (
     <div className="flex min-h-screen flex-col bg-black text-white">
