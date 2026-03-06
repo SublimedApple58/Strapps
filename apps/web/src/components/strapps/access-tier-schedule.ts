@@ -12,7 +12,7 @@ export type RemainingTime = {
   minutes: number;
 };
 
-const FIRST_OPEN = new Date("2026-03-07T00:00:00+01:00").getTime();
+const FIRST_OPEN = new Date("2026-03-06T00:00:00+01:00").getTime();
 const SECOND_OPEN = new Date("2026-03-14T00:00:00+01:00").getTime();
 const THIRD_OPEN = new Date("2026-03-21T00:00:00+01:00").getTime();
 const LAST_CLOSE = new Date("2026-03-25T00:00:00+01:00").getTime();

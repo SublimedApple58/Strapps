@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { AccessTierCta } from "@/components/strapps/access-tier-cta";
-import { AccessTierCountdown } from "@/components/strapps/access-tier-countdown";
 import { NewsletterCountdown } from "@/components/strapps/newsletter-countdown";
 import { NewsletterSignup } from "@/components/strapps/newsletter-signup";
 import { ScrollToNewsletterButton } from "@/components/strapps/scroll-to-newsletter-button";
@@ -15,7 +14,7 @@ const accessOptions = [
     price: "189.99€",
     originalPrice: "239.99€",
     lines: ["Ticket valido 30 minuti", "rimasti: 60"],
-    href: "/prodotto/first",
+    href: "/checkout/accesso/first",
     cta: "SBLOCCA 1€",
   },
   {
@@ -24,7 +23,7 @@ const accessOptions = [
     price: "219.99€",
     originalPrice: "239.99€",
     lines: ["Si attiva alla chiusura del livello", "precedente"],
-    href: "/prodotto/early",
+    href: "/checkout/accesso/early",
     cta: "SBLOCCA 1€",
   },
   {
@@ -32,7 +31,7 @@ const accessOptions = [
     name: "LAST 90",
     price: "239.99€",
     lines: ["Si attiva alla chiusura del livello", "precedente."],
-    href: "/prodotto/last",
+    href: "/checkout/accesso/last",
     cta: "VAI",
   },
 ];
@@ -195,11 +194,6 @@ export default function Home() {
                     href={option.href}
                     label={option.cta}
                     className="font-azeret mx-auto mt-[31px] flex h-[35px] w-[150px] items-center justify-center rounded-[20px] border border-white/30 bg-[linear-gradient(180deg,rgba(28,31,44,0.55)_0%,rgba(10,10,14,0.72)_100%)] text-[13px] font-black italic tracking-[-0.333px] shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_10px_16px_rgba(0,0,0,0.35)] backdrop-blur-[6px]"
-                  />
-
-                  <AccessTierCountdown
-                    tier={option.id}
-                    className="font-rounded mt-[8px] text-center text-[12px] font-bold tracking-[-0.333px] text-white"
                   />
                 </article>
 
