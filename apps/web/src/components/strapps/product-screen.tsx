@@ -4,23 +4,13 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
-import { type ProductVariant, PRODUCT_CONFIGS } from "@/components/strapps/product-config";
-
-type ShoeColor = "bianco" | "nero";
-type StrapColor = "bianco" | "nero";
-
-// scarpa_strappo_[col]       = stesso colore per scarpa e strappo
-// scarpa_bianca/nera_strappo_[col] = colori diversi
-const PRODUCT_IMAGES: Record<ShoeColor, Record<StrapColor, [string, string]>> = {
-  bianco: {
-    bianco: ["/scarpa_strappo_bianco.png", "/scarpa_strappo_bianco_2.png"],
-    nero: ["/scarpa_bianca_strappo_nero.png", "/scarpa_bianca_strappo_nero_2.png"],
-  },
-  nero: {
-    bianco: ["/scarpa_nera_strappo_bianco.png", "/scarpa_nera_strappo_bianco_2.png"],
-    nero: ["/scarpa_strappo_nero.png", "/scarpa_strappo_nero_2.png"],
-  },
-};
+import {
+  type ProductVariant,
+  type ShoeColor,
+  type StrapColor,
+  PRODUCT_CONFIGS,
+  PRODUCT_IMAGES,
+} from "@/components/strapps/product-config";
 
 const shoeColors: { id: ShoeColor; label: string; bg: string }[] = [
   { id: "bianco", label: "Bianco", bg: "#d9d9d9" },
@@ -42,6 +32,10 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
   const images = PRODUCT_IMAGES[shoeColor][strapColor];
+
+  const checkoutHref =
+    `${cfg.checkoutHref}?scarpa=${shoeColor}&strappo=${strapColor}` +
+    (selectedSize ? `&taglia=${selectedSize}` : "");
 
   return (
     <main className="min-h-screen bg-black pb-20 text-white">
@@ -136,7 +130,7 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
           {/* CTA acquisto */}
           <div className="mt-[54px] flex flex-col items-center gap-[23px]">
             <Link
-              href={cfg.checkoutHref}
+              href={checkoutHref}
               className="font-impact flex h-[42px] w-[200px] items-center justify-center rounded-[20px] bg-[#f00707] text-[15px] tracking-[-0.333px] text-white"
             >
               ACQUISTA {cfg.price}

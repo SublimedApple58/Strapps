@@ -1,5 +1,10 @@
 import Image from "next/image";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
+import {
+  type ShoeColor,
+  type StrapColor,
+  PRODUCT_IMAGES,
+} from "@/components/strapps/product-config";
 
 export type CheckoutVariant = "first" | "early" | "last";
 
@@ -29,8 +34,32 @@ const deliveryFields = [
   { label: "CAP*", type: "text", name: "cap" },
 ];
 
-export function CheckoutScreen({ variant }: { variant: CheckoutVariant }) {
+const validShoeColors: ShoeColor[] = ["bianco", "nero"];
+const validStrapColors: StrapColor[] = ["bianco", "nero"];
+
+type CheckoutScreenProps = {
+  variant: CheckoutVariant;
+  scarpa?: string;
+  strappo?: string;
+  taglia?: string;
+};
+
+export function CheckoutScreen({ variant, scarpa, strappo, taglia }: CheckoutScreenProps) {
   const cfg = CHECKOUT_CONFIGS[variant];
+
+  // Normalizza i valori ricevuti dalla query string (fallback a "bianco")
+  const shoeColor: ShoeColor = validShoeColors.includes(scarpa as ShoeColor)
+    ? (scarpa as ShoeColor)
+    : "bianco";
+  const strapColor: StrapColor = validStrapColors.includes(strappo as StrapColor)
+    ? (strappo as StrapColor)
+    : "bianco";
+
+  const thumbnailSrc = PRODUCT_IMAGES[shoeColor][strapColor][0];
+
+  // Etichette da mostrare nel riepilogo
+  const shoeLabel = shoeColor === "bianco" ? "Bianco" : "Nero";
+  const strapLabel = strapColor === "bianco" ? "Bianco" : "Nero";
 
   return (
     <main className="min-h-screen bg-black text-white">
@@ -55,7 +84,7 @@ export function CheckoutScreen({ variant }: { variant: CheckoutVariant }) {
           <div className="mt-[24px] flex items-start gap-[14px]">
             <div className="relative h-[63px] w-[55px] flex-none overflow-hidden rounded-[4px]">
               <Image
-                src="/hero_image.png"
+                src={thumbnailSrc}
                 alt="STRAPPS V1"
                 fill
                 sizes="55px"
@@ -65,7 +94,12 @@ export function CheckoutScreen({ variant }: { variant: CheckoutVariant }) {
             <div className="flex flex-1 items-start justify-between">
               <div>
                 <p className="font-azeret text-[12px] font-black tracking-[-0.333px]">STRAPPS V1</p>
-                <p className="font-azeret mt-[8px] text-[12px] font-light tracking-[-0.333px]">SKU: {cfg.sku}</p>
+                <div className="font-azeret mt-[6px] space-y-[3px] text-[10px] font-light tracking-[-0.333px] text-white/70">
+                  <p>Scarpa: {shoeLabel}</p>
+                  <p>Strappo: {strapLabel}</p>
+                  {taglia && <p>Taglia: {taglia}</p>}
+                </div>
+                <p className="font-azeret mt-[6px] text-[10px] font-light tracking-[-0.333px] text-white/40">SKU: {cfg.sku}</p>
               </div>
               <p className="font-impact text-[15px] tracking-[-0.333px]">{cfg.price}</p>
             </div>
