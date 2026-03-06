@@ -9,10 +9,10 @@ export function SiteFooter() {
 
         <p className="font-azeret mt-16 text-[15px] font-normal tracking-[-0.333px]">I nostri social</p>
         <div className="font-azeret mt-3 space-y-2 text-[12px] font-normal tracking-[-0.333px]">
-          <a href="https://www.instagram.com/siamostrapps?igsh=MTN5dG52bjdkb2RrdA==" target="_blank" rel="noreferrer">
+          <a href="https://www.instagram.com/siamostrapps?igsh=MTN5dG52bjdkb2RrdA==" target="_blank" rel="noreferrer" className="block">
             Instagram
           </a>
-          <a href="https://www.tiktok.com/@siamostrapps_?_r=1&_t=ZN-94RYXKyPLjH" target="_blank" rel="noreferrer">
+          <a href="https://www.tiktok.com/@siamostrapps_?_r=1&_t=ZN-94RYXKyPLjH" target="_blank" rel="noreferrer" className="block">
             Tiktok
           </a>
         </div>
