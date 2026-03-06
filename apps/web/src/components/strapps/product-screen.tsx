@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
@@ -11,45 +14,52 @@ type ProductConfig = {
 };
 
 export const PRODUCT_CONFIGS: Record<ProductVariant, ProductConfig> = {
-  first: {
-    tier: "FIRST 60",
-    price: "189,99€",
-    checkoutHref: "/checkout/first",
+  first: { tier: "FIRST 60", price: "189,99€", checkoutHref: "/checkout/first" },
+  early: { tier: "EARLY 140", price: "219,99€", checkoutHref: "/checkout/early" },
+  last: { tier: "LAST 90", price: "239,99€", checkoutHref: "/checkout/last" },
+};
+
+type ShoeColor = "bianco" | "nero";
+type StrapColor = "bianco" | "nero";
+
+// scarpa_strappo_[col]       = stesso colore per scarpa e strappo
+// scarpa_bianca/nera_strappo_[col] = colori diversi
+const PRODUCT_IMAGES: Record<ShoeColor, Record<StrapColor, [string, string]>> = {
+  bianco: {
+    bianco: ["/scarpa_strappo_bianco.png", "/scarpa_strappo_bianco_2.png"],
+    nero: ["/scarpa_bianca_strappo_nero.png", "/scarpa_bianca_strappo_nero_2.png"],
   },
-  early: {
-    tier: "EARLY 140",
-    price: "219,99€",
-    checkoutHref: "/checkout/early",
-  },
-  last: {
-    tier: "LAST 90",
-    price: "239,99€",
-    checkoutHref: "/checkout/last",
+  nero: {
+    bianco: ["/scarpa_nera_strappo_bianco.png", "/scarpa_nera_strappo_bianco_2.png"],
+    nero: ["/scarpa_strappo_nero.png", "/scarpa_strappo_nero_2.png"],
   },
 };
 
-const shoeColors = [
-  { label: "Bianco", bg: "#d9d9d9" },
-  { label: "Nero", bg: "#1e1e1e" },
+const shoeColors: { id: ShoeColor; label: string; bg: string }[] = [
+  { id: "bianco", label: "Bianco", bg: "#d9d9d9" },
+  { id: "nero", label: "Nero", bg: "#1e1e1e" },
 ];
 
-const strapColors = [
-  { label: "Bianco", bg: "#d9d9d9" },
-  { label: "Nero", bg: "#1e1e1e" },
+const strapColors: { id: StrapColor; label: string; bg: string }[] = [
+  { id: "bianco", label: "Bianco", bg: "#d9d9d9" },
+  { id: "nero", label: "Nero", bg: "#1e1e1e" },
 ];
 
 const sizes = ["38", "39", "40", "41", "42", "43"];
 
-const productImages = ["/hero_image.png", "/hero_image.png"];
-
 export function ProductScreen({ variant }: { variant: ProductVariant }) {
   const cfg = PRODUCT_CONFIGS[variant];
+
+  const [shoeColor, setShoeColor] = useState<ShoeColor>("bianco");
+  const [strapColor, setStrapColor] = useState<StrapColor>("bianco");
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+
+  const images = PRODUCT_IMAGES[shoeColor][strapColor];
 
   return (
     <main className="min-h-screen bg-black pb-20 text-white">
       <div className="mx-auto w-full max-w-[390px] pt-8">
 
-        {/* Nav */}
         <div className="px-[20px]">
           <SiteNavMenu />
         </div>
@@ -60,10 +70,10 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
           <p className="font-impact text-[48px] tracking-[-0.333px] text-[#f00707]">30m 00s</p>
         </div>
 
-        {/* Image slider — full bleed, swipe invisibile, niente frecce */}
+        {/* Image slider — si aggiorna in base alla selezione colore */}
         <div className="relative left-1/2 mt-[19px] flex w-screen -translate-x-1/2 snap-x snap-mandatory overflow-x-auto hide-scrollbar">
-          {productImages.map((src, i) => (
-            <div key={i} className="relative aspect-[333/313] w-screen flex-none snap-start overflow-hidden">
+          {images.map((src, i) => (
+            <div key={src} className="relative aspect-square w-screen flex-none snap-start overflow-hidden">
               <Image
                 src={src}
                 alt={`STRAPPS V1 - foto ${i + 1}`}
@@ -76,7 +86,7 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
           ))}
         </div>
 
-        {/* Selezioni e CTA */}
+        {/* Selezioni */}
         <div className="mt-[58px] px-[20px]">
 
           {/* Colore scarpa */}
@@ -84,10 +94,15 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
           <div className="mt-[11px] flex gap-[10px]">
             {shoeColors.map((c) => (
               <button
-                key={c.label}
+                key={c.id}
                 type="button"
                 aria-label={c.label}
-                className="h-[25px] w-[25px] rounded-[2px]"
+                onClick={() => setShoeColor(c.id)}
+                className={`h-[25px] w-[25px] rounded-[2px] transition-all ${
+                  shoeColor === c.id
+                    ? "ring-2 ring-[#f00707] ring-offset-2 ring-offset-black"
+                    : "opacity-60"
+                }`}
                 style={{ backgroundColor: c.bg }}
               />
             ))}
@@ -98,10 +113,15 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
           <div className="mt-[11px] flex gap-[10px]">
             {strapColors.map((c) => (
               <button
-                key={c.label}
+                key={c.id}
                 type="button"
                 aria-label={c.label}
-                className="h-[25px] w-[25px] rounded-[2px]"
+                onClick={() => setStrapColor(c.id)}
+                className={`h-[25px] w-[25px] rounded-[2px] transition-all ${
+                  strapColor === c.id
+                    ? "ring-2 ring-[#f00707] ring-offset-2 ring-offset-black"
+                    : "opacity-60"
+                }`}
                 style={{ backgroundColor: c.bg }}
               />
             ))}
@@ -109,7 +129,22 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
 
           {/* Taglia */}
           <p className="font-impact mt-[26px] text-[15px] tracking-[-0.333px]">SELEZIONA LA TAGLIA</p>
-          <p className="font-impact mt-[20px] text-[15px] tracking-[-0.333px]">{sizes.join(" - ")}</p>
+          <div className="mt-[14px] flex flex-wrap gap-[8px]">
+            {sizes.map((size) => (
+              <button
+                key={size}
+                type="button"
+                onClick={() => setSelectedSize(size)}
+                className={`font-impact h-[32px] min-w-[40px] rounded-full border px-3 text-[13px] tracking-[-0.333px] transition-all ${
+                  selectedSize === size
+                    ? "border-[#f00707] bg-[#f00707] text-white"
+                    : "border-white/30 text-white/60"
+                }`}
+              >
+                {size}
+              </button>
+            ))}
+          </div>
 
           {/* CTA acquisto */}
           <div className="mt-[54px] flex flex-col items-center gap-[23px]">
