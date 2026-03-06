@@ -1,9 +1,6 @@
 import { notFound } from "next/navigation";
-import {
-  type ProductVariant,
-  PRODUCT_CONFIGS,
-  ProductScreen,
-} from "@/components/strapps/product-screen";
+import { type ProductVariant, PRODUCT_CONFIGS } from "@/components/strapps/product-config";
+import { ProductScreen } from "@/components/strapps/product-screen";
 
 type ProductPageProps = {
   params: Promise<{ variant: string }>;
