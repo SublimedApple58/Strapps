@@ -141,8 +141,8 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
           </div>
 
           {/* Lock price card */}
-          <div className="mt-[51px] flex h-[102px] w-full items-center justify-center rounded-[52px] border border-white/15 bg-black">
-            <div className="px-6 text-center">
+          <div className="mt-[51px] flex h-[102px] w-full items-center justify-between rounded-[52px] border border-white/15 bg-black px-6">
+            <div>
               <p className="font-impact text-[14px] leading-snug tracking-[-0.333px]">
                 Blocca la tua scarpa a questo prezzo per 30 giorni
               </p>
@@ -150,6 +150,12 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
                 Scalati dal saldo finale*
               </p>
             </div>
+            <a
+              href={`/checkout/estendi/${variant}?scarpa=${shoeColor}&strappo=${strapColor}`}
+              className="font-impact flex h-[27px] w-[129px] flex-none items-center justify-center rounded-[20px] bg-[#f00707] text-[10px] tracking-[-0.333px] text-white"
+            >
+              ESTENDI&nbsp;&nbsp;49,00€
+            </a>
           </div>
 
         </div>
