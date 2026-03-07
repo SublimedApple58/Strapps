@@ -82,8 +82,7 @@ export default function Home() {
               non aggiungerci anche i lacci.
               <br />
               <br />
-              STRAPPS V1 ti dà controllo in 1 gesto senza nodi:
-              <br />O ti allacci al passato o tiri un altro strappo
+              STRAPPS V1 ti dà controllo in 1 gesto senza nodi: Ti allacci al passato o tiri un altro strappo?
             </p>
           </div>
         </section>
