@@ -128,7 +128,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="scegli-il-tuo-accesso" className="mt-14">
+        <section id="scegli-il-tuo-accesso" className="mt-14 scroll-mt-10">
           <h2 className="font-impact text-center text-[20px] font-normal tracking-[-0.333px] text-[#f00707]">
             SCEGLI IL TUO ACCESSO
           </h2>
