@@ -8,6 +8,7 @@ import {
   buildEstendiConfirmationTemplate,
   buildAcquistoConfirmationTemplate,
 } from "@/lib/payment-email-templates";
+import { recordSale, initSalesTable, type SaleType, type SaleTier } from "@/lib/sales-counter";
 
 export const runtime = "nodejs";
 
@@ -97,6 +98,10 @@ export async function POST(request: Request) {
   };
 
   try {
+    // ── Registra vendita su Neon DB ───────────────────────────────────────
+    await initSalesTable();
+    await recordSale(type as SaleType, tier as SaleTier);
+
     const existing = await stripe.customers.search({
       query: `email:"${email}"`,
       limit: 1,

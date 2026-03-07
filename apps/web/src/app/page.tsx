@@ -2,39 +2,56 @@ import Image from "next/image";
 import { AccessTierCta } from "@/components/strapps/access-tier-cta";
 import { AccessTierCountdown } from "@/components/strapps/access-tier-countdown";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
+import { getSaleCount, initSalesTable } from "@/lib/sales-counter";
 
 const HERO_IMAGE = "/hero_image.png";
 
-const accessOptions = [
-  {
-    id: "first" as const,
-    name: "FIRST 60",
-    price: "189.99€",
-    originalPrice: "239.99€",
-    lines: ["rimasti: 49"],
-    href: "/checkout/accesso/first",
-    cta: "SBLOCCA 1€",
-  },
-  {
-    id: "early" as const,
-    name: "EARLY 140",
-    price: "219.99€",
-    originalPrice: "239.99€",
-    lines: ["Si attiva alla chiusura del livello", "precedente"],
-    href: "/checkout/accesso/early",
-    cta: "SBLOCCA 1€",
-  },
-  {
-    id: "last" as const,
-    name: "LAST 90",
-    price: "239.99€",
-    lines: ["Si attiva alla chiusura del livello", "precedente."],
-    href: "/checkout/accesso/last",
-    cta: "VAI",
-  },
-];
+const TIER_CAPACITY: Record<string, number> = {
+  first: 60,
+  early: 140,
+  last: 90,
+};
 
-export default function Home() {
+export const revalidate = 60; // rilegge i contatori ogni 60 secondi
+
+export default async function Home() {
+  let firstSold = 0;
+  try {
+    await initSalesTable();
+    firstSold = await getSaleCount("acquisto", "first");
+  } catch {
+    // se il DB non è disponibile, mostra il fallback
+  }
+  const firstRimasti = Math.max(0, TIER_CAPACITY.first - firstSold);
+
+  const accessOptions = [
+    {
+      id: "first" as const,
+      name: "FIRST 60",
+      price: "189.99€",
+      originalPrice: "239.99€",
+      lines: [`rimasti: ${firstRimasti}`],
+      href: "/checkout/accesso/first",
+      cta: "SBLOCCA 1€",
+    },
+    {
+      id: "early" as const,
+      name: "EARLY 140",
+      price: "219.99€",
+      originalPrice: "239.99€",
+      lines: ["Si attiva alla chiusura del livello", "precedente"],
+      href: "/checkout/accesso/early",
+      cta: "SBLOCCA 1€",
+    },
+    {
+      id: "last" as const,
+      name: "LAST 90",
+      price: "239.99€",
+      lines: ["Si attiva alla chiusura del livello", "precedente."],
+      href: "/checkout/accesso/last",
+      cta: "VAI",
+    },
+  ];
   return (
     <main className="min-h-screen overflow-x-hidden bg-black text-white">
       <div className="mx-auto w-full max-w-6xl px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pt-12">
