@@ -40,7 +40,7 @@ export default async function CheckoutSuccessPage({ searchParams }: SuccessPageP
   const messages: Record<string, { title: string; body: string }> = {
     accesso: {
       title: "ACCESSO CONFERMATO",
-      body: `Hai sbloccato il drop ${tierLabel ?? ""}. Acquista ora al prezzo bloccato — hai 30 minuti. Ti abbiamo inviato anche una email con il link.`,
+      body: `Hai sbloccato il drop ${tierLabel ?? ""}. Acquista ora al prezzo bloccato — hai 30 minuti. Clicca il pulsante per accedere alla pagina.`,
     },
     acquisto: {
       title: "ORDINE CONFERMATO",
