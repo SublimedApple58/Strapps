@@ -39,7 +39,7 @@ export function buildAccessoConfirmationTemplate(params: {
   const { tier, price, productUrl, expiresAt } = params;
   const safeTier = escapeHtml(tier);
   const safePrice = escapeHtml(price);
-  const expireTime = expiresAt.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" });
+  const expireTime = expiresAt.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit", timeZone: "Europe/Rome" });
 
   return {
     subject: `✅ Accesso confermato — Drop ${tier}`,
