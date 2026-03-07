@@ -158,11 +158,14 @@ export default function Home() {
                         <span className="text-white/55 line-through decoration-white/60">{option.originalPrice}</span>
                       ) : null}
                     </p>
-                    {option.lines.map((line) => (
-                      <span key={line} className={`block ${line.startsWith("rimasti:") ? "text-green-400" : ""}`}>
-                        {line}
-                      </span>
-                    ))}
+                    {option.lines.map((line) => {
+                      const match = line.startsWith("rimasti:") ? line.match(/^(rimasti:\s*)(\d+)$/) : null;
+                      return (
+                        <span key={line} className="block">
+                          {match ? <>{match[1]}<span className="text-green-400">{match[2]}</span></> : line}
+                        </span>
+                      );
+                    })}
                   </div>
 
                   <AccessTierCta
