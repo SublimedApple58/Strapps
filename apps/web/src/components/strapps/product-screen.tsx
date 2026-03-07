@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
@@ -24,12 +24,41 @@ const strapColors: { id: StrapColor; label: string; bg: string }[] = [
 
 const sizes = ["38", "39", "40", "41", "42", "43", "44"];
 
-export function ProductScreen({ variant, defaultEmail }: { variant: ProductVariant; defaultEmail?: string }) {
+function useCountdown(expiresAt?: number): string {
+  const [display, setDisplay] = useState(() => {
+    if (!expiresAt) return null;
+    const ms = expiresAt - Date.now();
+    if (ms <= 0) return "0m 00s";
+    const m = Math.floor(ms / 60000);
+    const s = Math.floor((ms % 60000) / 1000);
+    return `${m}m ${String(s).padStart(2, "0")}s`;
+  });
+
+  useEffect(() => {
+    if (!expiresAt) return;
+    const tick = () => {
+      const ms = expiresAt - Date.now();
+      if (ms <= 0) { setDisplay("0m 00s"); return; }
+      const m = Math.floor(ms / 60000);
+      const s = Math.floor((ms % 60000) / 1000);
+      setDisplay(`${m}m ${String(s).padStart(2, "0")}s`);
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [expiresAt]);
+
+  return display ?? "30m 00s";
+}
+
+export function ProductScreen({ variant, defaultEmail, expiresAt }: { variant: ProductVariant; defaultEmail?: string; expiresAt?: number }) {
   const cfg = PRODUCT_CONFIGS[variant];
 
   const [shoeColor, setShoeColor] = useState<ShoeColor>("bianco");
   const [strapColor, setStrapColor] = useState<StrapColor>("bianco");
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+
+  const countdown = useCountdown(expiresAt);
 
   const images = PRODUCT_IMAGES[shoeColor][strapColor];
 
@@ -50,7 +79,7 @@ export function ProductScreen({ variant, defaultEmail }: { variant: ProductVaria
         {/* Timer */}
         <div className="mt-[37px] px-[20px] text-center">
           <p className="font-impact text-[20px] tracking-[-0.333px]">TEMPO RIMANENTE</p>
-          <p className="font-impact text-[48px] tracking-[-0.333px] text-[#f00707]">30m 00s</p>
+          <p className="font-impact text-[48px] tracking-[-0.333px] text-[#f00707]">{countdown}</p>
         </div>
 
         {/* Image slider — si aggiorna in base alla selezione colore */}

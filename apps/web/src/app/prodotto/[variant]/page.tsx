@@ -19,6 +19,7 @@ export default async function ProductVariantPage({ params, searchParams }: Produ
   // Verifica il token dall'email di accesso/estensione
   const verified = t ? verifyAccessToken(decodeURIComponent(t)) : null;
   const defaultEmail = verified?.email ?? undefined;
+  const expiresAt = verified?.expiresAt ?? undefined;
 
-  return <ProductScreen variant={variant as ProductVariant} defaultEmail={defaultEmail} />;
+  return <ProductScreen variant={variant as ProductVariant} defaultEmail={defaultEmail} expiresAt={expiresAt} />;
 }
