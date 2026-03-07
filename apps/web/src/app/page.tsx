@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { AccessTierCta } from "@/components/strapps/access-tier-cta";
+import { AccessTierCountdown } from "@/components/strapps/access-tier-countdown";
 import { NewsletterCountdown } from "@/components/strapps/newsletter-countdown";
 import { NewsletterSignup } from "@/components/strapps/newsletter-signup";
 import { ScrollToNewsletterButton } from "@/components/strapps/scroll-to-newsletter-button";
@@ -194,6 +195,10 @@ export default function Home() {
                     href={option.href}
                     label={option.cta}
                     className="font-azeret mx-auto mt-[31px] flex h-[35px] w-[150px] items-center justify-center rounded-[20px] border border-white/30 bg-[linear-gradient(180deg,rgba(28,31,44,0.55)_0%,rgba(10,10,14,0.72)_100%)] text-[13px] font-black italic tracking-[-0.333px] shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_10px_16px_rgba(0,0,0,0.35)] backdrop-blur-[6px]"
+                  />
+                  <AccessTierCountdown
+                    tier={option.id}
+                    className="font-azeret mt-[12px] text-center text-[11px] font-light tracking-[-0.333px] text-white/60"
                   />
                 </article>
 
