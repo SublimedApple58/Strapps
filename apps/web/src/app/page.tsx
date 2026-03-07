@@ -45,7 +45,7 @@ export default function Home() {
             IN UN MONDO DI STRINGHE
           </h1>
           <p className="font-azeret relative z-20 mt-4 text-[12px] leading-none tracking-[-0.333px] text-[#f00707]">
-            DISTINGUITI CON STRAPPS
+            DISTINGUITI CON STRAPPS.
           </p>
 
           <div className="relative left-1/2 -mt-[12px] aspect-[375/490] w-screen -translate-x-1/2 overflow-hidden sm:w-full">
@@ -88,7 +88,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="scegli-il-tuo-accesso" className="mt-14">
+        <section className="mt-14">
           <div className="mx-auto w-[calc(100vw-52px)] max-w-[660px]">
             <div className="h-[3px] w-full rounded-full bg-[#f00707]" />
 
@@ -129,7 +129,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mt-14">
+        <section id="scegli-il-tuo-accesso" className="mt-14">
           <h2 className="font-impact text-center text-[20px] font-normal tracking-[-0.333px] text-[#f00707]">
             SCEGLI IL TUO ACCESSO
           </h2>
