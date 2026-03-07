@@ -11,7 +11,7 @@ const accessOptions = [
     name: "FIRST 60",
     price: "189.99€",
     originalPrice: "239.99€",
-    lines: ["rimasti: 60"],
+    lines: ["rimasti: 49"],
     href: "/checkout/accesso/first",
     cta: "SBLOCCA 1€",
   },
@@ -153,13 +153,13 @@ export default function Home() {
                   <h3 className="font-azeret text-[13px] font-black italic tracking-[-0.333px]">{option.name}</h3>
                   <div className="font-azeret mt-[15px] text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
                     <p className="flex items-baseline gap-2">
-                      <span className={option.originalPrice ? "text-green-400" : ""}>{option.price}</span>
+                      <span>{option.price}</span>
                       {option.originalPrice ? (
                         <span className="text-white/55 line-through decoration-white/60">{option.originalPrice}</span>
                       ) : null}
                     </p>
                     {option.lines.map((line) => (
-                      <span key={line} className="block">
+                      <span key={line} className={`block ${line.startsWith("rimasti:") ? "text-green-400" : ""}`}>
                         {line}
                       </span>
                     ))}
