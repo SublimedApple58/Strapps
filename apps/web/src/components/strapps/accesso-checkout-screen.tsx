@@ -174,6 +174,10 @@ export function AccessoCheckoutScreen({ tier }: { tier: AccessoTier }) {
             </button>
           </div>
 
+          {error && (
+            <p className="font-azeret mt-[12px] text-center text-[11px] tracking-[-0.333px] text-[#f00707]">{error}</p>
+          )}
+
           {/* oppure separator */}
           <div className="mt-[43px] flex items-center gap-[12px]">
             <div className="h-px flex-1 bg-[#f00707]" />
@@ -229,6 +233,9 @@ export function AccessoCheckoutScreen({ tier }: { tier: AccessoTier }) {
           >
             {loading ? "Attendere..." : `Paga ${PRICE}`}
           </button>
+          {error && (
+            <p className="font-azeret mt-[8px] text-center text-[11px] tracking-[-0.333px] text-[#f00707]">{error}</p>
+          )}
         </form>
 
       </div>

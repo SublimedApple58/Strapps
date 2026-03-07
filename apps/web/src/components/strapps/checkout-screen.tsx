@@ -213,6 +213,10 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
             </button>
           </div>
 
+          {error && (
+            <p className="font-azeret mt-[12px] text-center text-[11px] tracking-[-0.333px] text-[#f00707]">{error}</p>
+          )}
+
           <div className="mt-[43px] flex items-center gap-[12px]">
             <div className="h-px flex-1 bg-[#f00707]" />
             <span className="font-rounded text-[12px] italic">oppure</span>
@@ -267,6 +271,9 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
           >
             {loading ? "Attendere..." : `Paga ${cfg.price}`}
           </button>
+          {error && (
+            <p className="font-azeret mt-[8px] text-center text-[11px] tracking-[-0.333px] text-[#f00707]">{error}</p>
+          )}
         </form>
 
       </div>
