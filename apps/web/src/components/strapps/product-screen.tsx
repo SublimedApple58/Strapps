@@ -72,8 +72,22 @@ export function ProductScreen({ variant, defaultEmail }: { variant: ProductVaria
         {/* Selezioni */}
         <div className="mt-[58px] px-[20px]">
 
-          {/* Colori — due colonne affiancate */}
-          <div className="flex gap-[32px]">
+          {/* CTA acquisto — sopra la selezione colori */}
+          <div className="flex flex-col items-center gap-[16px]">
+            <p className="font-impact text-[32px] tracking-[-0.5px]">{cfg.price}</p>
+            <Link
+              href={checkoutHref}
+              className="font-impact flex h-[52px] w-[220px] items-center justify-center rounded-[26px] bg-[#f00707] text-[18px] tracking-[-0.333px] text-white"
+            >
+              ACQUISTA ORA
+            </Link>
+            <p className="font-azeret text-center text-[7px] tracking-[-0.333px]">
+              Rimborso garantito entro 14 giorni dalla consegna*
+            </p>
+          </div>
+
+          {/* Colori — due colonne centrate */}
+          <div className="mt-[44px] flex justify-center gap-[48px]">
             {/* Scarpa */}
             <div>
               <p className="font-impact text-[13px] tracking-[-0.333px]">SCARPA</p>
@@ -136,33 +150,17 @@ export function ProductScreen({ variant, defaultEmail }: { variant: ProductVaria
             ))}
           </div>
 
-          {/* CTA acquisto */}
-          <div className="mt-[44px] flex flex-col items-center gap-[16px]">
-            <p className="font-impact text-[32px] tracking-[-0.5px]">{cfg.price}</p>
-            <Link
-              href={checkoutHref}
-              className="font-impact flex h-[52px] w-full items-center justify-center rounded-[26px] bg-[#f00707] text-[18px] tracking-[-0.333px] text-white"
-            >
-              ACQUISTA ORA
-            </Link>
-            <p className="font-azeret text-center text-[7px] tracking-[-0.333px]">
-              Rimborso garantito entro 14 giorni dalla consegna*
-            </p>
-          </div>
-
           {/* Lock price card */}
-          <div className="mt-[51px] flex h-[102px] w-full items-center justify-between rounded-[52px] border border-white/15 bg-black px-6">
-            <div>
-              <p className="font-impact text-[14px] leading-snug tracking-[-0.333px]">
-                Blocca la tua scarpa a questo prezzo per 30 giorni
-              </p>
-              <p className="font-azeret mt-[8px] text-[5px] tracking-[-0.333px]">
-                Scalati dal saldo finale*
-              </p>
-            </div>
+          <div className="mt-[51px] w-full rounded-[28px] border border-white/15 bg-black px-6 py-5">
+            <p className="font-impact text-[14px] leading-snug tracking-[-0.333px]">
+              Blocca la tua scarpa a questo prezzo per 30 giorni
+            </p>
+            <p className="font-azeret mt-[6px] text-[5px] tracking-[-0.333px]">
+              Scalati dal saldo finale*
+            </p>
             <a
               href={`/checkout/estendi/${variant}?scarpa=${shoeColor}&strappo=${strapColor}`}
-              className="font-impact flex h-[27px] w-[129px] flex-none items-center justify-center rounded-[20px] bg-[#f00707] text-[10px] tracking-[-0.333px] text-white"
+              className="font-impact mt-[16px] flex h-[34px] w-full items-center justify-center rounded-[20px] bg-[#f00707] text-[12px] tracking-[-0.333px] text-white"
             >
               ESTENDI&nbsp;&nbsp;49,00€
             </a>
