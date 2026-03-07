@@ -54,16 +54,13 @@ export function buildAccessoConfirmationTemplate(params: {
             Il link qui sotto scade alle <strong>${expireTime}</strong>.
             Clicca qui se hai chiuso la pagina per errore.
           </p>
-          <p style="${SMALL_STYLE}">
-            I <strong>1,00€</strong> che hai appena pagato verranno scalati dal prezzo finale della scarpa.
-          </p>
           <p style="margin:0;text-align:center;">
             <a href="${productUrl}" style="${BTN_STYLE}">ACQUISTA ORA →</a>
           </p>
         </div>
       </div>
     `.trim(),
-    text: `ACCESSO CONFERMATO\n\nHai sbloccato il drop ${tier} al prezzo di ${price}.\n\nHai 30 minuti (fino alle ${expireTime}) per completare l'acquisto.\n\nAcquista qui: ${productUrl}\n\nI 1,00€ verranno scalati dal prezzo finale.`,
+    text: `ACCESSO CONFERMATO\n\nHai sbloccato il drop ${tier} al prezzo di ${price}.\n\nHai 30 minuti (fino alle ${expireTime}) per completare l'acquisto.\n\nAcquista qui: ${productUrl}`,
   };
 }
 
