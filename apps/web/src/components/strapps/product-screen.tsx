@@ -155,7 +155,7 @@ export function ProductScreen({ variant, defaultEmail }: { variant: ProductVaria
             <p className="font-impact text-[14px] leading-snug tracking-[-0.333px]">
               Blocca la tua scarpa a questo prezzo per 30 giorni
             </p>
-            <p className="font-azeret mt-[6px] text-[5px] tracking-[-0.333px]">
+            <p className="font-azeret mt-[6px] text-[9px] tracking-[-0.333px]">
               Scalati dal saldo finale*
             </p>
             <a
