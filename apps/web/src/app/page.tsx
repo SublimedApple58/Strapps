@@ -1,9 +1,6 @@
 import Image from "next/image";
 import { AccessTierCta } from "@/components/strapps/access-tier-cta";
 import { AccessTierCountdown } from "@/components/strapps/access-tier-countdown";
-import { NewsletterCountdown } from "@/components/strapps/newsletter-countdown";
-import { NewsletterSignup } from "@/components/strapps/newsletter-signup";
-import { ScrollToNewsletterButton } from "@/components/strapps/scroll-to-newsletter-button";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
 
 const HERO_IMAGE = "/hero_image.png";
@@ -67,10 +64,6 @@ export default function Home() {
             <p className="font-azeret mt-[23px] text-center text-[11px] font-bold tracking-[-0.333px] text-white">
               esci di casa <span className="text-[#f00707]">in 3 secondi</span>
             </p>
-            <ScrollToNewsletterButton
-              className="font-impact mx-auto mt-[13px] flex h-[42px] w-[200px] items-center justify-center rounded-[40px] bg-[#f00707] text-[15px] tracking-[-0.333px] text-white"
-              label="ISCRIVITI AL DROP"
-            />
           </div>
 
           <div className="mt-[61px] mx-auto w-[calc(100vw-68px)] max-w-[322px]">
@@ -125,29 +118,6 @@ export default function Home() {
                 </p>
               </article>
             </div>
-
-            <div className="mt-[46px] h-[3px] w-full rounded-full bg-[#f00707]" />
-          </div>
-        </section>
-
-        <section id="newsletter" className="mt-14">
-          <div className="mx-auto w-[calc(100vw-52px)] max-w-[660px]">
-            <p
-              id="newsletter-title"
-              className="font-azeret text-center text-[15px] font-black italic leading-[1.2] tracking-[-0.333px] text-[#f00707]"
-            >
-              ISCRIVITI ALLA NEWSLETTER PER NON
-              <br />
-              PERDERTI IL LANCIO
-            </p>
-
-            <p className="font-azeret mt-[46px] text-[15px] font-black italic tracking-[-0.333px] text-white">
-              FATTI AVVISARE*
-            </p>
-
-            <NewsletterSignup />
-
-            <NewsletterCountdown className="font-rounded mt-4 text-center text-[12px] font-bold tracking-[-0.333px] text-white" />
 
             <div className="mt-[46px] h-[3px] w-full rounded-full bg-[#f00707]" />
           </div>
