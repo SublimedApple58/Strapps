@@ -42,10 +42,10 @@ export default function Home() {
           <SiteNavMenu />
 
           <h1 className="font-azeret relative z-20 mt-[21px] text-[20px] leading-[1.2] tracking-[-0.333px] text-white">
-            IN UN MONDO DI NODI
+            IN UN MONDO DI STRINGHE
           </h1>
           <p className="font-azeret relative z-20 mt-4 text-[12px] leading-none tracking-[-0.333px] text-[#f00707]">
-            È IL MOMENTO DELLO STRAPPO
+            DISTINGUITI CON STRAPPS
           </p>
 
           <div className="relative left-1/2 -mt-[12px] aspect-[375/490] w-screen -translate-x-1/2 overflow-hidden sm:w-full">
@@ -62,7 +62,7 @@ export default function Home() {
           <div className="relative z-10 -mt-[120px]">
             <p className="font-impact text-center text-[20px] tracking-[-0.333px] text-white">STRAPPS V1</p>
             <p className="font-azeret mt-[23px] text-center text-[11px] font-bold tracking-[-0.333px] text-white">
-              esci di casa <span className="text-[#f00707]">in 3 secondi</span>
+              solo su <span className="text-[#f00707]">iscrizione</span>
             </p>
           </div>
 
