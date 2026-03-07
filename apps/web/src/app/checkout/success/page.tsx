@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
 import { SiteFooter } from "@/components/strapps/site-footer";
 import { stripe } from "@/lib/stripe";
+import { generateAccessToken, TTL_30_MIN } from "@/lib/access-token";
 
 type SuccessPageProps = {
   searchParams: Promise<{ session_id?: string }>;
@@ -12,18 +13,25 @@ export default async function CheckoutSuccessPage({ searchParams }: SuccessPageP
 
   let paymentType: string | null = null;
   let tierLabel: string | null = null;
+  let productUrl: string | null = null;
 
   if (session_id) {
     try {
       const session = await stripe.checkout.sessions.retrieve(session_id);
       paymentType = session.metadata?.type ?? null;
       const tier = session.metadata?.tier ?? "";
+      const email = (session.metadata?.email ?? session.customer_email ?? "").toLowerCase().trim();
       const TIER_LABEL: Record<string, string> = {
         first: "FIRST 60",
         early: "EARLY 140",
         last: "LAST 90",
       };
       tierLabel = TIER_LABEL[tier] ?? null;
+
+      if (paymentType === "accesso" && tier && email) {
+        const token = generateAccessToken(email, tier, TTL_30_MIN);
+        productUrl = `/prodotto/${tier}?t=${encodeURIComponent(token)}`;
+      }
     } catch {
       // Sessione non trovata — mostra messaggio generico
     }
@@ -32,7 +40,7 @@ export default async function CheckoutSuccessPage({ searchParams }: SuccessPageP
   const messages: Record<string, { title: string; body: string }> = {
     accesso: {
       title: "ACCESSO CONFERMATO",
-      body: `Hai sbloccato l'accesso al drop ${tierLabel ?? ""}. Ti abbiamo inviato una email di conferma. Torna qui quando il drop apre per completare l'acquisto.`,
+      body: `Hai sbloccato il drop ${tierLabel ?? ""}. Acquista ora al prezzo bloccato — hai 30 minuti. Ti abbiamo inviato anche una email con il link.`,
     },
     acquisto: {
       title: "ORDINE CONFERMATO",
@@ -49,6 +57,9 @@ export default async function CheckoutSuccessPage({ searchParams }: SuccessPageP
     body: "Grazie per il tuo acquisto. Ti abbiamo inviato una email di conferma.",
   };
   const msg = (paymentType ? messages[paymentType] : null) ?? defaultMsg;
+
+  const ctaHref = productUrl ?? "/";
+  const ctaLabel = productUrl ? "ACQUISTA ORA →" : "TORNA ALLA HOME";
 
   return (
     <div className="flex min-h-screen flex-col bg-black text-white">
@@ -72,10 +83,10 @@ export default async function CheckoutSuccessPage({ searchParams }: SuccessPageP
           </p>
 
           <Link
-            href="/"
+            href={ctaHref}
             className="font-impact mt-[48px] flex h-[42px] w-[200px] items-center justify-center rounded-[20px] bg-[#f00707] text-[15px] tracking-[-0.333px] text-white"
           >
-            TORNA ALLA HOME
+            {ctaLabel}
           </Link>
         </div>
       </div>
