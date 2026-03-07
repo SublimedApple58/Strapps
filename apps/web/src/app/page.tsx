@@ -64,6 +64,12 @@ export default function Home() {
             <p className="font-azeret mt-[23px] text-center text-[11px] font-bold tracking-[-0.333px] text-white">
               solo su <span className="text-[#f00707]">iscrizione</span>
             </p>
+            <a
+              href="#scegli-il-tuo-accesso"
+              className="font-impact mx-auto mt-[13px] flex h-[42px] w-[200px] items-center justify-center rounded-[40px] bg-[#f00707] text-[15px] tracking-[-0.333px] text-white"
+            >
+              ISCRIVITI AL DROP
+            </a>
           </div>
 
           <div className="mt-[61px] mx-auto w-[calc(100vw-68px)] max-w-[322px]">
