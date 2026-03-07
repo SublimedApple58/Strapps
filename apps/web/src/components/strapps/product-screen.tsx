@@ -22,7 +22,7 @@ const strapColors: { id: StrapColor; label: string; bg: string }[] = [
   { id: "nero", label: "Nero", bg: "#1e1e1e" },
 ];
 
-const sizes = ["38", "39", "40", "41", "42", "43"];
+const sizes = ["38", "39", "40", "41", "42", "43", "44"];
 
 export function ProductScreen({ variant, defaultEmail }: { variant: ProductVariant; defaultEmail?: string }) {
   const cfg = PRODUCT_CONFIGS[variant];
