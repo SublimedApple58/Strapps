@@ -72,56 +72,63 @@ export function ProductScreen({ variant, defaultEmail }: { variant: ProductVaria
         {/* Selezioni */}
         <div className="mt-[58px] px-[20px]">
 
-          {/* Colore scarpa */}
-          <p className="font-impact text-[15px] tracking-[-0.333px]">SCEGLI IL COLORE DELLA SCARPA</p>
-          <div className="mt-[11px] flex gap-[10px]">
-            {shoeColors.map((c) => (
-              <button
-                key={c.id}
-                type="button"
-                aria-label={c.label}
-                onClick={() => setShoeColor(c.id)}
-                className={`h-[25px] w-[25px] rounded-[2px] transition-all ${
-                  shoeColor === c.id
-                    ? "ring-2 ring-[#f00707] ring-offset-2 ring-offset-black"
-                    : "opacity-60"
-                }`}
-                style={{ backgroundColor: c.bg }}
-              />
-            ))}
-          </div>
+          {/* Colori — due colonne affiancate */}
+          <div className="flex gap-[32px]">
+            {/* Scarpa */}
+            <div>
+              <p className="font-impact text-[13px] tracking-[-0.333px]">SCARPA</p>
+              <div className="mt-[10px] flex gap-[8px]">
+                {shoeColors.map((c) => (
+                  <button
+                    key={c.id}
+                    type="button"
+                    aria-label={c.label}
+                    onClick={() => setShoeColor(c.id)}
+                    className={`h-[44px] w-[44px] rounded-[6px] transition-all ${
+                      shoeColor === c.id
+                        ? "ring-2 ring-[#f00707] ring-offset-2 ring-offset-black"
+                        : ""
+                    }`}
+                    style={{ backgroundColor: c.bg }}
+                  />
+                ))}
+              </div>
+            </div>
 
-          {/* Colore strappo */}
-          <p className="font-impact mt-[27px] text-[15px] tracking-[-0.333px]">SCEGLI IL COLORE DELLO STRAPPO</p>
-          <div className="mt-[11px] flex gap-[10px]">
-            {strapColors.map((c) => (
-              <button
-                key={c.id}
-                type="button"
-                aria-label={c.label}
-                onClick={() => setStrapColor(c.id)}
-                className={`h-[25px] w-[25px] rounded-[2px] transition-all ${
-                  strapColor === c.id
-                    ? "ring-2 ring-[#f00707] ring-offset-2 ring-offset-black"
-                    : "opacity-60"
-                }`}
-                style={{ backgroundColor: c.bg }}
-              />
-            ))}
+            {/* Strappo */}
+            <div>
+              <p className="font-impact text-[13px] tracking-[-0.333px]">STRAPPO</p>
+              <div className="mt-[10px] flex gap-[8px]">
+                {strapColors.map((c) => (
+                  <button
+                    key={c.id}
+                    type="button"
+                    aria-label={c.label}
+                    onClick={() => setStrapColor(c.id)}
+                    className={`h-[44px] w-[44px] rounded-[6px] transition-all ${
+                      strapColor === c.id
+                        ? "ring-2 ring-[#f00707] ring-offset-2 ring-offset-black"
+                        : ""
+                    }`}
+                    style={{ backgroundColor: c.bg }}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Taglia */}
-          <p className="font-impact mt-[26px] text-[15px] tracking-[-0.333px]">SELEZIONA LA TAGLIA</p>
-          <div className="mt-[14px] flex flex-wrap gap-[8px]">
+          <p className="font-impact mt-[28px] text-center text-[13px] tracking-[-0.333px]">SELEZIONA LA TAGLIA</p>
+          <div className="mt-[14px] flex flex-wrap justify-center gap-[8px]">
             {sizes.map((size) => (
               <button
                 key={size}
                 type="button"
                 onClick={() => setSelectedSize(size)}
-                className={`font-impact h-[32px] min-w-[40px] rounded-full border px-3 text-[13px] tracking-[-0.333px] transition-all ${
+                className={`font-impact flex h-[40px] w-[40px] items-center justify-center rounded-full border text-[13px] tracking-[-0.333px] transition-all ${
                   selectedSize === size
-                    ? "border-[#f00707] bg-[#f00707] text-white"
-                    : "border-white/30 text-white/60"
+                    ? "border-[#f00707] bg-black text-[#f00707]"
+                    : "border-white/20 bg-white/5 text-white/70"
                 }`}
               >
                 {size}
@@ -130,12 +137,13 @@ export function ProductScreen({ variant, defaultEmail }: { variant: ProductVaria
           </div>
 
           {/* CTA acquisto */}
-          <div className="mt-[54px] flex flex-col items-center gap-[23px]">
+          <div className="mt-[44px] flex flex-col items-center gap-[16px]">
+            <p className="font-impact text-[32px] tracking-[-0.5px]">{cfg.price}</p>
             <Link
               href={checkoutHref}
-              className="font-impact flex h-[42px] w-[200px] items-center justify-center rounded-[20px] bg-[#f00707] text-[15px] tracking-[-0.333px] text-white"
+              className="font-impact flex h-[52px] w-full items-center justify-center rounded-[26px] bg-[#f00707] text-[18px] tracking-[-0.333px] text-white"
             >
-              ACQUISTA {cfg.price}
+              ACQUISTA ORA
             </Link>
             <p className="font-azeret text-center text-[7px] tracking-[-0.333px]">
               Rimborso garantito entro 14 giorni dalla consegna*
