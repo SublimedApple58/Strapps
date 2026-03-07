@@ -92,11 +92,6 @@ export function EstendiCheckoutScreen({ tier, scarpa, strappo }: EstendiCheckout
           <span className="font-light">CHECKOUT</span>
         </p>
 
-        {/* Main title */}
-        <h1 className="font-azeret mt-[47px] text-center text-[16px] font-black italic tracking-[-0.333px]">
-          ESTENDI ACCESSO — {tierLabel}
-        </h1>
-
         {/* Order summary */}
         <section className="mt-[42px]">
           <p className="font-azeret text-[12px] tracking-[-0.333px]">
