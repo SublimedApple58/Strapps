@@ -22,7 +22,7 @@ export default async function Home() {
   } catch {
     // se il DB non è disponibile, mostra il fallback
   }
-  const firstRimasti = Math.max(0, TIER_CAPACITY.first - firstSold);
+  const firstRimasti = Math.min(49, Math.max(0, TIER_CAPACITY.first - firstSold));
 
   const accessOptions = [
     {
