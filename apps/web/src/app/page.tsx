@@ -61,8 +61,8 @@ export default function Home() {
 
           <div className="relative z-10 -mt-[120px]">
             <p className="font-impact text-center text-[20px] tracking-[-0.333px] text-white">STRAPPS V1</p>
-            <p className="font-azeret mt-[23px] text-center text-[11px] font-bold tracking-[-0.333px] text-white">
-              solo su <span className="text-[#f00707]">iscrizione</span>
+            <p className="font-azeret mt-[23px] text-center text-[11px] font-normal tracking-[-0.333px] text-white">
+              SOLO SU <span className="text-[#f00707]">ISCRIZIONE</span>
             </p>
             <a
               href="#scegli-il-tuo-accesso"
