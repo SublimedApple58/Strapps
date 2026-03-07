@@ -11,6 +11,13 @@ import {
   PRODUCT_CONFIGS,
   PRODUCT_IMAGES,
 } from "@/components/strapps/product-config";
+import { fbqTrack } from "@/lib/meta-pixel";
+
+const TIER_PRICE_NUM: Record<ProductVariant, number> = {
+  first: 189.99,
+  early: 219.99,
+  last: 239.99,
+};
 
 const shoeColors: { id: ShoeColor; label: string; bg: string }[] = [
   { id: "bianco", label: "Bianco", bg: "#d9d9d9" },
@@ -106,6 +113,14 @@ export function ProductScreen({ variant, defaultEmail, expiresAt }: { variant: P
             <p className="font-impact text-[32px] tracking-[-0.5px]">{cfg.price}</p>
             <Link
               href={checkoutHref}
+              onClick={() => fbqTrack("InitiateCheckout", {
+                value: TIER_PRICE_NUM[variant],
+                currency: "EUR",
+                checkout_type: "shoe",
+                list_level: variant,
+                content_ids: ["strapps_v1"],
+                content_type: "product",
+              })}
               className="font-impact flex h-[52px] w-[220px] items-center justify-center rounded-[26px] bg-[#f00707] text-[18px] tracking-[-0.333px] text-white"
             >
               ACQUISTA ORA
@@ -189,6 +204,13 @@ export function ProductScreen({ variant, defaultEmail, expiresAt }: { variant: P
             </p>
             <a
               href={`/checkout/estendi/${variant}?scarpa=${shoeColor}&strappo=${strapColor}`}
+              onClick={() => fbqTrack("InitiateCheckout", {
+                value: 49,
+                currency: "EUR",
+                checkout_type: "extend",
+                content_ids: ["price_lock_30d"],
+                content_type: "product",
+              })}
               className="font-impact mt-[16px] flex h-[34px] w-full items-center justify-center rounded-[20px] bg-[#f00707] text-[12px] tracking-[-0.333px] text-white"
             >
               ESTENDI&nbsp;&nbsp;49,00€

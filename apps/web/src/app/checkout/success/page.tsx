@@ -3,6 +3,7 @@ import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
 import { SiteFooter } from "@/components/strapps/site-footer";
 import { stripe } from "@/lib/stripe";
 import { generateAccessToken, TTL_30_MIN } from "@/lib/access-token";
+import { MetaPixelEvents } from "@/components/strapps/meta-pixel-events";
 
 type SuccessPageProps = {
   searchParams: Promise<{ session_id?: string }>;
@@ -13,23 +14,26 @@ export default async function CheckoutSuccessPage({ searchParams }: SuccessPageP
 
   let paymentType: string | null = null;
   let tierLabel: string | null = null;
+  let tier: string | null = null;
+  let amountTotal: number | null = null;
   let productUrl: string | null = null;
 
   if (session_id) {
     try {
       const session = await stripe.checkout.sessions.retrieve(session_id);
       paymentType = session.metadata?.type ?? null;
-      const tier = session.metadata?.tier ?? "";
+      tier = session.metadata?.tier ?? "";
+      amountTotal = session.amount_total ? session.amount_total / 100 : null;
       const email = (session.metadata?.email ?? session.customer_email ?? "").toLowerCase().trim();
       const TIER_LABEL: Record<string, string> = {
         first: "FIRST 60",
         early: "EARLY 140",
         last: "LAST 90",
       };
-      tierLabel = TIER_LABEL[tier] ?? null;
+      tierLabel = TIER_LABEL[tier ?? ""] ?? null;
 
       if (paymentType === "accesso" && tier && email) {
-        const token = generateAccessToken(email, tier, TTL_30_MIN);
+        const token = generateAccessToken(email, tier as string, TTL_30_MIN);
         productUrl = `/prodotto/${tier}?t=${encodeURIComponent(token)}`;
       }
     } catch {
@@ -63,6 +67,7 @@ export default async function CheckoutSuccessPage({ searchParams }: SuccessPageP
 
   return (
     <div className="flex min-h-screen flex-col bg-black text-white">
+      <MetaPixelEvents paymentType={paymentType} tier={tier} amountTotal={amountTotal} />
       <div className="mx-auto w-full max-w-[390px] flex-1 px-[28px] pb-20 pt-8">
         <SiteNavMenu />
 

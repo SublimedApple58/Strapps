@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
+import { fbqTrack } from "@/lib/meta-pixel";
 
 export type EstendiTier = "first" | "early" | "last";
 
@@ -37,6 +38,13 @@ async function redirectToStripe(tier: EstendiTier, email: string): Promise<void>
   }
 
   const { url } = (await res.json()) as { url: string };
+  fbqTrack("InitiateCheckout", {
+    value: 49,
+    currency: "EUR",
+    checkout_type: "extend",
+    content_ids: ["price_lock_30d"],
+    content_type: "product",
+  });
   window.location.href = url;
 }
 

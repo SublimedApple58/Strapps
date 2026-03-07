@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
+import { fbqTrack } from "@/lib/meta-pixel";
 
 export type AccessoTier = "first" | "early" | "last";
 
@@ -38,6 +39,13 @@ async function redirectToStripe(tier: AccessoTier, email: string): Promise<void>
   }
 
   const { url } = (await res.json()) as { url: string };
+  fbqTrack("InitiateCheckout", {
+    value: 1,
+    currency: "EUR",
+    checkout_type: "access_fee",
+    content_ids: ["access_1eur"],
+    content_type: "product",
+  });
   window.location.href = url;
 }
 
