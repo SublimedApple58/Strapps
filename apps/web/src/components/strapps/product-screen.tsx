@@ -57,85 +57,63 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
           <SiteNavMenu />
         </div>
 
-        {/* Carosello con frecce */}
-        <div className="mx-auto mt-[28px] w-[80%] max-w-[312px]">
-          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[12px] bg-black">
-            <Image
-              src={images[slideIndex]}
-              alt={`STRAPPS V1 - angolo ${slideIndex + 1}`}
-              fill
-              unoptimized
-              sizes="100vw"
-              className="object-cover"
-              priority={slideIndex === 0}
-            />
-
-            {/* Freccia sinistra */}
-            <button
-              onClick={prev}
-              aria-label="Foto precedente"
-              className="absolute left-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 backdrop-blur-sm"
-            >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M9 2L4 7L9 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-
-            {/* Freccia destra */}
-            <button
-              onClick={next}
-              aria-label="Foto successiva"
-              className="absolute right-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 backdrop-blur-sm"
-            >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M5 2L10 7L5 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-
-            {/* Dots */}
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-[6px]">
-              {images.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setSlideIndex(i)}
-                  aria-label={`Foto ${i + 1}`}
-                  className={`h-[5px] rounded-full transition-all duration-200 ${
-                    i === slideIndex ? "w-[16px] bg-white" : "w-[5px] bg-white/40"
-                  }`}
-                />
-              ))}
+        {/* Carosello con frecce ai bordi */}
+        <div className="relative mt-[28px] w-full">
+          <div className="mx-auto w-[80%] max-w-[312px]">
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[12px] bg-black">
+              <Image
+                src={images[slideIndex]}
+                alt={`STRAPPS V1 - angolo ${slideIndex + 1}`}
+                fill
+                unoptimized
+                sizes="80vw"
+                className="object-cover"
+                priority={slideIndex === 0}
+              />
+              {/* Dots */}
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-[5px]">
+                {images.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setSlideIndex(i)}
+                    aria-label={`Foto ${i + 1}`}
+                    className={`h-[4px] rounded-full transition-all duration-200 ${
+                      i === slideIndex ? "w-[14px] bg-white" : "w-[4px] bg-white/40"
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
+
+          {/* Freccia sinistra */}
+          <button
+            onClick={prev}
+            aria-label="Foto precedente"
+            className="absolute left-3 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-black/50 backdrop-blur-sm"
+          >
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M8 2L3 6L8 10" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+
+          {/* Freccia destra */}
+          <button
+            onClick={next}
+            aria-label="Foto successiva"
+            className="absolute right-3 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-black/50 backdrop-blur-sm"
+          >
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M4 2L9 6L4 10" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
         </div>
 
-        {/* Selezioni */}
-        <div className="mt-[58px] px-[20px]">
+        {/* Selezioni + CTA */}
+        <div className="mt-[40px] px-[20px]">
 
-          {/* CTA acquisto */}
-          <div className="flex flex-col items-center gap-[16px]">
-            <p className="font-impact text-[32px] tracking-[-0.5px]">{cfg.price}</p>
-            <Link
-              href={checkoutHref}
-              onClick={() => fbqTrack("InitiateCheckout", {
-                value: TIER_PRICE_NUM[variant],
-                currency: "EUR",
-                checkout_type: "shoe",
-                list_level: variant,
-                content_ids: ["strapps_v1"],
-                content_type: "product",
-              })}
-              className="font-impact flex h-[52px] w-[220px] items-center justify-center rounded-[26px] bg-[#f00707] text-[18px] tracking-[-0.333px] text-white"
-            >
-              ACQUISTA ORA
-            </Link>
-            <p className="font-azeret text-center text-[7px] tracking-[-0.333px]">
-              Rimborso garantito entro 14 giorni dalla consegna*
-            </p>
-          </div>
-
-          {/* Colori */}
-          <div className="mt-[44px] flex justify-center gap-[48px]">
-            {/* Scarpa */}
+          {/* 1. Colori */}
+          <div className="flex justify-center gap-[48px]">
             <div>
               <p className="font-impact text-[13px] tracking-[-0.333px]">SCARPA</p>
               <div className="mt-[10px] flex gap-[8px]">
@@ -146,17 +124,13 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
                     aria-label={c.label}
                     onClick={() => { setShoeColor(c.id); setSlideIndex(0); }}
                     className={`h-[44px] w-[44px] rounded-[6px] transition-all ${
-                      shoeColor === c.id
-                        ? "ring-2 ring-[#f00707] ring-offset-2 ring-offset-black"
-                        : ""
+                      shoeColor === c.id ? "ring-2 ring-[#f00707] ring-offset-2 ring-offset-black" : ""
                     }`}
                     style={{ backgroundColor: c.bg }}
                   />
                 ))}
               </div>
             </div>
-
-            {/* Strappo */}
             <div>
               <p className="font-impact text-[13px] tracking-[-0.333px]">STRAPPO</p>
               <div className="mt-[10px] flex gap-[8px]">
@@ -167,9 +141,7 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
                     aria-label={c.label}
                     onClick={() => { setStrapColor(c.id); setSlideIndex(0); }}
                     className={`h-[44px] w-[44px] rounded-[6px] transition-all ${
-                      strapColor === c.id
-                        ? "ring-2 ring-[#f00707] ring-offset-2 ring-offset-black"
-                        : ""
+                      strapColor === c.id ? "ring-2 ring-[#f00707] ring-offset-2 ring-offset-black" : ""
                     }`}
                     style={{ backgroundColor: c.bg }}
                   />
@@ -178,8 +150,10 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
             </div>
           </div>
 
-          {/* Taglia */}
-          <p className="font-impact mt-[28px] text-center text-[13px] tracking-[-0.333px]">SELEZIONA LA TAGLIA</p>
+          {/* 2. Taglia */}
+          <p className="font-impact mt-[28px] text-center text-[13px] tracking-[-0.333px]">
+            SELEZIONA LA TAGLIA
+          </p>
           <div className="mt-[14px] flex flex-wrap justify-center gap-[8px]">
             {sizes.map((size) => (
               <button
@@ -195,6 +169,50 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
                 {size}
               </button>
             ))}
+          </div>
+
+          {/* 3. CTA acquisto con prezzo dentro il bottone */}
+          <div className="mt-[36px] flex flex-col items-center gap-[10px]">
+            <Link
+              href={checkoutHref}
+              onClick={() => fbqTrack("InitiateCheckout", {
+                value: TIER_PRICE_NUM[variant],
+                currency: "EUR",
+                checkout_type: "shoe",
+                list_level: variant,
+                content_ids: ["strapps_v1"],
+                content_type: "product",
+              })}
+              className="font-impact flex h-[52px] w-[260px] items-center justify-center rounded-[26px] bg-[#f00707] text-[18px] tracking-[-0.333px] text-white"
+            >
+              ACQUISTA&nbsp;&nbsp;{cfg.price}
+            </Link>
+            <p className="font-azeret text-center text-[7px] tracking-[-0.333px] text-white/50">
+              Rimborso garantito entro 14 giorni dalla consegna*
+            </p>
+          </div>
+
+          {/* 4. Card estensione — pill nera stile Figma */}
+          <div className="mt-[20px] w-full rounded-[52px] bg-[#111111] px-6 pb-5 pt-4">
+            <p className="font-impact text-center text-[13px] leading-snug tracking-[-0.333px] text-white">
+              Blocca il prezzo scontato per 30 giorni
+            </p>
+            <p className="font-azeret mt-[3px] text-center text-[9px] leading-[1.3] tracking-[-0.333px] text-white/60">
+              49,00€ scalati dall&apos;acquisto finale
+            </p>
+            <a
+              href={`/checkout/estendi/${variant}?scarpa=${shoeColor}&strappo=${strapColor}`}
+              onClick={() => fbqTrack("InitiateCheckout", {
+                value: 49,
+                currency: "EUR",
+                checkout_type: "extend",
+                content_ids: ["price_lock_30d"],
+                content_type: "product",
+              })}
+              className="font-impact mx-auto mt-[12px] flex h-[27px] w-[129px] items-center justify-center rounded-[20px] bg-[#f00707] text-[10px] tracking-[-0.333px] text-white"
+            >
+              ESTENDI&nbsp;&nbsp;49,00€
+            </a>
           </div>
 
         </div>

@@ -136,17 +136,15 @@ export default async function Home() {
               </article>
             </div>
 
-            <div className="mt-[46px] h-[3px] w-full rounded-full bg-[#f00707]" />
-
             {/* Bottone VAI AL DROP — solo se c'è un tier attivo */}
             {activeTier && (
               <div className="mt-[36px] flex justify-center">
                 <Link
                   href={`/prodotto/${activeTier}`}
-                  className="font-impact inline-flex h-[52px] items-center gap-3 rounded-full bg-[#111111] pl-6 pr-3 text-[15px] tracking-[-0.333px] text-white"
+                  className="font-impact inline-flex h-[52px] items-center gap-3 rounded-full bg-[#f00707] pl-6 pr-3 text-[15px] tracking-[-0.333px] text-white"
                 >
                   VAI AL DROP
-                  <span className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-black">
+                  <span className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-black/30">
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                       <path d="M3 11L11 3M11 3H5.5M11 3V8.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
