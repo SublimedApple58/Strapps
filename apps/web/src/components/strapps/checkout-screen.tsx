@@ -13,13 +13,12 @@ export type CheckoutVariant = "first" | "early" | "last";
 
 type CheckoutConfig = {
   price: string;
-  sku: string;
 };
 
 const CHECKOUT_CONFIGS: Record<CheckoutVariant, CheckoutConfig> = {
-  first: { price: "189,99€", sku: "111222" },
-  early: { price: "219,99€", sku: "222333" },
-  last: { price: "239,99€", sku: "333444" },
+  first: { price: "189,99€" },
+  early: { price: "219,99€" },
+  last: { price: "239,99€" },
 };
 
 const validShoeColors: ShoeColor[] = ["bianco", "nero"];
@@ -197,7 +196,6 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
                   <p>Strappo: {strapLabel}</p>
                   {taglia && <p>Taglia: {taglia}</p>}
                 </div>
-                <p className="font-azeret mt-[6px] text-[10px] font-light tracking-[-0.333px] text-white/40">SKU: {cfg.sku}</p>
               </div>
               <p className="font-impact text-[15px] tracking-[-0.333px]">{cfg.price}</p>
             </div>

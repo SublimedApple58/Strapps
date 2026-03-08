@@ -86,6 +86,9 @@ export default async function Home() {
             >
               SCOPRI IL DROP
             </a>
+            <p className="font-azeret mt-[12px] text-center text-[11px] tracking-[-0.333px] text-white/80">
+              LISTE APERTE ORA
+            </p>
           </div>
         </section>
 
