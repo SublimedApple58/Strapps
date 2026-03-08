@@ -58,8 +58,8 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
         </div>
 
         {/* Carosello con frecce */}
-        <div className="relative left-1/2 mt-[28px] w-screen -translate-x-1/2">
-          <div className="relative aspect-square w-full overflow-hidden bg-black">
+        <div className="mx-auto mt-[28px] w-[80%] max-w-[312px]">
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[12px] bg-black">
             <Image
               src={images[slideIndex]}
               alt={`STRAPPS V1 - angolo ${slideIndex + 1}`}

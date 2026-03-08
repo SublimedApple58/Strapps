@@ -36,11 +36,13 @@ export default async function Home() {
       name: "EARLY 140",
       price: "219.99€",
       originalPrice: "239.99€",
+      rimasti: TIER_CAPACITY.early,
     },
     {
       id: "last" as const,
       name: "LAST 90",
       price: "239.99€",
+      rimasti: TIER_CAPACITY.last,
     },
   ];
 

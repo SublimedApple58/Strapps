@@ -1,10 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { PRODUCT_IMAGES, type ShoeColor, type StrapColor } from "@/components/strapps/product-config";
-import { AccessTierCta } from "@/components/strapps/access-tier-cta";
-import { AccessTierCountdown } from "@/components/strapps/access-tier-countdown";
+import {
+  getActiveTier,
+  getCountdownView,
+  getRemainingTime,
+} from "@/components/strapps/access-tier-schedule";
 import type { TierId } from "@/components/strapps/access-tier-schedule";
 
 const shoeColors: { id: ShoeColor; label: string; bg: string }[] = [
@@ -22,7 +26,7 @@ type TierData = {
   name: string;
   price: string;
   originalPrice?: string;
-  rimasti?: number;
+  rimasti: number;
 };
 
 export function HomeDropSection({
@@ -35,6 +39,20 @@ export function HomeDropSection({
   const [shoeColor, setShoeColor] = useState<ShoeColor>("bianco");
   const [strapColor, setStrapColor] = useState<StrapColor>("bianco");
   const [slideIndex, setSlideIndex] = useState(0);
+  const [now, setNow] = useState<number | null>(null);
+
+  useEffect(() => {
+    setNow(Date.now());
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const activeTier = useMemo(() => (now ? getActiveTier(now) : null), [now]);
+  const countdownView = useMemo(() => (now ? getCountdownView(now) : null), [now]);
+  const countdownRemaining = useMemo(
+    () => (countdownView && now ? getRemainingTime(countdownView.target, now) : null),
+    [countdownView, now],
+  );
 
   const images = PRODUCT_IMAGES[shoeColor][strapColor];
   const total = images.length;
@@ -49,15 +67,15 @@ export function HomeDropSection({
         {delivery}
       </p>
 
-      {/* Carosello scarpa */}
-      <div className="relative left-1/2 mt-[28px] w-screen -translate-x-1/2">
-        <div className="relative aspect-square w-full overflow-hidden bg-black">
+      {/* Carosello — contenuto, non full-width */}
+      <div className="mx-auto mt-[28px] w-[76%] max-w-[290px]">
+        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[12px] bg-black">
           <Image
             src={images[slideIndex]}
             alt={`STRAPPS V1 - angolo ${slideIndex + 1}`}
             fill
             unoptimized
-            sizes="100vw"
+            sizes="76vw"
             className="object-cover"
             priority={slideIndex === 0}
           />
@@ -66,10 +84,10 @@ export function HomeDropSection({
           <button
             onClick={prev}
             aria-label="Foto precedente"
-            className="absolute left-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 backdrop-blur-sm"
+            className="absolute left-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-black/50 backdrop-blur-sm"
           >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M9 2L4 7L9 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M8 2L3 6L8 10" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
 
@@ -77,22 +95,22 @@ export function HomeDropSection({
           <button
             onClick={next}
             aria-label="Foto successiva"
-            className="absolute right-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 backdrop-blur-sm"
+            className="absolute right-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-black/50 backdrop-blur-sm"
           >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M5 2L10 7L5 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M4 2L9 6L4 10" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
 
           {/* Dots */}
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-[6px]">
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-[5px]">
             {images.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setSlideIndex(i)}
                 aria-label={`Foto ${i + 1}`}
-                className={`h-[5px] rounded-full transition-all duration-200 ${
-                  i === slideIndex ? "w-[16px] bg-white" : "w-[5px] bg-white/40"
+                className={`h-[4px] rounded-full transition-all duration-200 ${
+                  i === slideIndex ? "w-[14px] bg-white" : "w-[4px] bg-white/40"
                 }`}
               />
             ))}
@@ -100,100 +118,96 @@ export function HomeDropSection({
         </div>
       </div>
 
-      {/* Selettori colore */}
-      <div className="mx-auto mt-[28px] flex w-[calc(100vw-68px)] max-w-[660px] justify-center gap-[48px]">
-        {/* SCARPA */}
-        <div>
-          <p className="font-impact text-[11px] tracking-[-0.333px] text-white/60">SCARPA</p>
-          <div className="mt-[8px] flex gap-[6px]">
-            {shoeColors.map((c) => (
-              <button
-                key={c.id}
-                type="button"
-                aria-label={c.label}
-                onClick={() => {
-                  setShoeColor(c.id);
-                  setSlideIndex(0);
-                }}
-                className={`h-[28px] w-[28px] rounded-[5px] transition-all ${
-                  shoeColor === c.id
-                    ? "ring-2 ring-[#f00707] ring-offset-1 ring-offset-black"
-                    : ""
-                }`}
-                style={{ backgroundColor: c.bg }}
-              />
-            ))}
+      {/* Selettori colore + bottone ENTRA sulla stessa riga */}
+      <div className="mx-auto mt-[24px] flex w-[calc(100vw-68px)] max-w-[360px] items-center justify-between">
+        <div className="flex gap-[24px]">
+          {/* SCARPA */}
+          <div>
+            <p className="font-impact text-[10px] tracking-[-0.333px] text-white/60">SCARPA</p>
+            <div className="mt-[6px] flex gap-[5px]">
+              {shoeColors.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  aria-label={c.label}
+                  onClick={() => { setShoeColor(c.id); setSlideIndex(0); }}
+                  className={`h-[26px] w-[26px] rounded-[4px] transition-all ${
+                    shoeColor === c.id ? "ring-2 ring-[#f00707] ring-offset-1 ring-offset-black" : ""
+                  }`}
+                  style={{ backgroundColor: c.bg }}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* STRAPPO */}
+          <div>
+            <p className="font-impact text-[10px] tracking-[-0.333px] text-white/60">STRAPPO</p>
+            <div className="mt-[6px] flex gap-[5px]">
+              {strapColors.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  aria-label={c.label}
+                  onClick={() => { setStrapColor(c.id); setSlideIndex(0); }}
+                  className={`h-[26px] w-[26px] rounded-[4px] transition-all ${
+                    strapColor === c.id ? "ring-2 ring-[#f00707] ring-offset-1 ring-offset-black" : ""
+                  }`}
+                  style={{ backgroundColor: c.bg }}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* STRAPPO */}
-        <div>
-          <p className="font-impact text-[11px] tracking-[-0.333px] text-white/60">STRAPPO</p>
-          <div className="mt-[8px] flex gap-[6px]">
-            {strapColors.map((c) => (
-              <button
-                key={c.id}
-                type="button"
-                aria-label={c.label}
-                onClick={() => {
-                  setStrapColor(c.id);
-                  setSlideIndex(0);
-                }}
-                className={`h-[28px] w-[28px] rounded-[5px] transition-all ${
-                  strapColor === c.id
-                    ? "ring-2 ring-[#f00707] ring-offset-1 ring-offset-black"
-                    : ""
-                }`}
-                style={{ backgroundColor: c.bg }}
-              />
-            ))}
-          </div>
-        </div>
+        {/* Bottone ENTRA — visibile solo quando c'è un tier attivo */}
+        {activeTier ? (
+          <Link
+            href={`/prodotto/${activeTier}`}
+            className="font-azeret flex h-[38px] w-[86px] items-center justify-center rounded-[20px] bg-[#f00707] text-[13px] font-black italic tracking-[-0.333px] text-white"
+          >
+            ENTRA
+          </Link>
+        ) : (
+          <span
+            aria-disabled="true"
+            className="font-azeret flex h-[38px] w-[86px] cursor-not-allowed select-none items-center justify-center rounded-[20px] bg-[#f00707] text-[13px] font-black italic tracking-[-0.333px] text-white opacity-40"
+          >
+            ENTRA
+          </span>
+        )}
       </div>
 
-      {/* Lista tier */}
-      <div className="mt-[58px]">
-        {tiers.map((tier, index) => (
-          <div key={tier.id}>
-            <article
-              className={`mx-auto w-[calc(100vw-68px)] max-w-[660px] ${index > 0 ? "mt-[58px]" : ""}`}
-            >
-              <h3 className="font-azeret text-[13px] font-black italic tracking-[-0.333px]">
+      {/* Tutti i tier in griglia 3 colonne — senza divider */}
+      <div className="mx-auto mt-[36px] w-[calc(100vw-68px)] max-w-[360px]">
+        <div className="grid grid-cols-3 gap-x-[8px]">
+          {tiers.map((tier) => (
+            <div key={tier.id}>
+              <h3 className="font-azeret text-[11px] font-black italic tracking-[-0.333px] text-white">
                 {tier.name}
               </h3>
-              <div className="font-azeret mt-[15px] text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
-                <p className="flex items-baseline gap-2">
-                  <span>{tier.price}</span>
-                  {tier.originalPrice ? (
-                    <span className="text-white/55 line-through decoration-white/60">
-                      {tier.originalPrice}
-                    </span>
-                  ) : null}
-                </p>
-                {tier.rimasti !== undefined ? (
-                  <span className="block">
-                    rimasti: <span className="text-green-400">{tier.rimasti}</span>
+              <div className="font-azeret mt-[10px] text-[11px] font-light leading-[1.4] tracking-[-0.333px] text-white">
+                <p>{tier.price}</p>
+                <p>
+                  rimasti:{" "}
+                  <span className={tier.id === activeTier ? "text-green-400" : "text-white/60"}>
+                    {tier.rimasti}
                   </span>
-                ) : null}
+                </p>
               </div>
+            </div>
+          ))}
+        </div>
 
-              <AccessTierCta
-                tier={tier.id}
-                href={`/prodotto/${tier.id}`}
-                label="ENTRA"
-                className="font-azeret mx-auto mt-[31px] flex h-[35px] w-[100px] items-center justify-center rounded-[20px] bg-[#f00707] text-[13px] font-black italic tracking-[-0.333px] text-white"
-              />
-              <AccessTierCountdown
-                tier={tier.id}
-                className="font-azeret mt-[12px] text-center text-[11px] font-light tracking-[-0.333px] text-white/60"
-              />
-            </article>
-
-            {index < tiers.length - 1 && (
-              <div className="relative left-1/2 mt-10 h-px w-screen -translate-x-1/2 bg-white" />
-            )}
-          </div>
-        ))}
+        {/* Countdown unico sotto la griglia */}
+        {countdownView && countdownRemaining && (
+          <p className="font-azeret mt-[20px] text-[11px] font-light tracking-[-0.333px] text-white/60">
+            {countdownView.label}:{" "}
+            {countdownRemaining.days}g&nbsp;&nbsp;
+            {countdownRemaining.hours}h&nbsp;&nbsp;
+            {countdownRemaining.minutes}m
+          </p>
+        )}
       </div>
     </div>
   );
