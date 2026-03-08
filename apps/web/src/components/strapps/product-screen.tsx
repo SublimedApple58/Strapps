@@ -171,6 +171,16 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
             ))}
           </div>
 
+          {/* Link guida taglie */}
+          <div className="mt-[12px] flex justify-center">
+            <Link
+              href="/guida-taglie"
+              className="font-azeret inline-flex h-[26px] items-center rounded-[13px] bg-[#f00707] px-[14px] text-[10px] tracking-[-0.333px] text-white"
+            >
+              VISUALIZZA TAGLIE
+            </Link>
+          </div>
+
           {/* 3. CTA acquisto con prezzo dentro il bottone */}
           <div className="mt-[36px] flex flex-col items-center gap-[10px]">
             <Link
