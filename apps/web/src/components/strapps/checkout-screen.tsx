@@ -33,6 +33,8 @@ type CheckoutScreenProps = {
   defaultEmail?: string;
 };
 
+type PaymentMethod = "carta" | "apple" | "google";
+
 interface CustomerFields {
   email: string;
   nome: string;
@@ -117,6 +119,7 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
     paese: "Italia",
   });
 
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("carta");
   const [errors, setErrors] = useState<Partial<Record<keyof CustomerFields, string>>>({});
   const [globalError, setGlobalError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -144,7 +147,8 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
     return Object.keys(newErrors).length === 0;
   }
 
-  async function handlePay() {
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
     if (!validate()) return;
     setGlobalError(null);
     setLoading(true);
@@ -156,10 +160,11 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
     }
   }
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    await handlePay();
-  }
+  const PAYMENT_METHODS: { id: PaymentMethod; label: string }[] = [
+    { id: "carta", label: "Carta" },
+    { id: "apple", label: "Apple Pay" },
+    { id: "google", label: "Google Pay" },
+  ];
 
   return (
     <main className="min-h-screen bg-black text-white">
@@ -217,17 +222,16 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
         {/* Full-width separator */}
         <div className="relative left-1/2 mt-[40px] h-px w-screen -translate-x-1/2 bg-white/20" />
 
-        {/* Form — info first */}
+        {/* Form */}
         <form onSubmit={handleSubmit} className="mt-[40px]">
 
-          {/* Dati personali */}
+          {/* ── DATI PERSONALI ── */}
           <p className="font-impact text-[13px] tracking-[-0.333px] text-white/60">
             DATI PERSONALI
           </p>
 
           <div className="mt-[20px] flex flex-col gap-[20px]">
 
-            {/* Email */}
             <div>
               <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">Email*</p>
               <input
@@ -243,7 +247,6 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
               )}
             </div>
 
-            {/* Nome + Cognome affiancati */}
             <div className="flex gap-[12px]">
               <div className="flex-1">
                 <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">Nome*</p>
@@ -275,7 +278,6 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
               </div>
             </div>
 
-            {/* Telefono */}
             <div>
               <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">N. telefono*</p>
               <input
@@ -292,14 +294,13 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
             </div>
           </div>
 
-          {/* Indirizzo di consegna */}
+          {/* ── INDIRIZZO DI CONSEGNA ── */}
           <p className="font-impact mt-[36px] text-[13px] tracking-[-0.333px] text-white/60">
             INDIRIZZO DI CONSEGNA
           </p>
 
           <div className="mt-[20px] flex flex-col gap-[20px]">
 
-            {/* Indirizzo */}
             <div>
               <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">Indirizzo*</p>
               <input
@@ -315,7 +316,6 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
               )}
             </div>
 
-            {/* Città + CAP affiancati */}
             <div className="flex gap-[12px]">
               <div className="flex-[2]">
                 <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">Città*</p>
@@ -349,7 +349,6 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
               </div>
             </div>
 
-            {/* Regione + Paese affiancati */}
             <div className="flex gap-[12px]">
               <div className="flex-1">
                 <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">Regione</p>
@@ -379,60 +378,47 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
             </div>
           </div>
 
-          {/* Pagamento */}
+          {/* ── METODO DI PAGAMENTO ── */}
           <p className="font-impact mt-[36px] text-[13px] tracking-[-0.333px] text-white/60">
-            PAGAMENTO
+            METODO DI PAGAMENTO
           </p>
 
-          <div className="mt-[20px] flex flex-col gap-[12px]">
-
-            {/* Paga con carta — CTA primaria */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="font-azeret h-[40px] w-full rounded-[20px] bg-[#f00707] text-[15px] font-black tracking-[-0.333px] text-white disabled:opacity-50"
-            >
-              {loading ? "Attendere..." : `Paga ${cfg.price} — carta`}
-            </button>
-
-            {/* Oppure */}
-            <div className="flex items-center gap-[12px] py-[4px]">
-              <div className="h-px flex-1 bg-white/20" />
-              <span className="font-azeret text-[11px] font-light italic text-white/40">oppure</span>
-              <div className="h-px flex-1 bg-white/20" />
-            </div>
-
-            {/* Apple Pay */}
-            <button
-              type="button"
-              onClick={handlePay}
-              disabled={loading}
-              className="font-azeret h-[40px] w-full rounded-[20px] bg-[#d9d9d9] text-[15px] font-black italic text-black disabled:opacity-50"
-            >
-              APPLE PAY
-            </button>
-
-            {/* Google Pay */}
-            <button
-              type="button"
-              onClick={handlePay}
-              disabled={loading}
-              className="font-azeret h-[40px] w-full rounded-[20px] bg-[#d9d9d9] text-[15px] font-black italic text-black disabled:opacity-50"
-            >
-              GOOGLE PAY
-            </button>
+          {/* Selector a pillole */}
+          <div className="mt-[16px] flex gap-[8px]">
+            {PAYMENT_METHODS.map((m) => (
+              <button
+                key={m.id}
+                type="button"
+                onClick={() => setPaymentMethod(m.id)}
+                className={`font-azeret flex-1 rounded-[20px] border py-[10px] text-[11px] font-light tracking-[-0.333px] transition-colors ${
+                  paymentMethod === m.id
+                    ? "border-[#f00707] bg-[#f00707] text-white"
+                    : "border-white/20 bg-transparent text-white/60"
+                }`}
+              >
+                {m.label}
+              </button>
+            ))}
           </div>
 
+          {/* CTA unica */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="font-azeret mt-[20px] h-[48px] w-full rounded-[24px] bg-[#f00707] text-[15px] font-black tracking-[-0.333px] text-white disabled:opacity-50"
+          >
+            {loading ? "Attendere..." : `Paga ${cfg.price}`}
+          </button>
+
           {globalError && (
-            <p className="font-azeret mt-[12px] text-center text-[11px] tracking-[-0.333px] text-[#f00707]">{globalError}</p>
+            <p className="font-azeret mt-[10px] text-center text-[11px] tracking-[-0.333px] text-[#f00707]">{globalError}</p>
           )}
 
-          <p className="font-azeret mt-[16px] text-center text-[9px] font-light tracking-[-0.333px] text-white/30">
+          <p className="font-azeret mt-[14px] text-center text-[9px] font-light tracking-[-0.333px] text-white/30">
             Pagamento sicuro · Rimborso garantito entro 14 giorni dalla consegna*
           </p>
 
         </form>
-
       </div>
     </main>
   );
