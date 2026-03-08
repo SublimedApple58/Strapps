@@ -94,6 +94,9 @@ export default async function Home() {
 
         {/* ── SCEGLI IL TUO ACCESSO ────────────────────────────────── */}
         <section id="scegli-il-tuo-accesso" className="mt-14 scroll-mt-10">
+          <div className="mx-auto mb-[46px] w-[calc(100vw-52px)] max-w-[660px]">
+            <div className="h-[3px] w-full rounded-full bg-[#f00707]" />
+          </div>
           <h2 className="font-impact text-center text-[20px] font-normal tracking-[-0.333px] text-[#f00707]">
             SCEGLI IL TUO ACCESSO
           </h2>
