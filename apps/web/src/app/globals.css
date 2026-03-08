@@ -49,6 +49,10 @@ a {
   font-family: var(--font-azeret-mono), "Azeret Mono", monospace;
 }
 
+.font-averia {
+  font-family: var(--font-averia), "Averia Serif Libre", serif;
+}
+
 .hide-scrollbar {
   scrollbar-width: none;
 }
