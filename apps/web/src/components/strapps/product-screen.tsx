@@ -67,7 +67,7 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
                 fill
                 unoptimized
                 sizes="80vw"
-                className="object-cover"
+                className="object-contain"
                 priority={slideIndex === 0}
               />
               {/* Dots */}

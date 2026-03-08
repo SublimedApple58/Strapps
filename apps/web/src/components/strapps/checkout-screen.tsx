@@ -33,9 +33,21 @@ type CheckoutScreenProps = {
   defaultEmail?: string;
 };
 
+interface CustomerFields {
+  email: string;
+  nome: string;
+  cognome: string;
+  telefono: string;
+  indirizzo: string;
+  citta: string;
+  regione: string;
+  cap: string;
+  paese: string;
+}
+
 async function redirectToStripe(
   variant: CheckoutVariant,
-  email: string,
+  fields: CustomerFields,
   scarpa: string,
   strappo: string,
   taglia: string,
@@ -46,10 +58,18 @@ async function redirectToStripe(
     body: JSON.stringify({
       type: "acquisto",
       tier: variant,
-      email: email.trim().toLowerCase(),
+      email: fields.email.trim().toLowerCase(),
       scarpa,
       strappo,
       taglia,
+      nome: fields.nome.trim(),
+      cognome: fields.cognome.trim(),
+      telefono: fields.telefono.trim(),
+      indirizzo: fields.indirizzo.trim(),
+      citta: fields.citta.trim(),
+      regione: fields.regione.trim(),
+      cap: fields.cap.trim(),
+      paese: fields.paese.trim(),
       cancelPath: `/checkout/${variant}?scarpa=${scarpa}&strappo=${strappo}${taglia ? `&taglia=${taglia}` : ""}`,
     }),
   });
@@ -61,6 +81,14 @@ async function redirectToStripe(
 
   const { url } = (await res.json()) as { url: string };
   window.location.href = url;
+}
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function inputClass(hasError?: boolean) {
+  return `mt-[10px] block h-[40px] w-full rounded-[20px] border ${
+    hasError ? "border-[#f00707]" : "border-white/30"
+  } bg-transparent px-4 text-[12px] font-light tracking-[-0.333px] text-white placeholder:text-white/30 outline-none focus:border-[#f00707] transition-colors`;
 }
 
 export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail }: CheckoutScreenProps) {
@@ -77,41 +105,60 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
   const shoeLabel = shoeColor === "bianco" ? "Bianco" : "Nero";
   const strapLabel = strapColor === "bianco" ? "Bianco" : "Nero";
 
-  const [email, setEmail] = useState(defaultEmail ?? "");
-  const [error, setError] = useState<string | null>(null);
+  const [fields, setFields] = useState<CustomerFields>({
+    email: defaultEmail ?? "",
+    nome: "",
+    cognome: "",
+    telefono: "",
+    indirizzo: "",
+    citta: "",
+    regione: "",
+    cap: "",
+    paese: "Italia",
+  });
+
+  const [errors, setErrors] = useState<Partial<Record<keyof CustomerFields, string>>>({});
+  const [globalError, setGlobalError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  function set(key: keyof CustomerFields) {
+    return (e: React.ChangeEvent<HTMLInputElement>) => {
+      setFields((prev) => ({ ...prev, [key]: e.target.value }));
+      if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
+    };
+  }
 
-  async function handlePay(e: React.FormEvent) {
-    e.preventDefault();
-    if (!EMAIL_REGEX.test(email.trim())) {
-      setError("Inserisci un indirizzo email valido.");
-      return;
-    }
-    setError(null);
+  function validate(): boolean {
+    const newErrors: Partial<Record<keyof CustomerFields, string>> = {};
+
+    if (!EMAIL_REGEX.test(fields.email.trim())) newErrors.email = "Email non valida";
+    if (!fields.nome.trim()) newErrors.nome = "Campo obbligatorio";
+    if (!fields.cognome.trim()) newErrors.cognome = "Campo obbligatorio";
+    if (!fields.telefono.trim()) newErrors.telefono = "Campo obbligatorio";
+    if (!fields.indirizzo.trim()) newErrors.indirizzo = "Campo obbligatorio";
+    if (!fields.citta.trim()) newErrors.citta = "Campo obbligatorio";
+    if (!fields.cap.trim()) newErrors.cap = "Campo obbligatorio";
+    if (!fields.paese.trim()) newErrors.paese = "Campo obbligatorio";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }
+
+  async function handlePay() {
+    if (!validate()) return;
+    setGlobalError(null);
     setLoading(true);
     try {
-      await redirectToStripe(variant, email, shoeColor, strapColor, taglia ?? "");
+      await redirectToStripe(variant, fields, shoeColor, strapColor, taglia ?? "");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Errore imprevisto. Riprova.");
+      setGlobalError(err instanceof Error ? err.message : "Errore imprevisto. Riprova.");
       setLoading(false);
     }
   }
 
-  async function handleQuickPay() {
-    if (!EMAIL_REGEX.test(email.trim())) {
-      setError("Inserisci prima la tua email.");
-      return;
-    }
-    setError(null);
-    setLoading(true);
-    try {
-      await redirectToStripe(variant, email, shoeColor, strapColor, taglia ?? "");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Errore imprevisto. Riprova.");
-      setLoading(false);
-    }
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    await handlePay();
   }
 
   return (
@@ -134,8 +181,8 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
           </p>
 
           <div className="mt-[24px] flex items-start gap-[14px]">
-            <div className="relative h-[63px] w-[55px] flex-none overflow-hidden rounded-[4px]">
-              <Image src={thumbnailSrc} alt="STRAPPS V1" fill sizes="55px" className="object-cover" />
+            <div className="relative h-[63px] w-[55px] flex-none overflow-hidden rounded-[4px] bg-[#1a1a1a]">
+              <Image src={thumbnailSrc} alt="STRAPPS V1" fill sizes="55px" unoptimized className="object-contain" />
             </div>
             <div className="flex flex-1 items-start justify-between">
               <div>
@@ -170,110 +217,220 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
         {/* Full-width separator */}
         <div className="relative left-1/2 mt-[40px] h-px w-screen -translate-x-1/2 bg-white/20" />
 
-        {/* Email — sempre richiesta */}
-        <section className="mt-[41px]">
-          <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">
-            Email* <span className="text-white/40">(richiesta per tutti i metodi di pagamento)</span>
-          </p>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="la.tua@email.it"
-            autoComplete="email"
-            className="mt-[14px] block h-[40px] w-full rounded-[20px] border border-[#f00707] bg-transparent px-4 text-[12px] font-light tracking-[-0.333px] text-white placeholder:text-white/30 outline-none"
-          />
-          {error && (
-            <p className="font-azeret mt-[8px] text-[11px] tracking-[-0.333px] text-[#f00707]">{error}</p>
-          )}
-        </section>
+        {/* Form — info first */}
+        <form onSubmit={handleSubmit} className="mt-[40px]">
 
-        {/* Checkout rapido */}
-        <section className="mt-[32px]">
-          <p className="font-azeret text-center text-[15px] font-black italic tracking-[-0.333px]">
-            Checkout rapido
+          {/* Dati personali */}
+          <p className="font-impact text-[13px] tracking-[-0.333px] text-white/60">
+            DATI PERSONALI
           </p>
 
-          <div className="mt-[28px] flex flex-col items-center gap-[18px]">
+          <div className="mt-[20px] flex flex-col gap-[20px]">
+
+            {/* Email */}
+            <div>
+              <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">Email*</p>
+              <input
+                type="email"
+                value={fields.email}
+                onChange={set("email")}
+                placeholder="la.tua@email.it"
+                autoComplete="email"
+                className={inputClass(!!errors.email)}
+              />
+              {errors.email && (
+                <p className="font-azeret mt-[5px] text-[10px] tracking-[-0.333px] text-[#f00707]">{errors.email}</p>
+              )}
+            </div>
+
+            {/* Nome + Cognome affiancati */}
+            <div className="flex gap-[12px]">
+              <div className="flex-1">
+                <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">Nome*</p>
+                <input
+                  type="text"
+                  value={fields.nome}
+                  onChange={set("nome")}
+                  placeholder="Mario"
+                  autoComplete="given-name"
+                  className={inputClass(!!errors.nome)}
+                />
+                {errors.nome && (
+                  <p className="font-azeret mt-[5px] text-[10px] tracking-[-0.333px] text-[#f00707]">{errors.nome}</p>
+                )}
+              </div>
+              <div className="flex-1">
+                <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">Cognome*</p>
+                <input
+                  type="text"
+                  value={fields.cognome}
+                  onChange={set("cognome")}
+                  placeholder="Rossi"
+                  autoComplete="family-name"
+                  className={inputClass(!!errors.cognome)}
+                />
+                {errors.cognome && (
+                  <p className="font-azeret mt-[5px] text-[10px] tracking-[-0.333px] text-[#f00707]">{errors.cognome}</p>
+                )}
+              </div>
+            </div>
+
+            {/* Telefono */}
+            <div>
+              <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">N. telefono*</p>
+              <input
+                type="tel"
+                value={fields.telefono}
+                onChange={set("telefono")}
+                placeholder="+39 320 000 0000"
+                autoComplete="tel"
+                className={inputClass(!!errors.telefono)}
+              />
+              {errors.telefono && (
+                <p className="font-azeret mt-[5px] text-[10px] tracking-[-0.333px] text-[#f00707]">{errors.telefono}</p>
+              )}
+            </div>
+          </div>
+
+          {/* Indirizzo di consegna */}
+          <p className="font-impact mt-[36px] text-[13px] tracking-[-0.333px] text-white/60">
+            INDIRIZZO DI CONSEGNA
+          </p>
+
+          <div className="mt-[20px] flex flex-col gap-[20px]">
+
+            {/* Indirizzo */}
+            <div>
+              <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">Indirizzo*</p>
+              <input
+                type="text"
+                value={fields.indirizzo}
+                onChange={set("indirizzo")}
+                placeholder="Via Roma 1"
+                autoComplete="street-address"
+                className={inputClass(!!errors.indirizzo)}
+              />
+              {errors.indirizzo && (
+                <p className="font-azeret mt-[5px] text-[10px] tracking-[-0.333px] text-[#f00707]">{errors.indirizzo}</p>
+              )}
+            </div>
+
+            {/* Città + CAP affiancati */}
+            <div className="flex gap-[12px]">
+              <div className="flex-[2]">
+                <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">Città*</p>
+                <input
+                  type="text"
+                  value={fields.citta}
+                  onChange={set("citta")}
+                  placeholder="Milano"
+                  autoComplete="address-level2"
+                  className={inputClass(!!errors.citta)}
+                />
+                {errors.citta && (
+                  <p className="font-azeret mt-[5px] text-[10px] tracking-[-0.333px] text-[#f00707]">{errors.citta}</p>
+                )}
+              </div>
+              <div className="flex-1">
+                <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">CAP*</p>
+                <input
+                  type="text"
+                  value={fields.cap}
+                  onChange={set("cap")}
+                  placeholder="20100"
+                  autoComplete="postal-code"
+                  inputMode="numeric"
+                  maxLength={5}
+                  className={inputClass(!!errors.cap)}
+                />
+                {errors.cap && (
+                  <p className="font-azeret mt-[5px] text-[10px] tracking-[-0.333px] text-[#f00707]">{errors.cap}</p>
+                )}
+              </div>
+            </div>
+
+            {/* Regione + Paese affiancati */}
+            <div className="flex gap-[12px]">
+              <div className="flex-1">
+                <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">Regione</p>
+                <input
+                  type="text"
+                  value={fields.regione}
+                  onChange={set("regione")}
+                  placeholder="Lombardia"
+                  autoComplete="address-level1"
+                  className={inputClass()}
+                />
+              </div>
+              <div className="flex-1">
+                <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">Paese*</p>
+                <input
+                  type="text"
+                  value={fields.paese}
+                  onChange={set("paese")}
+                  placeholder="Italia"
+                  autoComplete="country-name"
+                  className={inputClass(!!errors.paese)}
+                />
+                {errors.paese && (
+                  <p className="font-azeret mt-[5px] text-[10px] tracking-[-0.333px] text-[#f00707]">{errors.paese}</p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Pagamento */}
+          <p className="font-impact mt-[36px] text-[13px] tracking-[-0.333px] text-white/60">
+            PAGAMENTO
+          </p>
+
+          <div className="mt-[20px] flex flex-col gap-[12px]">
+
+            {/* Paga con carta — CTA primaria */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="font-azeret h-[40px] w-full rounded-[20px] bg-[#f00707] text-[15px] font-black tracking-[-0.333px] text-white disabled:opacity-50"
+            >
+              {loading ? "Attendere..." : `Paga ${cfg.price} — carta`}
+            </button>
+
+            {/* Oppure */}
+            <div className="flex items-center gap-[12px] py-[4px]">
+              <div className="h-px flex-1 bg-white/20" />
+              <span className="font-azeret text-[11px] font-light italic text-white/40">oppure</span>
+              <div className="h-px flex-1 bg-white/20" />
+            </div>
+
+            {/* Apple Pay */}
             <button
               type="button"
-              onClick={handleQuickPay}
+              onClick={handlePay}
               disabled={loading}
-              className="font-azeret h-[40px] w-[247px] rounded-[20px] bg-[#d9d9d9] text-[15px] font-black italic text-black disabled:opacity-50"
+              className="font-azeret h-[40px] w-full rounded-[20px] bg-[#d9d9d9] text-[15px] font-black italic text-black disabled:opacity-50"
             >
               APPLE PAY
             </button>
+
+            {/* Google Pay */}
             <button
               type="button"
-              onClick={handleQuickPay}
+              onClick={handlePay}
               disabled={loading}
-              className="font-azeret h-[40px] w-[247px] rounded-[20px] bg-[#d9d9d9] text-[15px] font-black italic text-black disabled:opacity-50"
+              className="font-azeret h-[40px] w-full rounded-[20px] bg-[#d9d9d9] text-[15px] font-black italic text-black disabled:opacity-50"
             >
               GOOGLE PAY
             </button>
           </div>
 
-          {error && (
-            <p className="font-azeret mt-[12px] text-center text-[11px] tracking-[-0.333px] text-[#f00707]">{error}</p>
+          {globalError && (
+            <p className="font-azeret mt-[12px] text-center text-[11px] tracking-[-0.333px] text-[#f00707]">{globalError}</p>
           )}
 
-          <div className="mt-[43px] flex items-center gap-[12px]">
-            <div className="h-px flex-1 bg-[#f00707]" />
-            <span className="font-rounded text-[12px] italic">oppure</span>
-            <div className="h-px flex-1 bg-[#f00707]" />
-          </div>
-        </section>
+          <p className="font-azeret mt-[16px] text-center text-[9px] font-light tracking-[-0.333px] text-white/30">
+            Pagamento sicuro · Rimborso garantito entro 14 giorni dalla consegna*
+          </p>
 
-        {/* Form */}
-        <form onSubmit={handlePay} className="mt-[76px]">
-          <p className="font-rounded text-[16px]">Dettagli cliente</p>
-          <div className="mt-[40px] flex flex-col gap-[24px]">
-            {[
-              { label: "Nome*", type: "text", name: "nome" },
-              { label: "Cognome*", type: "text", name: "cognome" },
-              { label: "N. telefono*", type: "tel", name: "telefono" },
-            ].map((field) => (
-              <div key={field.name}>
-                <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">{field.label}</p>
-                <input
-                  type={field.type}
-                  name={field.name}
-                  className="mt-[20px] block h-[40px] w-full rounded-[20px] border border-[#f00707] bg-transparent px-4 text-[12px] font-light tracking-[-0.333px] text-white outline-none"
-                />
-              </div>
-            ))}
-          </div>
-
-          <p className="font-rounded mt-[48px] text-[16px]">Dettagli di consegna</p>
-          <div className="mt-[24px] flex flex-col gap-[24px]">
-            {[
-              { label: "Paese/Regione*", type: "text", name: "paese" },
-              { label: "Indirizzo*", type: "text", name: "indirizzo" },
-              { label: "Città*", type: "text", name: "citta" },
-              { label: "Regione*", type: "text", name: "regione" },
-              { label: "CAP*", type: "text", name: "cap" },
-            ].map((field) => (
-              <div key={field.name}>
-                <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">{field.label}</p>
-                <input
-                  type={field.type}
-                  name={field.name}
-                  className="mt-[20px] block h-[40px] w-full rounded-[20px] border border-[#f00707] bg-transparent px-4 text-[12px] font-light tracking-[-0.333px] text-white outline-none"
-                />
-              </div>
-            ))}
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="font-azeret mt-[41px] h-[40px] w-full rounded-[20px] bg-[#f00707] text-[15px] font-extrabold tracking-[-0.333px] text-white disabled:opacity-50"
-          >
-            {loading ? "Attendere..." : `Paga ${cfg.price}`}
-          </button>
-          {error && (
-            <p className="font-azeret mt-[8px] text-center text-[11px] tracking-[-0.333px] text-[#f00707]">{error}</p>
-          )}
         </form>
 
       </div>

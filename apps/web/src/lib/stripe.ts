@@ -27,6 +27,16 @@ export interface AcquistoSessionParams {
   strappo: string;
   taglia: string;
   cancelPath: string;
+  // Customer info
+  nome?: string;
+  cognome?: string;
+  telefono?: string;
+  // Delivery address
+  indirizzo?: string;
+  citta?: string;
+  regione?: string;
+  cap?: string;
+  paese?: string;
 }
 
 export interface EstendiSessionParams {
@@ -34,6 +44,10 @@ export interface EstendiSessionParams {
   tier: "first" | "early" | "last";
   email: string;
   cancelPath: string;
+  // Customer info
+  nome?: string;
+  cognome?: string;
+  telefono?: string;
 }
 
 export type SessionParams = AccessoSessionParams | AcquistoSessionParams | EstendiSessionParams;
@@ -102,6 +116,14 @@ export async function createCheckoutSession(params: SessionParams): Promise<stri
       scarpa: params.scarpa,
       strappo: params.strappo,
       taglia: params.taglia,
+      ...(params.nome ? { nome: params.nome } : {}),
+      ...(params.cognome ? { cognome: params.cognome } : {}),
+      ...(params.telefono ? { telefono: params.telefono } : {}),
+      ...(params.indirizzo ? { indirizzo: params.indirizzo } : {}),
+      ...(params.citta ? { citta: params.citta } : {}),
+      ...(params.regione ? { regione: params.regione } : {}),
+      ...(params.cap ? { cap: params.cap } : {}),
+      ...(params.paese ? { paese: params.paese } : {}),
     };
   } else {
     lineItem = {
@@ -119,6 +141,9 @@ export async function createCheckoutSession(params: SessionParams): Promise<stri
       type: "estendi",
       tier: params.tier,
       email: params.email,
+      ...(params.nome ? { nome: params.nome } : {}),
+      ...(params.cognome ? { cognome: params.cognome } : {}),
+      ...(params.telefono ? { telefono: params.telefono } : {}),
     };
   }
 
