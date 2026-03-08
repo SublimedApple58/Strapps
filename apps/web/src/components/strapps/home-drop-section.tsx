@@ -166,16 +166,26 @@ export function HomeDropSection({
         {activeTier ? (
           <Link
             href={`/prodotto/${activeTier}`}
-            className="font-azeret flex h-[38px] w-[86px] items-center justify-center rounded-[20px] bg-[#f00707] text-[13px] font-black italic tracking-[-0.333px] text-white"
+            className="font-azeret flex h-[38px] w-[100px] items-center justify-between rounded-[20px] bg-[#f00707] pl-[14px] pr-[5px] text-[13px] font-black italic tracking-[-0.333px] text-white"
           >
             ENTRA
+            <span className="flex h-[28px] w-[28px] items-center justify-center rounded-full bg-black/30">
+              <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M3 11L11 3M11 3H5.5M11 3V8.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
           </Link>
         ) : (
           <span
             aria-disabled="true"
-            className="font-azeret flex h-[38px] w-[86px] cursor-not-allowed select-none items-center justify-center rounded-[20px] bg-[#f00707] text-[13px] font-black italic tracking-[-0.333px] text-white opacity-40"
+            className="font-azeret flex h-[38px] w-[100px] cursor-not-allowed select-none items-center justify-between rounded-[20px] bg-[#f00707] pl-[14px] pr-[5px] text-[13px] font-black italic tracking-[-0.333px] text-white opacity-40"
           >
             ENTRA
+            <span className="flex h-[28px] w-[28px] items-center justify-center rounded-full bg-black/30">
+              <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M3 11L11 3M11 3H5.5M11 3V8.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
           </span>
         )}
       </div>
@@ -190,7 +200,7 @@ export function HomeDropSection({
             return (
               <div
                 key={tier.id}
-                className={`transition-opacity duration-300 ${isDimmed ? "opacity-60" : ""}`}
+                className={`transition-opacity duration-300 ${isDimmed ? "opacity-40" : ""}`}
               >
                 <h3 className="font-azeret text-[11px] font-black italic tracking-[-0.333px] text-white">
                   {tier.name}
@@ -211,8 +221,7 @@ export function HomeDropSection({
 
         {/* Countdown unico */}
         {countdownView && countdownRemaining && (
-          <p className="font-azeret mt-[20px] text-[11px] font-light tracking-[-0.333px] text-white">
-            {countdownView.label}:{" "}
+          <p className="font-azeret mt-[20px] text-[11px] font-light tracking-[-0.333px] text-green-400">
             {countdownRemaining.days}g&nbsp;&nbsp;
             {countdownRemaining.hours}h&nbsp;&nbsp;
             {countdownRemaining.minutes}m
