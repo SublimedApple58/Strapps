@@ -9,7 +9,7 @@ import {
   type ShoeColor,
   type StrapColor,
   PRODUCT_CONFIGS,
-  PRODUCT_IMAGES,
+  PRODUCT_PAGE_IMAGES,
 } from "@/components/strapps/product-config";
 import { fbqTrack } from "@/lib/meta-pixel";
 
@@ -39,7 +39,7 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [slideIndex, setSlideIndex] = useState(0);
 
-  const images = PRODUCT_IMAGES[shoeColor][strapColor];
+  const images: string[] = PRODUCT_PAGE_IMAGES[shoeColor][strapColor];
   const total = images.length;
 
   const prev = () => setSlideIndex((i) => (i - 1 + total) % total);

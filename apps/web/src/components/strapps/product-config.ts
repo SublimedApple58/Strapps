@@ -14,10 +14,10 @@ export const PRODUCT_CONFIGS: Record<ProductVariant, ProductConfig> = {
   last: { tier: "LAST 90", price: "239,99€", checkoutHref: "/checkout/last" },
 };
 
-// Immagini da Figma CDN — 4 angoli per ogni combinazione [right, left, front, back]
-// TODO: scaricare in /public e sostituire con path locali
 const F = (id: string) => `https://www.figma.com/api/mcp/asset/${id}`;
 
+// ─── Foto HOME (sfondo bianco, studio) ─────────────────────────────────────
+// [right, left, front, back]
 export const PRODUCT_IMAGES: Record<ShoeColor, Record<StrapColor, [string, string, string, string]>> = {
   bianco: {
     bianco: [
@@ -45,6 +45,42 @@ export const PRODUCT_IMAGES: Record<ShoeColor, Record<StrapColor, [string, strin
       F("a5594520-c8ec-472d-85a5-dced557c5778"), // left
       F("1dcdb8cd-b4cd-497c-83f4-3cad3dd20be1"), // front
       F("bb81e721-2697-46c1-8cc0-7eb7508f7266"), // back
+    ],
+  },
+};
+
+// ─── Foto PRODUCT PAGE (sfondo scuro, foto editorial) ──────────────────────
+// [hero, right, left, back]
+export const PRODUCT_PAGE_IMAGES: Record<ShoeColor, Record<StrapColor, string[]>> = {
+  bianco: {
+    bianco: [
+      F("9ab2f21e-4183-4c68-b4c8-979cf4803ca2"), // hero
+      F("ddab77c2-dbae-407d-ab71-c04fb5008576"), // right
+      F("8e79e159-7384-4954-a5dc-d4d4d4ce3f2f"), // left
+      F("1ce72d47-fdc9-4fba-ad6a-879368a088c2"), // front
+      F("cb4488ff-ab6d-4504-96db-406f3eaad06c"), // back
+    ],
+    nero: [
+      F("74472e32-f1d0-46b5-bb44-fb8d546c9b6e"), // hero
+      F("499525a8-ac77-43dd-b4a4-27f799b1583f"), // right
+      F("8d7b9cf6-5b67-4ee9-ae00-b033910387b8"), // left
+      F("afbd2eda-ddcd-4d77-9482-0cd466b2dc47"), // front
+      F("6756ce89-db34-4e5b-be23-1e3618e13d0a"), // back
+    ],
+  },
+  nero: {
+    bianco: [
+      F("801c5b39-0553-421d-97df-de63cdf60762"), // hero
+      F("0dcb4875-bc15-40e9-aedd-aef4f5628bbf"), // right
+      F("d3205a2a-e54f-42fa-893e-e18baa4187a5"), // left
+      F("755dbe2a-e6d4-4653-a325-3ec934b9f568"), // back
+    ],
+    nero: [
+      F("b0897a52-a2e2-485c-b182-7e7b0b9f53b4"), // hero
+      F("3eb2c2de-eaf4-40b0-8db8-668fa523e531"), // right
+      F("a7152f87-2db7-4cea-b4fb-d4b1c061b8a7"), // left
+      F("4a6272ea-de3e-4028-ae4f-f014c1457875"), // front
+      F("6a169faa-3a89-402d-8031-3064d5fa087d"), // back
     ],
   },
 };

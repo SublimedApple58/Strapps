@@ -47,10 +47,10 @@ export function HomeDropSection({
     return () => clearInterval(id);
   }, []);
 
-  const activeTier = useMemo(() => (now ? getActiveTier(now) : null), [now]);
-  const countdownView = useMemo(() => (now ? getCountdownView(now) : null), [now]);
+  const activeTier = useMemo(() => (now !== null ? getActiveTier(now) : null), [now]);
+  const countdownView = useMemo(() => (now !== null ? getCountdownView(now) : null), [now]);
   const countdownRemaining = useMemo(
-    () => (countdownView && now ? getRemainingTime(countdownView.target, now) : null),
+    () => (countdownView && now !== null ? getRemainingTime(countdownView.target, now) : null),
     [countdownView, now],
   );
 
@@ -67,59 +67,61 @@ export function HomeDropSection({
         {delivery}
       </p>
 
-      {/* Carosello — contenuto, non full-width */}
-      <div className="mx-auto mt-[28px] w-[76%] max-w-[290px]">
-        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[12px] bg-black">
-          <Image
-            src={images[slideIndex]}
-            alt={`STRAPPS V1 - angolo ${slideIndex + 1}`}
-            fill
-            unoptimized
-            sizes="76vw"
-            className="object-cover"
-            priority={slideIndex === 0}
-          />
-
-          {/* Freccia sinistra */}
-          <button
-            onClick={prev}
-            aria-label="Foto precedente"
-            className="absolute left-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-black/50 backdrop-blur-sm"
-          >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M8 2L3 6L8 10" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-
-          {/* Freccia destra */}
-          <button
-            onClick={next}
-            aria-label="Foto successiva"
-            className="absolute right-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-black/50 backdrop-blur-sm"
-          >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M4 2L9 6L4 10" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-
-          {/* Dots */}
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-[5px]">
-            {images.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setSlideIndex(i)}
-                aria-label={`Foto ${i + 1}`}
-                className={`h-[4px] rounded-full transition-all duration-200 ${
-                  i === slideIndex ? "w-[14px] bg-white" : "w-[4px] bg-white/40"
-                }`}
-              />
-            ))}
+      {/* Carosello — immagine contenuta, frecce ai bordi dello schermo */}
+      <div className="relative mt-[28px] w-full">
+        {/* Immagine */}
+        <div className="mx-auto w-[85%] max-w-[330px]">
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[12px] bg-black">
+            <Image
+              src={images[slideIndex]}
+              alt={`STRAPPS V1 - angolo ${slideIndex + 1}`}
+              fill
+              unoptimized
+              sizes="85vw"
+              className="object-cover"
+              priority={slideIndex === 0}
+            />
+            {/* Dots */}
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-[5px]">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setSlideIndex(i)}
+                  aria-label={`Foto ${i + 1}`}
+                  className={`h-[4px] rounded-full transition-all duration-200 ${
+                    i === slideIndex ? "w-[14px] bg-white" : "w-[4px] bg-white/40"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
+
+        {/* Freccia sinistra — bordo schermo */}
+        <button
+          onClick={prev}
+          aria-label="Foto precedente"
+          className="absolute left-3 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 backdrop-blur-sm"
+        >
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M8 2L3 6L8 10" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        {/* Freccia destra — bordo schermo */}
+        <button
+          onClick={next}
+          aria-label="Foto successiva"
+          className="absolute right-3 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 backdrop-blur-sm"
+        >
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M4 2L9 6L4 10" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
       </div>
 
-      {/* Selettori colore + bottone ENTRA sulla stessa riga */}
-      <div className="mx-auto mt-[24px] flex w-[calc(100vw-68px)] max-w-[360px] items-center justify-between">
+      {/* Selettori colore + ENTRA — allineati in basso */}
+      <div className="mx-auto mt-[24px] flex w-[calc(100vw-68px)] max-w-[360px] items-end justify-between">
         <div className="flex gap-[24px]">
           {/* SCARPA */}
           <div>
@@ -160,7 +162,7 @@ export function HomeDropSection({
           </div>
         </div>
 
-        {/* Bottone ENTRA — visibile solo quando c'è un tier attivo */}
+        {/* ENTRA */}
         {activeTier ? (
           <Link
             href={`/prodotto/${activeTier}`}
@@ -178,28 +180,36 @@ export function HomeDropSection({
         )}
       </div>
 
-      {/* Tutti i tier in griglia 3 colonne — senza divider */}
+      {/* Tutti i tier in griglia 3 colonne, senza divider */}
       <div className="mx-auto mt-[36px] w-[calc(100vw-68px)] max-w-[360px]">
         <div className="grid grid-cols-3 gap-x-[8px]">
-          {tiers.map((tier) => (
-            <div key={tier.id}>
-              <h3 className="font-azeret text-[11px] font-black italic tracking-[-0.333px] text-white">
-                {tier.name}
-              </h3>
-              <div className="font-azeret mt-[10px] text-[11px] font-light leading-[1.4] tracking-[-0.333px] text-white">
-                <p>{tier.price}</p>
-                <p>
-                  rimasti:{" "}
-                  <span className={tier.id === activeTier ? "text-green-400" : "text-white/60"}>
-                    {tier.rimasti}
-                  </span>
-                </p>
+          {tiers.map((tier) => {
+            const isActive = now !== null && tier.id === activeTier;
+            const isDimmed = now !== null && activeTier !== null && !isActive;
+
+            return (
+              <div
+                key={tier.id}
+                className={`transition-opacity duration-300 ${isDimmed ? "opacity-60" : ""}`}
+              >
+                <h3 className="font-azeret text-[11px] font-black italic tracking-[-0.333px] text-white">
+                  {tier.name}
+                </h3>
+                <div className="font-azeret mt-[10px] text-[11px] font-light leading-[1.4] tracking-[-0.333px] text-white">
+                  <p>{tier.price}</p>
+                  <p>
+                    rimasti:{" "}
+                    <span className={isActive ? "text-green-400" : "text-white/60"}>
+                      {tier.rimasti}
+                    </span>
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        {/* Countdown unico sotto la griglia */}
+        {/* Countdown unico */}
         {countdownView && countdownRemaining && (
           <p className="font-azeret mt-[20px] text-[11px] font-light tracking-[-0.333px] text-white/60">
             {countdownView.label}:{" "}

@@ -1,7 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
 import { getSaleCount, initSalesTable } from "@/lib/sales-counter";
 import { HomeDropSection } from "@/components/strapps/home-drop-section";
+import { getActiveTier } from "@/components/strapps/access-tier-schedule";
 
 const HERO_IMAGE = "/hero_image.png";
 
@@ -22,6 +24,7 @@ export default async function Home() {
     // se il DB non è disponibile, mostra il fallback
   }
   const firstRimasti = Math.min(49, Math.max(0, TIER_CAPACITY.first - firstSold));
+  const activeTier = getActiveTier(Date.now());
 
   const tiers = [
     {
@@ -49,6 +52,8 @@ export default async function Home() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-black text-white">
       <div className="mx-auto w-full max-w-6xl px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pt-12">
+
+        {/* ── HERO ─────────────────────────────────────────────────── */}
         <section className="mx-auto w-full max-w-[390px]">
           <SiteNavMenu />
 
@@ -79,25 +84,21 @@ export default async function Home() {
               href="#scegli-il-tuo-accesso"
               className="font-impact mx-auto mt-[13px] flex h-[42px] w-[200px] items-center justify-center rounded-[40px] bg-[#f00707] text-[15px] tracking-[-0.333px] text-white"
             >
-              ISCRIVITI
+              SCOPRI IL DROP
             </a>
-          </div>
-
-          <div className="mt-[61px] mx-auto w-[calc(100vw-68px)] max-w-[322px]">
-            <p className="font-azeret text-[12px] leading-[1.25] tracking-[-0.333px] text-white">
-              STIAMO RIDISEGNANDO IL PASSATO PER CHI SE NE FREGA DEL FUTURO
-            </p>
-            <p className="font-azeret mt-10 text-[12px] leading-[1.25] tracking-[-0.333px] text-white">
-              Ogni uscita è già piena di cose:
-              <br />
-              non aggiungerci anche i lacci.
-              <br />
-              <br />
-              STRAPPS V1 ti dà controllo in 1 gesto senza nodi: Ti allacci al passato o tiri un altro strappo?
-            </p>
           </div>
         </section>
 
+        {/* ── SCEGLI IL TUO ACCESSO ────────────────────────────────── */}
+        <section id="scegli-il-tuo-accesso" className="mt-14 scroll-mt-10">
+          <h2 className="font-impact text-center text-[20px] font-normal tracking-[-0.333px] text-[#f00707]">
+            SCEGLI IL TUO ACCESSO
+          </h2>
+
+          <HomeDropSection tiers={tiers} delivery="Consegna garantita entro il 07/07" />
+        </section>
+
+        {/* ── COS'È STRAPPS ────────────────────────────────────────── */}
         <section className="mt-14">
           <div className="mx-auto w-[calc(100vw-52px)] max-w-[660px]">
             <div className="h-[3px] w-full rounded-full bg-[#f00707]" />
@@ -136,16 +137,26 @@ export default async function Home() {
             </div>
 
             <div className="mt-[46px] h-[3px] w-full rounded-full bg-[#f00707]" />
+
+            {/* Bottone VAI AL DROP — solo se c'è un tier attivo */}
+            {activeTier && (
+              <div className="mt-[36px] flex justify-center">
+                <Link
+                  href={`/prodotto/${activeTier}`}
+                  className="font-impact inline-flex h-[52px] items-center gap-3 rounded-full bg-[#111111] pl-6 pr-3 text-[15px] tracking-[-0.333px] text-white"
+                >
+                  VAI AL DROP
+                  <span className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-black">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                      <path d="M3 11L11 3M11 3H5.5M11 3V8.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                </Link>
+              </div>
+            )}
           </div>
         </section>
 
-        <section id="scegli-il-tuo-accesso" className="mt-14 scroll-mt-10">
-          <h2 className="font-impact text-center text-[20px] font-normal tracking-[-0.333px] text-[#f00707]">
-            SCEGLI IL TUO ACCESSO
-          </h2>
-
-          <HomeDropSection tiers={tiers} delivery="Consegna garantita entro il 07/07" />
-        </section>
       </div>
     </main>
   );
