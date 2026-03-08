@@ -172,12 +172,12 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
           </div>
 
           {/* Link guida taglie */}
-          <div className="mt-[12px] flex justify-center">
+          <div className="mt-[10px] flex justify-center">
             <Link
               href="/guida-taglie"
-              className="font-azeret inline-flex h-[26px] items-center rounded-[13px] bg-[#f00707] px-[14px] text-[10px] tracking-[-0.333px] text-white"
+              className="font-azeret text-[10px] tracking-[-0.333px] text-white/50 underline underline-offset-2"
             >
-              VISUALIZZA TAGLIE
+              Visualizza guida alle taglie
             </Link>
           </div>
 
