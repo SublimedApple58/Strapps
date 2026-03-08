@@ -221,10 +221,13 @@ export function HomeDropSection({
 
         {/* Countdown unico */}
         {countdownView && countdownRemaining && (
-          <p className="font-azeret mt-[20px] text-[11px] font-light tracking-[-0.333px] text-green-400">
-            {countdownRemaining.days}g&nbsp;&nbsp;
-            {countdownRemaining.hours}h&nbsp;&nbsp;
-            {countdownRemaining.minutes}m
+          <p className="font-azeret mt-[20px] text-[11px] font-light tracking-[-0.333px] text-white">
+            {countdownView.label}:{" "}
+            <span className="text-green-400">
+              {countdownRemaining.days}g&nbsp;&nbsp;
+              {countdownRemaining.hours}h&nbsp;&nbsp;
+              {countdownRemaining.minutes}m
+            </span>
           </p>
         )}
       </div>
