@@ -58,7 +58,7 @@ export default async function Home() {
         <section className="mx-auto w-full max-w-[390px]">
           <SiteNavMenu />
 
-          <h1 className="font-azeret relative z-20 mt-[21px] text-center text-[22px] font-black leading-[1.2] tracking-[-0.333px] text-white">
+          <h1 className="font-azeret relative z-20 mt-[21px] text-center text-[22px] font-semibold leading-[1.2] tracking-[-0.333px] text-white">
             CONTROLLO IN 1 GESTO
           </h1>
 
@@ -74,11 +74,13 @@ export default async function Home() {
           </div>
 
           <div className="relative z-10 -mt-[120px]">
-            <p className="font-impact text-center text-[20px] tracking-[-0.333px] text-white">STRAPPS V1</p>
-            <p className="font-azeret mt-[6px] text-center text-[11px] font-normal tracking-[-0.333px] text-white">
+            <p className="font-alumni text-center text-[33.5px] font-extrabold leading-none tracking-[-0.333px] text-white">STRAPPS V1</p>
+            <p className="font-azeret mt-[3px] text-center text-[11px] font-normal tracking-[-0.333px] text-white">
               290 SCARPE NUMERATE
             </p>
-            <ScrollCta targetId="scegli-il-tuo-accesso" />
+            <div className="mt-[20px]">
+              <ScrollCta targetId="scegli-il-tuo-accesso" />
+            </div>
             <p className="font-azeret mt-[12px] text-center text-[8px] font-medium tracking-[-0.333px] text-white/80">
               LISTE APERTE ORA
             </p>

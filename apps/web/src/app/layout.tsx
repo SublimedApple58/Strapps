@@ -20,7 +20,7 @@ const averiaSerifLibre = Averia_Serif_Libre({
 const alumniSans = Alumni_Sans({
   subsets: ["latin"],
   style: ["normal", "italic"],
-  weight: ["400", "700", "900"],
+  weight: ["400", "700", "800", "900"],
   variable: "--font-alumni",
 });
 
