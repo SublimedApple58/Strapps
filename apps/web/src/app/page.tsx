@@ -62,18 +62,18 @@ export default async function Home() {
             CONTROLLO IN 1 GESTO
           </h1>
 
-          <div className="relative mx-auto mt-[16px] aspect-[4/5] w-[80%] max-w-[312px] overflow-hidden rounded-[16px]">
+          <div className="relative left-1/2 -mt-[12px] aspect-[375/490] w-screen -translate-x-1/2 overflow-hidden sm:w-full">
             <Image
               src={HERO_IMAGE}
               alt="Sneaker STRAPPS bianca e nera"
               fill
-              sizes="80vw"
-              className="object-cover object-center"
+              sizes="(max-width: 640px) 100vw, 390px"
+              className="object-cover object-center scale-[1.12]"
               priority
             />
           </div>
 
-          <div className="relative z-10 mt-[20px]">
+          <div className="relative z-10 -mt-[120px]">
             <p className="font-alumni text-center text-[33.5px] font-extrabold leading-none tracking-[-0.333px] text-white">STRAPPS V1</p>
             <p className="font-azeret mt-[3px] text-center text-[11px] font-normal tracking-[-0.333px] text-white">
               290 SCARPE NUMERATE
