@@ -62,13 +62,14 @@ export default async function Home() {
             CONTROLLO IN 1 GESTO
           </h1>
 
-          <div className="relative -mt-[12px] mx-[24px] aspect-[375/490] overflow-hidden rounded-[12px]">
+          <div className="-mt-[12px] mx-[24px] overflow-hidden rounded-[12px]">
             <Image
               src={HERO_IMAGE}
               alt="Sneaker STRAPPS bianca e nera"
-              fill
+              width={1487}
+              height={1845}
               sizes="calc(100vw - 48px)"
-              className="object-cover object-center scale-[1.12]"
+              className="w-full h-auto"
               priority
             />
           </div>
