@@ -62,7 +62,7 @@ export default async function Home() {
             CONTROLLO IN 1 GESTO
           </h1>
 
-          <div className="-mt-[12px] mx-[10px] overflow-hidden rounded-[12px]">
+          <div className="-mt-[22px] mx-[10px] overflow-hidden rounded-[12px]">
             <Image
               src={HERO_IMAGE}
               alt="Sneaker STRAPPS bianca e nera"
@@ -74,7 +74,7 @@ export default async function Home() {
             />
           </div>
 
-          <div className="relative z-10 -mt-[70px]">
+          <div className="relative z-10 -mt-[120px]">
             <p className="font-alumni text-center text-[33.5px] font-extrabold leading-none tracking-[-0.333px] text-white">STRAPPS V1</p>
             <p className="font-azeret mt-[3px] text-center text-[11px] font-normal tracking-[-0.333px] text-white">
               290 SCARPE NUMERATE
