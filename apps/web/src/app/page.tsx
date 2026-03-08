@@ -79,12 +79,14 @@ export default async function Home() {
             </p>
             <a
               href="#scegli-il-tuo-accesso"
-              className="font-alumni mx-auto mt-[13px] flex h-[42px] w-[170px] items-center justify-center gap-[6px] rounded-[40px] bg-[#f00707] text-[20px] font-black leading-none tracking-[-0.333px] text-white"
+              className="font-alumni mx-auto mt-[13px] flex h-[42px] w-[170px] items-center justify-between rounded-[40px] bg-[#f00707] pl-[14px] pr-[5px] text-[20px] font-black leading-none tracking-[-0.333px] text-white"
             >
               SCOPRI IL DROP
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-                <path d="M6.5 2v9M2 7l4.5 4.5L11 7" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <span className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-black/30">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M7 2v10M3 8l4 4 4-4" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
             </a>
             <p className="font-azeret mt-[12px] text-center text-[8px] font-medium tracking-[-0.333px] text-white/80">
               LISTE APERTE ORA
