@@ -4,6 +4,7 @@ import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
 import { getSaleCount, initSalesTable } from "@/lib/sales-counter";
 import { HomeDropSection } from "@/components/strapps/home-drop-section";
 import { getActiveTier } from "@/components/strapps/access-tier-schedule";
+import { ScrollCta } from "@/components/strapps/scroll-cta";
 
 const HERO_IMAGE = "/hero_image.png";
 
@@ -77,17 +78,7 @@ export default async function Home() {
             <p className="font-azeret mt-[6px] text-center text-[11px] font-normal tracking-[-0.333px] text-white">
               290 SCARPE NUMERATE
             </p>
-            <a
-              href="#scegli-il-tuo-accesso"
-              className="font-alumni mx-auto mt-[13px] flex h-[42px] w-[170px] items-center justify-between rounded-[40px] bg-[#f00707] pl-[14px] pr-[5px] text-[20px] font-black leading-none tracking-[-0.333px] text-white"
-            >
-              SCOPRI IL DROP
-              <span className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-black/30">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M7 2v10M3 8l4 4 4-4" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-            </a>
+            <ScrollCta targetId="scegli-il-tuo-accesso" />
             <p className="font-azeret mt-[12px] text-center text-[8px] font-medium tracking-[-0.333px] text-white/80">
               LISTE APERTE ORA
             </p>
