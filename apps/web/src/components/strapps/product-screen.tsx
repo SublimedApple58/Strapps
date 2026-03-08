@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
@@ -31,49 +31,23 @@ const strapColors: { id: StrapColor; label: string; bg: string }[] = [
 
 const sizes = ["38", "39", "40", "41", "42", "43", "44"];
 
-function useCountdown(expiresAt?: number): string {
-  const [display, setDisplay] = useState(() => {
-    if (!expiresAt) return null;
-    const ms = expiresAt - Date.now();
-    if (ms <= 0) return "0m 00s";
-    const m = Math.floor(ms / 60000);
-    const s = Math.floor((ms % 60000) / 1000);
-    return `${m}m ${String(s).padStart(2, "0")}s`;
-  });
-
-  useEffect(() => {
-    if (!expiresAt) return;
-    const tick = () => {
-      const ms = expiresAt - Date.now();
-      if (ms <= 0) { setDisplay("0m 00s"); return; }
-      const m = Math.floor(ms / 60000);
-      const s = Math.floor((ms % 60000) / 1000);
-      setDisplay(`${m}m ${String(s).padStart(2, "0")}s`);
-    };
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, [expiresAt]);
-
-  return display ?? "30m 00s";
-}
-
-export function ProductScreen({ variant, defaultEmail, expiresAt }: { variant: ProductVariant; defaultEmail?: string; expiresAt?: number }) {
+export function ProductScreen({ variant }: { variant: ProductVariant }) {
   const cfg = PRODUCT_CONFIGS[variant];
 
   const [shoeColor, setShoeColor] = useState<ShoeColor>("bianco");
   const [strapColor, setStrapColor] = useState<StrapColor>("bianco");
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
-
-  const countdown = useCountdown(expiresAt);
+  const [slideIndex, setSlideIndex] = useState(0);
 
   const images = PRODUCT_IMAGES[shoeColor][strapColor];
+  const total = images.length;
 
-  const emailParam = defaultEmail ? `&email=${encodeURIComponent(defaultEmail)}` : "";
+  const prev = () => setSlideIndex((i) => (i - 1 + total) % total);
+  const next = () => setSlideIndex((i) => (i + 1) % total);
+
   const checkoutHref =
     `${cfg.checkoutHref}?scarpa=${shoeColor}&strappo=${strapColor}` +
-    (selectedSize ? `&taglia=${selectedSize}` : "") +
-    emailParam;
+    (selectedSize ? `&taglia=${selectedSize}` : "");
 
   return (
     <main className="min-h-screen bg-black pb-20 text-white">
@@ -83,32 +57,61 @@ export function ProductScreen({ variant, defaultEmail, expiresAt }: { variant: P
           <SiteNavMenu />
         </div>
 
-        {/* Timer */}
-        <div className="mt-[37px] px-[20px] text-center">
-          <p className="font-impact text-[20px] tracking-[-0.333px]">TEMPO RIMANENTE</p>
-          <p className="font-impact text-[48px] tracking-[-0.333px] text-[#f00707]">{countdown}</p>
-        </div>
+        {/* Carosello con frecce */}
+        <div className="relative left-1/2 mt-[28px] w-screen -translate-x-1/2">
+          <div className="relative aspect-square w-full overflow-hidden bg-black">
+            <Image
+              src={images[slideIndex]}
+              alt={`STRAPPS V1 - angolo ${slideIndex + 1}`}
+              fill
+              unoptimized
+              sizes="100vw"
+              className="object-cover"
+              priority={slideIndex === 0}
+            />
 
-        {/* Image slider — si aggiorna in base alla selezione colore */}
-        <div className="relative left-1/2 mt-[19px] flex w-screen -translate-x-1/2 snap-x snap-mandatory overflow-x-auto hide-scrollbar">
-          {images.map((src, i) => (
-            <div key={src} className="relative aspect-square w-screen flex-none snap-start overflow-hidden">
-              <Image
-                src={src}
-                alt={`STRAPPS V1 - foto ${i + 1}`}
-                fill
-                sizes="100vw"
-                className="object-cover"
-                priority={i === 0}
-              />
+            {/* Freccia sinistra */}
+            <button
+              onClick={prev}
+              aria-label="Foto precedente"
+              className="absolute left-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 backdrop-blur-sm"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M9 2L4 7L9 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+
+            {/* Freccia destra */}
+            <button
+              onClick={next}
+              aria-label="Foto successiva"
+              className="absolute right-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 backdrop-blur-sm"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M5 2L10 7L5 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+
+            {/* Dots */}
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-[6px]">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setSlideIndex(i)}
+                  aria-label={`Foto ${i + 1}`}
+                  className={`h-[5px] rounded-full transition-all duration-200 ${
+                    i === slideIndex ? "w-[16px] bg-white" : "w-[5px] bg-white/40"
+                  }`}
+                />
+              ))}
             </div>
-          ))}
+          </div>
         </div>
 
         {/* Selezioni */}
         <div className="mt-[58px] px-[20px]">
 
-          {/* CTA acquisto — sopra la selezione colori */}
+          {/* CTA acquisto */}
           <div className="flex flex-col items-center gap-[16px]">
             <p className="font-impact text-[32px] tracking-[-0.5px]">{cfg.price}</p>
             <Link
@@ -130,7 +133,7 @@ export function ProductScreen({ variant, defaultEmail, expiresAt }: { variant: P
             </p>
           </div>
 
-          {/* Colori — due colonne centrate */}
+          {/* Colori */}
           <div className="mt-[44px] flex justify-center gap-[48px]">
             {/* Scarpa */}
             <div>
@@ -141,7 +144,7 @@ export function ProductScreen({ variant, defaultEmail, expiresAt }: { variant: P
                     key={c.id}
                     type="button"
                     aria-label={c.label}
-                    onClick={() => setShoeColor(c.id)}
+                    onClick={() => { setShoeColor(c.id); setSlideIndex(0); }}
                     className={`h-[44px] w-[44px] rounded-[6px] transition-all ${
                       shoeColor === c.id
                         ? "ring-2 ring-[#f00707] ring-offset-2 ring-offset-black"
@@ -162,7 +165,7 @@ export function ProductScreen({ variant, defaultEmail, expiresAt }: { variant: P
                     key={c.id}
                     type="button"
                     aria-label={c.label}
-                    onClick={() => setStrapColor(c.id)}
+                    onClick={() => { setStrapColor(c.id); setSlideIndex(0); }}
                     className={`h-[44px] w-[44px] rounded-[6px] transition-all ${
                       strapColor === c.id
                         ? "ring-2 ring-[#f00707] ring-offset-2 ring-offset-black"
@@ -192,29 +195,6 @@ export function ProductScreen({ variant, defaultEmail, expiresAt }: { variant: P
                 {size}
               </button>
             ))}
-          </div>
-
-          {/* Lock price card */}
-          <div className="mt-[51px] w-full rounded-[28px] border border-white/15 bg-black px-6 py-5">
-            <p className="font-impact text-[14px] leading-snug tracking-[-0.333px]">
-              Blocca la tua scarpa a questo prezzo per 30 giorni
-            </p>
-            <p className="font-azeret mt-[6px] text-[9px] tracking-[-0.333px]">
-              Scalati dal saldo finale*
-            </p>
-            <a
-              href={`/checkout/estendi/${variant}?scarpa=${shoeColor}&strappo=${strapColor}`}
-              onClick={() => fbqTrack("InitiateCheckout", {
-                value: 49,
-                currency: "EUR",
-                checkout_type: "extend",
-                content_ids: ["price_lock_30d"],
-                content_type: "product",
-              })}
-              className="font-impact mt-[16px] flex h-[34px] w-full items-center justify-center rounded-[20px] bg-[#f00707] text-[12px] tracking-[-0.333px] text-white"
-            >
-              ESTENDI&nbsp;&nbsp;49,00€
-            </a>
           </div>
 
         </div>

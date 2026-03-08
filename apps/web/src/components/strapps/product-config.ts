@@ -14,13 +14,37 @@ export const PRODUCT_CONFIGS: Record<ProductVariant, ProductConfig> = {
   last: { tier: "LAST 90", price: "239,99€", checkoutHref: "/checkout/last" },
 };
 
-export const PRODUCT_IMAGES: Record<ShoeColor, Record<StrapColor, [string, string]>> = {
+// Immagini da Figma CDN — 4 angoli per ogni combinazione [right, left, front, back]
+// TODO: scaricare in /public e sostituire con path locali
+const F = (id: string) => `https://www.figma.com/api/mcp/asset/${id}`;
+
+export const PRODUCT_IMAGES: Record<ShoeColor, Record<StrapColor, [string, string, string, string]>> = {
   bianco: {
-    bianco: ["/scarpa_strappo_bianco.png", "/scarpa_strappo_bianco_2.png"],
-    nero: ["/scarpa_bianca_strappo_nero.png", "/scarpa_bianca_strappo_nero_2.png"],
+    bianco: [
+      F("456bd3ca-7d56-4665-8b09-45e9596b15aa"), // right
+      F("2f4908ed-79e6-4bbb-aee4-7c3fddea67f7"), // left
+      F("e9e3181e-3139-496c-abe9-ad21e675b2b3"), // front
+      F("f916a114-3604-478c-96e3-740d5cdfd3fc"), // back
+    ],
+    nero: [
+      F("47ccb31c-7e7c-4fab-8558-96856c94d08e"), // right
+      F("6b53f22d-a3c4-4cff-885a-772989816f93"), // left
+      F("2583edb8-d088-4f6c-8fb8-a98417d95e86"), // front
+      F("4064a126-0778-4f78-93c8-4448754fe25c"), // back
+    ],
   },
   nero: {
-    bianco: ["/scarpa_nera_strappo_bianco.png", "/scarpa_nera_strappo_bianco_2.png"],
-    nero: ["/scarpa_strappo_nero.png", "/scarpa_strappo_nero_2.png"],
+    bianco: [
+      F("811e9bd6-cae5-44a0-8f06-4dc16601abdf"), // right
+      F("6e9803be-4cfc-4ad1-b5e2-00034eb85e48"), // left
+      F("af468051-6242-4d4c-a566-1c93a609266c"), // front
+      F("98f0a818-021d-43ea-9535-8c14b24ae0f7"), // back
+    ],
+    nero: [
+      F("da35c585-ba37-47e5-9ebe-acadc6c962c2"), // right
+      F("a5594520-c8ec-472d-85a5-dced557c5778"), // left
+      F("1dcdb8cd-b4cd-497c-83f4-3cad3dd20be1"), // front
+      F("bb81e721-2697-46c1-8cc0-7eb7508f7266"), // back
+    ],
   },
 };

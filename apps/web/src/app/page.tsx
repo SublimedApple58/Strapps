@@ -1,8 +1,7 @@
 import Image from "next/image";
-import { AccessTierCta } from "@/components/strapps/access-tier-cta";
-import { AccessTierCountdown } from "@/components/strapps/access-tier-countdown";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
 import { getSaleCount, initSalesTable } from "@/lib/sales-counter";
+import { HomeDropSection } from "@/components/strapps/home-drop-section";
 
 const HERO_IMAGE = "/hero_image.png";
 
@@ -24,34 +23,27 @@ export default async function Home() {
   }
   const firstRimasti = Math.min(49, Math.max(0, TIER_CAPACITY.first - firstSold));
 
-  const accessOptions = [
+  const tiers = [
     {
       id: "first" as const,
       name: "FIRST 60",
       price: "189.99€",
       originalPrice: "239.99€",
-      lines: [`rimasti: ${firstRimasti}`],
-      href: "/checkout/accesso/first",
-      cta: "SBLOCCA 1€",
+      rimasti: firstRimasti,
     },
     {
       id: "early" as const,
       name: "EARLY 140",
       price: "219.99€",
       originalPrice: "239.99€",
-      lines: ["Si attiva alla chiusura del livello", "precedente"],
-      href: "/checkout/accesso/early",
-      cta: "SBLOCCA 1€",
     },
     {
       id: "last" as const,
       name: "LAST 90",
       price: "239.99€",
-      lines: ["Si attiva alla chiusura del livello", "precedente."],
-      href: "/checkout/accesso/last",
-      cta: "VAI",
     },
   ];
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-black text-white">
       <div className="mx-auto w-full max-w-6xl px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pt-12">
@@ -79,13 +71,13 @@ export default async function Home() {
           <div className="relative z-10 -mt-[120px]">
             <p className="font-impact text-center text-[20px] tracking-[-0.333px] text-white">STRAPPS V1</p>
             <p className="font-azeret mt-[23px] text-center text-[11px] font-normal tracking-[-0.333px] text-white">
-              SOLO SU <span className="text-[#f00707]">ISCRIZIONE</span>
+              290 SCARPE NUMERATE
             </p>
             <a
               href="#scegli-il-tuo-accesso"
               className="font-impact mx-auto mt-[13px] flex h-[42px] w-[200px] items-center justify-center rounded-[40px] bg-[#f00707] text-[15px] tracking-[-0.333px] text-white"
             >
-              ISCRIVITI AL DROP
+              ISCRIVITI
             </a>
           </div>
 
@@ -150,61 +142,8 @@ export default async function Home() {
             SCEGLI IL TUO ACCESSO
           </h2>
 
-          <div className="mx-auto mt-8 w-[calc(100vw-68px)] max-w-[660px] text-center">
-            <p className="font-azeret text-[12px] font-semibold leading-[1.2] tracking-[-0.333px] text-white">
-              1€ - accedi (non rimborsabile) al livello
-              <br />
-              Accesso valido per 30 minuti
-            </p>
-            <p className="font-azeret mt-6 text-[11px] font-light leading-[1.2] tracking-[-0.333px] text-white">
-              Consegna garantita entro il 07/07
-            </p>
-          </div>
-
-          <div className="mt-[58px]">
-            {accessOptions.map((option, index) => (
-              <div key={option.id}>
-                <article
-                  className={`mx-auto w-[calc(100vw-68px)] max-w-[660px] ${index > 0 ? "mt-[58px]" : ""}`}
-                >
-                  <h3 className="font-azeret text-[13px] font-black italic tracking-[-0.333px]">{option.name}</h3>
-                  <div className="font-azeret mt-[15px] text-[12px] font-light leading-[1.24] tracking-[-0.333px] text-white">
-                    <p className="flex items-baseline gap-2">
-                      <span>{option.price}</span>
-                      {option.originalPrice ? (
-                        <span className="text-white/55 line-through decoration-white/60">{option.originalPrice}</span>
-                      ) : null}
-                    </p>
-                    {option.lines.map((line) => {
-                      const match = line.startsWith("rimasti:") ? line.match(/^(rimasti:\s*)(\d+)$/) : null;
-                      return (
-                        <span key={line} className="block">
-                          {match ? <>{match[1]}<span className="text-green-400">{match[2]}</span></> : line}
-                        </span>
-                      );
-                    })}
-                  </div>
-
-                  <AccessTierCta
-                    tier={option.id}
-                    href={option.href}
-                    label={option.cta}
-                    className={`font-azeret mx-auto mt-[31px] flex h-[35px] w-[150px] items-center justify-center rounded-[20px] text-[13px] font-black italic tracking-[-0.333px] ${option.cta === "SBLOCCA 1€" ? "bg-[#f00707] text-white" : "border border-white/30 bg-[linear-gradient(180deg,rgba(28,31,44,0.55)_0%,rgba(10,10,14,0.72)_100%)] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_10px_16px_rgba(0,0,0,0.35)] backdrop-blur-[6px]"}`}
-                  />
-                  <AccessTierCountdown
-                    tier={option.id}
-                    className="font-azeret mt-[12px] text-center text-[11px] font-light tracking-[-0.333px] text-white/60"
-                  />
-                </article>
-
-                {index < accessOptions.length - 1 && (
-                  <div className="relative left-1/2 mt-10 h-px w-screen -translate-x-1/2 bg-white" />
-                )}
-              </div>
-            ))}
-          </div>
+          <HomeDropSection tiers={tiers} delivery="Consegna garantita entro il 07/07" />
         </section>
-
       </div>
     </main>
   );
