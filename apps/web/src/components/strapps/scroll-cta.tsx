@@ -10,7 +10,7 @@ export function ScrollCta({ targetId }: { targetId: string }) {
     <a
       href={`#${targetId}`}
       onClick={handleClick}
-      className="font-alumni mx-auto mt-[13px] flex h-[42px] w-[170px] items-center justify-between rounded-[40px] bg-[#f00707] pl-[14px] pr-[5px] text-[20px] font-black leading-none tracking-[-0.333px] text-white"
+      className="font-alumni mx-auto mt-[13px] flex h-[42px] w-[170px] items-center justify-center gap-[8px] rounded-[40px] bg-[#f00707] text-[20px] font-black leading-none tracking-[-0.333px] text-white"
     >
       SCOPRI IL DROP
       <span className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-black/30">

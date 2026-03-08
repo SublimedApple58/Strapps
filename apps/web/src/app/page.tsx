@@ -78,7 +78,7 @@ export default async function Home() {
             <p className="font-azeret mt-[3px] text-center text-[11px] font-normal tracking-[-0.333px] text-white">
               290 SCARPE NUMERATE
             </p>
-            <div className="mt-[20px]">
+            <div className="mt-[32px]">
               <ScrollCta targetId="scegli-il-tuo-accesso" />
             </div>
             <p className="font-azeret mt-[12px] text-center text-[8px] font-medium tracking-[-0.333px] text-white/80">
