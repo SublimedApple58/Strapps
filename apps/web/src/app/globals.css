@@ -53,6 +53,10 @@ a {
   font-family: var(--font-averia), "Averia Serif Libre", serif;
 }
 
+.font-alumni {
+  font-family: var(--font-alumni), "Alumni Sans", sans-serif;
+}
+
 .hide-scrollbar {
   scrollbar-width: none;
 }

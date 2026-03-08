@@ -57,12 +57,9 @@ export default async function Home() {
         <section className="mx-auto w-full max-w-[390px]">
           <SiteNavMenu />
 
-          <h1 className="font-azeret relative z-20 mt-[21px] text-[20px] leading-[1.2] tracking-[-0.333px] text-white">
-            IN UN MONDO DI STRINGHE
+          <h1 className="font-azeret relative z-20 mt-[21px] text-center text-[22px] font-black leading-[1.2] tracking-[-0.333px] text-white">
+            CONTROLLO IN 1 GESTO
           </h1>
-          <p className="font-azeret relative z-20 mt-4 text-[12px] leading-none tracking-[-0.333px] text-[#f00707]">
-            DISTINGUITI CON STRAPPS.
-          </p>
 
           <div className="relative left-1/2 -mt-[12px] aspect-[375/490] w-screen -translate-x-1/2 overflow-hidden sm:w-full">
             <Image
@@ -77,16 +74,19 @@ export default async function Home() {
 
           <div className="relative z-10 -mt-[120px]">
             <p className="font-impact text-center text-[20px] tracking-[-0.333px] text-white">STRAPPS V1</p>
-            <p className="font-azeret mt-[23px] text-center text-[11px] font-normal tracking-[-0.333px] text-white">
+            <p className="font-azeret mt-[6px] text-center text-[11px] font-normal tracking-[-0.333px] text-white">
               290 SCARPE NUMERATE
             </p>
             <a
               href="#scegli-il-tuo-accesso"
-              className="font-impact mx-auto mt-[13px] flex h-[42px] w-[200px] items-center justify-center rounded-[40px] bg-[#f00707] text-[15px] tracking-[-0.333px] text-white"
+              className="font-alumni mx-auto mt-[13px] flex h-[42px] w-[170px] items-center justify-center gap-[6px] rounded-[40px] bg-[#f00707] text-[20px] font-black leading-none tracking-[-0.333px] text-white"
             >
               SCOPRI IL DROP
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                <path d="M6.5 2v9M2 7l4.5 4.5L11 7" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </a>
-            <p className="font-azeret mt-[12px] text-center text-[11px] tracking-[-0.333px] text-white/80">
+            <p className="font-azeret mt-[12px] text-center text-[8px] font-medium tracking-[-0.333px] text-white/80">
               LISTE APERTE ORA
             </p>
           </div>
