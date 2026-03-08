@@ -50,37 +50,38 @@ export const PRODUCT_IMAGES: Record<ShoeColor, Record<StrapColor, [string, strin
 };
 
 // ─── Foto PRODUCT PAGE (sfondo scuro, foto editorial) ──────────────────────
-// [hero, right, left, back]
+// [first, right, left, front, back]
 export const PRODUCT_PAGE_IMAGES: Record<ShoeColor, Record<StrapColor, string[]>> = {
   bianco: {
     bianco: [
-      F("9ab2f21e-4183-4c68-b4c8-979cf4803ca2"), // hero
-      F("ddab77c2-dbae-407d-ab71-c04fb5008576"), // right
-      F("8e79e159-7384-4954-a5dc-d4d4d4ce3f2f"), // left
-      F("1ce72d47-fdc9-4fba-ad6a-879368a088c2"), // front
-      F("cb4488ff-ab6d-4504-96db-406f3eaad06c"), // back
+      "/product/bianco_bianco_first.jpg",
+      "/product/bianco_bianco_right.jpg",
+      "/product/bianco_bianco_left.jpg",
+      "/product/bianco_bianco_front.jpg",
+      "/product/bianco_bianco_back.jpg",
     ],
     nero: [
-      F("74472e32-f1d0-46b5-bb44-fb8d546c9b6e"), // hero
-      F("499525a8-ac77-43dd-b4a4-27f799b1583f"), // right
-      F("8d7b9cf6-5b67-4ee9-ae00-b033910387b8"), // left
-      F("afbd2eda-ddcd-4d77-9482-0cd466b2dc47"), // front
-      F("6756ce89-db34-4e5b-be23-1e3618e13d0a"), // back
+      "/product/bianco_nero_first.jpg",
+      "/product/bianco_nero_right.jpg",
+      "/product/bianco_nero_left.jpg",
+      "/product/bianco_nero_front.jpg",
+      "/product/bianco_nero_back.jpg",
     ],
   },
   nero: {
     bianco: [
-      F("801c5b39-0553-421d-97df-de63cdf60762"), // hero
-      F("0dcb4875-bc15-40e9-aedd-aef4f5628bbf"), // right
-      F("d3205a2a-e54f-42fa-893e-e18baa4187a5"), // left
-      F("755dbe2a-e6d4-4653-a325-3ec934b9f568"), // back
+      "/product/nero_bianco_first.jpg",
+      "/product/nero_bianco_right.jpg",
+      "/product/nero_bianco_left.jpg",
+      "/product/nero_bianco_front.jpg",
+      "/product/nero_bianco_back.jpg",
     ],
     nero: [
-      F("b0897a52-a2e2-485c-b182-7e7b0b9f53b4"), // hero
-      F("3eb2c2de-eaf4-40b0-8db8-668fa523e531"), // right
-      F("a7152f87-2db7-4cea-b4fb-d4b1c061b8a7"), // left
-      F("4a6272ea-de3e-4028-ae4f-f014c1457875"), // front
-      F("6a169faa-3a89-402d-8031-3064d5fa087d"), // back
+      "/product/nero_nero_first.jpg",
+      "/product/nero_nero_right.jpg",
+      "/product/nero_nero_left.jpg",
+      "/product/nero_nero_front.jpg",
+      "/product/nero_nero_back.jpg",
     ],
   },
 };
