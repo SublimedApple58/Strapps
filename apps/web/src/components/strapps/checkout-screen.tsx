@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
+import { fbqTrack } from "@/lib/meta-pixel";
 import {
   type ShoeColor,
   type StrapColor,
@@ -152,6 +153,14 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
     setGlobalError(null);
     setLoading(true);
     try {
+      fbqTrack("InitiateCheckout", {
+        content_ids: ["strapps_v1"],
+        content_type: "product",
+        currency: "EUR",
+        value: parseFloat(cfg.price.replace(",", ".").replace("€", "")),
+        checkout_type: "shoe",
+        list_level: variant,
+      });
       await redirectToStripe(variant, fields, shoeColor, strapColor, taglia ?? "");
     } catch (err) {
       setGlobalError(err instanceof Error ? err.message : "Errore imprevisto. Riprova.");
