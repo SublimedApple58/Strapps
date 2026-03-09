@@ -5,6 +5,7 @@ import { getSaleCount, initSalesTable } from "@/lib/sales-counter";
 import { HomeDropSection } from "@/components/strapps/home-drop-section";
 import { getActiveTier } from "@/components/strapps/access-tier-schedule";
 import { ScrollCta } from "@/components/strapps/scroll-cta";
+import { ScrollTracker } from "@/components/strapps/scroll-tracker";
 
 const HERO_IMAGE = "/hero_image.png";
 
@@ -87,6 +88,8 @@ export default async function Home() {
             </p>
           </div>
         </section>
+
+        <ScrollTracker targetId="scegli-il-tuo-accesso" />
 
         {/* ── SCEGLI IL TUO ACCESSO ────────────────────────────────── */}
         <section id="scegli-il-tuo-accesso" className="mt-14 scroll-mt-10">

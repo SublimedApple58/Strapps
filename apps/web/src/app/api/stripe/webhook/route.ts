@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { Resend } from "resend";
 import { stripe } from "@/lib/stripe";
 import { generateAccessToken, TTL_30_MIN, TTL_30_DAYS } from "@/lib/access-token";
+import { sendCAPIEvent, sha256 } from "@/lib/meta-capi";
 import {
   buildAccessoConfirmationTemplate,
   buildEstendiConfirmationTemplate,
@@ -129,6 +130,24 @@ export async function POST(request: Request) {
     } else {
       await stripe.customers.create({ email, metadata: specificMeta });
     }
+
+    // ── Meta CAPI — Purchase ──────────────────────────────────────────────
+    const amountEur = (session.amount_total ?? 0) / 100;
+    const phone = (meta.telefono ?? "").replace(/\s/g, "");
+    await sendCAPIEvent([{
+      event_name: "Purchase",
+      event_id: session.id,
+      event_time: Math.floor(Date.now() / 1000),
+      action_source: "website",
+      user_data: {
+        em: email ? sha256(email) : undefined,
+        ph: phone ? sha256(phone) : undefined,
+      },
+      custom_data: {
+        currency: "EUR",
+        value: amountEur,
+      },
+    }]);
 
     // ── Email contestuale ──────────────────────────────────────────────────
     if (type === "accesso") {

@@ -67,7 +67,7 @@ export default async function CheckoutSuccessPage({ searchParams }: SuccessPageP
 
   return (
     <div className="flex min-h-screen flex-col bg-black text-white">
-      <MetaPixelEvents paymentType={paymentType} tier={tier} amountTotal={amountTotal} />
+      <MetaPixelEvents paymentType={paymentType} amountTotal={amountTotal} sessionId={session_id ?? null} />
       <div className="mx-auto w-full max-w-[390px] flex-1 px-[28px] pb-20 pt-8">
         <SiteNavMenu />
 

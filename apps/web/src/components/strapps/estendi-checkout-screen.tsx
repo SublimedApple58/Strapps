@@ -50,13 +50,7 @@ async function redirectToStripe(tier: EstendiTier, fields: CustomerFields): Prom
   }
 
   const { url } = (await res.json()) as { url: string };
-  fbqTrack("InitiateCheckout", {
-    value: 49,
-    currency: "EUR",
-    checkout_type: "extend",
-    content_ids: ["price_lock_30d"],
-    content_type: "product",
-  });
+  fbqTrack("InitiateCheckout");
   window.location.href = url;
 }
 
@@ -88,6 +82,7 @@ export function EstendiCheckoutScreen({ tier, scarpa, strappo }: EstendiCheckout
   const [errors, setErrors] = useState<Partial<Record<keyof CustomerFields, string>>>({});
   const [globalError, setGlobalError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [addPaymentInfoFired, setAddPaymentInfoFired] = useState(false);
 
   function set(key: keyof CustomerFields) {
     return (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -177,7 +172,16 @@ export function EstendiCheckoutScreen({ tier, scarpa, strappo }: EstendiCheckout
         <div className="relative left-1/2 mt-[40px] h-px w-screen -translate-x-1/2 bg-white/20" />
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="mt-[40px]">
+        <form
+          onSubmit={handleSubmit}
+          className="mt-[40px]"
+          onFocus={() => {
+            if (!addPaymentInfoFired) {
+              fbqTrack("AddPaymentInfo");
+              setAddPaymentInfoFired(true);
+            }
+          }}
+        >
 
           {/* ── DATI PERSONALI ── */}
           <p className="font-impact text-[13px] tracking-[-0.333px] text-white/60">

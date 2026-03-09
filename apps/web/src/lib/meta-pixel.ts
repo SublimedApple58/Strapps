@@ -5,9 +5,13 @@ declare global {
   }
 }
 
-export function fbqTrack(event: string, params?: Record<string, unknown>) {
+export function fbqTrack(
+  event: string,
+  params?: Record<string, unknown>,
+  options?: { eventID?: string },
+) {
   if (typeof window !== "undefined" && window.fbq) {
-    window.fbq("track", event, params);
+    window.fbq("track", event, params ?? {}, options ?? {});
   }
 }
 

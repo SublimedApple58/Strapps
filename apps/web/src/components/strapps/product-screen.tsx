@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
@@ -38,6 +38,13 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
   const [strapColor, setStrapColor] = useState<StrapColor>("bianco");
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [slideIndex, setSlideIndex] = useState(0);
+
+  useEffect(() => {
+    fbqTrack("ViewContent", {
+      content_name: "STRAPPS V1",
+      content_type: "product",
+    });
+  }, []);
 
   const images: string[] = PRODUCT_PAGE_IMAGES[shoeColor][strapColor];
   const total = images.length;
@@ -185,14 +192,7 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
           <div className="mt-[36px] flex flex-col items-center gap-[10px]">
             <Link
               href={checkoutHref}
-              onClick={() => fbqTrack("InitiateCheckout", {
-                value: TIER_PRICE_NUM[variant],
-                currency: "EUR",
-                checkout_type: "shoe",
-                list_level: variant,
-                content_ids: ["strapps_v1"],
-                content_type: "product",
-              })}
+              onClick={() => fbqTrack("InitiateCheckout")}
               className="font-impact flex h-[52px] w-[260px] items-center justify-center rounded-[26px] bg-[#f00707] text-[18px] tracking-[-0.333px] text-white"
             >
               ACQUISTA&nbsp;&nbsp;{cfg.price}
@@ -209,13 +209,7 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
             </p>
             <a
               href={`/checkout/estendi/${variant}?scarpa=${shoeColor}&strappo=${strapColor}`}
-              onClick={() => fbqTrack("InitiateCheckout", {
-                value: 49,
-                currency: "EUR",
-                checkout_type: "extend",
-                content_ids: ["price_lock_30d"],
-                content_type: "product",
-              })}
+              onClick={() => fbqTrack("InitiateCheckout")}
               className="font-impact mx-auto mt-[12px] flex h-[27px] w-[129px] items-center justify-center rounded-[20px] bg-[#f00707] text-[10px] tracking-[-0.333px] text-white"
             >
               ESTENDI&nbsp;&nbsp;49,00€

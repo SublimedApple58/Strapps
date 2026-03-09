@@ -1,45 +1,26 @@
 "use client";
 
 import { useEffect } from "react";
-import { fbqTrack, fbqTrackCustom } from "@/lib/meta-pixel";
+import { fbqTrack } from "@/lib/meta-pixel";
 
 type Props = {
   paymentType: string | null;
-  tier: string | null;
-  amountTotal: number | null; // in euro
+  amountTotal: number | null;
+  sessionId: string | null;
 };
 
-export function MetaPixelEvents({ paymentType, tier, amountTotal }: Props) {
+export function MetaPixelEvents({ paymentType, amountTotal, sessionId }: Props) {
   useEffect(() => {
-    if (!paymentType) return;
+    if (paymentType !== "acquisto" && paymentType !== "accesso" && paymentType !== "estendi") return;
 
-    if (paymentType === "accesso") {
-      fbqTrack("Lead", {
-        value: 1,
-        currency: "EUR",
-        checkout_type: "access_fee",
-        content_ids: ["access_1eur"],
-        content_type: "product",
-      });
-    } else if (paymentType === "acquisto") {
-      fbqTrack("Purchase", {
-        value: amountTotal ?? 0,
-        currency: "EUR",
-        checkout_type: "shoe",
-        list_level: tier ?? "",
-        content_ids: ["strapps_v1"],
-        content_type: "product",
-      });
-    } else if (paymentType === "estendi") {
-      fbqTrackCustom("PurchaseExtend", {
-        value: 49,
-        currency: "EUR",
-        checkout_type: "extend",
-        content_ids: ["price_lock_30d"],
-        content_type: "product",
-        event_id: crypto.randomUUID(),
-      });
-    }
+    const value = amountTotal ?? 0;
+    const eventID = sessionId ?? undefined;
+
+    fbqTrack(
+      "Purchase",
+      { value, currency: "EUR" },
+      eventID ? { eventID } : undefined,
+    );
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

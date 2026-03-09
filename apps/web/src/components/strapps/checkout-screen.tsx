@@ -123,6 +123,7 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
   const [errors, setErrors] = useState<Partial<Record<keyof CustomerFields, string>>>({});
   const [globalError, setGlobalError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [addPaymentInfoFired, setAddPaymentInfoFired] = useState(false);
 
   function set(key: keyof CustomerFields) {
     return (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -153,14 +154,7 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
     setGlobalError(null);
     setLoading(true);
     try {
-      fbqTrack("InitiateCheckout", {
-        content_ids: ["strapps_v1"],
-        content_type: "product",
-        currency: "EUR",
-        value: parseFloat(cfg.price.replace(",", ".").replace("€", "")),
-        checkout_type: "shoe",
-        list_level: variant,
-      });
+      fbqTrack("InitiateCheckout");
       await redirectToStripe(variant, fields, shoeColor, strapColor, taglia ?? "");
     } catch (err) {
       setGlobalError(err instanceof Error ? err.message : "Errore imprevisto. Riprova.");
@@ -230,7 +224,16 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
         <div className="relative left-1/2 mt-[40px] h-px w-screen -translate-x-1/2 bg-white/20" />
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="mt-[40px]">
+        <form
+          onSubmit={handleSubmit}
+          className="mt-[40px]"
+          onFocus={() => {
+            if (!addPaymentInfoFired) {
+              fbqTrack("AddPaymentInfo");
+              setAddPaymentInfoFired(true);
+            }
+          }}
+        >
 
           {/* ── DATI PERSONALI ── */}
           <p className="font-impact text-[13px] tracking-[-0.333px] text-white/60">
