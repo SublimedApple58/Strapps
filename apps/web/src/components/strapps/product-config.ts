@@ -50,7 +50,7 @@ export const PRODUCT_IMAGES: Record<ShoeColor, Record<StrapColor, [string, strin
 };
 
 // ─── Foto PRODUCT PAGE (sfondo scuro, foto editorial) ──────────────────────
-// [first, right, left, front, back]
+// [first, right, left, front]
 export const PRODUCT_PAGE_IMAGES: Record<ShoeColor, Record<StrapColor, string[]>> = {
   bianco: {
     bianco: [
@@ -58,14 +58,12 @@ export const PRODUCT_PAGE_IMAGES: Record<ShoeColor, Record<StrapColor, string[]>
       "/product/bianco_bianco_right.jpg",
       "/product/bianco_bianco_left.jpg",
       "/product/bianco_bianco_front.jpg",
-      "/product/bianco_bianco_back.jpg",
     ],
     nero: [
       "/product/bianco_nero_first.jpg",
       "/product/bianco_nero_right.jpg",
       "/product/bianco_nero_left.jpg",
       "/product/bianco_nero_front.jpg",
-      "/product/bianco_nero_back.jpg",
     ],
   },
   nero: {
@@ -74,14 +72,12 @@ export const PRODUCT_PAGE_IMAGES: Record<ShoeColor, Record<StrapColor, string[]>
       "/product/nero_bianco_right.jpg",
       "/product/nero_bianco_left.jpg",
       "/product/nero_bianco_front.jpg",
-      "/product/nero_bianco_back.jpg",
     ],
     nero: [
       "/product/nero_nero_first.jpg",
       "/product/nero_nero_right.jpg",
       "/product/nero_nero_left.jpg",
       "/product/nero_nero_front.jpg",
-      "/product/nero_nero_back.jpg",
     ],
   },
 };
