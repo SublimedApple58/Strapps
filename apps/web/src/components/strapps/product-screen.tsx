@@ -214,7 +214,7 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
             >
               ESTENDI&nbsp;&nbsp;49,00€
             </a>
-            <p className="font-averia mt-[6px] text-center text-[5px] font-normal tracking-[-0.333px] text-white/50">
+            <p className="font-averia mt-[6px] text-center text-[7px] font-normal tracking-[-0.333px] text-white/50">
               Scalati dal saldo finale*
             </p>
           </div>
