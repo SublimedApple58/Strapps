@@ -197,12 +197,13 @@ export function ProductScreen({ variant, rimasti }: { variant: ProductVariant; r
             >
               ACQUISTA&nbsp;&nbsp;{cfg.price}
             </Link>
-            <p className="font-azeret text-center text-[7px] tracking-[-0.333px] text-white/50">
+            <p className="font-azeret text-center text-[6px] tracking-[-0.333px] text-white/50">
               Rimborso garantito entro 14 giorni dalla consegna*
             </p>
             {rimasti !== undefined && (
-              <p className="font-azeret text-center text-[11px] font-medium tracking-[-0.333px] text-[#f00707]">
-                Rimasti {rimasti}
+              <p className="font-azeret text-center text-[11px] font-medium tracking-[-0.333px]">
+                <span className="text-[#f00707]">● {rimasti}</span>
+                <span className="text-white"> Rimasti</span>
               </p>
             )}
           </div>
