@@ -25,7 +25,7 @@ export default async function Home() {
   } catch {
     // se il DB non è disponibile, mostra il fallback
   }
-  const firstRimasti = Math.max(0, TIER_CAPACITY.first - firstSold);
+  const firstRimasti = Math.min(39, Math.max(0, TIER_CAPACITY.first - firstSold));
   const activeTier = getActiveTier(Date.now());
 
   const tiers = [
