@@ -205,7 +205,7 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
           {/* 4. Card estensione — pill nera stile Figma */}
           <div className="mt-[20px] w-full rounded-[52px] bg-[#111111] px-6 pb-5 pt-4">
             <p className="font-impact text-center text-[12px] leading-snug tracking-[-0.333px] text-white">
-              Blocca il prezzo scontato per 30 giorni
+              Blocca questo prezzo per 30 giorni
             </p>
             <a
               href={`/checkout/estendi/${variant}?scarpa=${shoeColor}&strappo=${strapColor}`}
