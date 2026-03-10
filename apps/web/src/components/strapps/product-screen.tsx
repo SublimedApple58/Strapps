@@ -31,7 +31,7 @@ const strapColors: { id: StrapColor; label: string; bg: string }[] = [
 
 const sizes = ["38", "39", "40", "41", "42", "43", "44"];
 
-export function ProductScreen({ variant }: { variant: ProductVariant }) {
+export function ProductScreen({ variant, rimasti }: { variant: ProductVariant; rimasti?: number }) {
   const cfg = PRODUCT_CONFIGS[variant];
 
   const [shoeColor, setShoeColor] = useState<ShoeColor>("bianco");
@@ -200,6 +200,11 @@ export function ProductScreen({ variant }: { variant: ProductVariant }) {
             <p className="font-azeret text-center text-[7px] tracking-[-0.333px] text-white/50">
               Rimborso garantito entro 14 giorni dalla consegna*
             </p>
+            {rimasti !== undefined && (
+              <p className="font-azeret text-center text-[11px] font-medium tracking-[-0.333px] text-[#f00707]">
+                Rimasti {rimasti}
+              </p>
+            )}
           </div>
 
           {/* 4. Card estensione — pill nera stile Figma */}
