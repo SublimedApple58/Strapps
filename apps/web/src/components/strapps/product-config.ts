@@ -21,30 +21,30 @@ const F = (id: string) => `https://www.figma.com/api/mcp/asset/${id}`;
 export const PRODUCT_IMAGES: Record<ShoeColor, Record<StrapColor, [string, string, string, string]>> = {
   bianco: {
     bianco: [
-      F("456bd3ca-7d56-4665-8b09-45e9596b15aa"), // right
-      F("2f4908ed-79e6-4bbb-aee4-7c3fddea67f7"), // left
-      F("e9e3181e-3139-496c-abe9-ad21e675b2b3"), // front
-      F("f916a114-3604-478c-96e3-740d5cdfd3fc"), // back
+      F("02ae812a-517f-44a5-af2c-d96a288dd9c8"), // right
+      F("a1a3568b-a734-4e64-9f2d-93dfc7b8ddc0"), // left
+      F("012610d4-3e29-441f-8c2d-7b1dc217c27f"), // front
+      F("abb7b0aa-d69b-4448-af28-5935cc78bb8f"), // back
     ],
     nero: [
-      F("47ccb31c-7e7c-4fab-8558-96856c94d08e"), // right
-      F("6b53f22d-a3c4-4cff-885a-772989816f93"), // left
-      F("2583edb8-d088-4f6c-8fb8-a98417d95e86"), // front
-      F("4064a126-0778-4f78-93c8-4448754fe25c"), // back
+      F("e14d943b-9d51-4bfc-b436-7e07308da0d2"), // right
+      F("a4e51ba0-047c-4409-bf14-d5b5d1b7c743"), // left
+      F("281e78d3-09f2-41c8-bb2a-1da6a39cc080"), // front
+      F("b6bc4f80-9f63-446f-b435-e514472821e1"), // back
     ],
   },
   nero: {
     bianco: [
-      F("811e9bd6-cae5-44a0-8f06-4dc16601abdf"), // right
-      F("6e9803be-4cfc-4ad1-b5e2-00034eb85e48"), // left
-      F("af468051-6242-4d4c-a566-1c93a609266c"), // front
-      F("98f0a818-021d-43ea-9535-8c14b24ae0f7"), // back
+      F("c310b611-86a6-4b47-a5d9-40a461cfcc00"), // right
+      F("f259cbb4-37b6-428f-9f5e-9e9a4e3a655e"), // left
+      F("1a4af4dd-02d7-4558-a12b-064a421d1bd2"), // front
+      F("52d35bf1-b0ca-40e4-a54e-fa632f3c84b6"), // back
     ],
     nero: [
-      F("da35c585-ba37-47e5-9ebe-acadc6c962c2"), // right
-      F("a5594520-c8ec-472d-85a5-dced557c5778"), // left
-      F("1dcdb8cd-b4cd-497c-83f4-3cad3dd20be1"), // front
-      F("bb81e721-2697-46c1-8cc0-7eb7508f7266"), // back
+      F("f81abb4f-1dc1-4f50-a5b5-93c7d2e33dc5"), // right
+      F("40667c0b-de86-4267-9aa5-6ad1b2937718"), // left
+      F("d107d434-81d4-4cb1-9b6d-6970f5f725eb"), // front
+      F("6460948f-ac1c-42fc-be6a-85a55689676f"), // back
     ],
   },
 };
