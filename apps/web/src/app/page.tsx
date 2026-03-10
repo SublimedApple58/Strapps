@@ -59,7 +59,7 @@ export default async function Home() {
         <section className="mx-auto w-full max-w-[390px]">
           <SiteNavMenu />
 
-          <h1 className="font-azeret relative z-20 mt-[44px] text-center text-[26px] font-semibold leading-[1.2] tracking-[-0.333px] text-white">
+          <h1 className="font-azeret relative z-20 mt-[44px] text-center text-[26px] font-medium leading-[1.2] tracking-[-0.333px] text-white">
             CONTROLLO IN 1 GESTO
           </h1>
 
