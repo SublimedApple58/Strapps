@@ -25,7 +25,7 @@ export default async function Home() {
   } catch {
     // se il DB non è disponibile, mostra il fallback
   }
-  const firstRimasti = Math.min(39, Math.max(0, TIER_CAPACITY.first - firstSold));
+  const firstRimasti = Math.min(29, Math.max(0, TIER_CAPACITY.first - firstSold));
   const activeTier = getActiveTier(Date.now());
 
   const tiers = [
@@ -83,7 +83,7 @@ export default async function Home() {
             <div className="mt-[32px]">
               <ScrollCta targetId="scegli-il-tuo-accesso" />
             </div>
-            <p className="font-azeret mt-[12px] text-center text-[8px] font-medium tracking-[-0.333px] text-white/80">
+            <p className="font-azeret mt-[12px] text-center text-[8px] font-medium tracking-[-0.333px] text-green-400">
               LISTE APERTE ORA
             </p>
           </div>
