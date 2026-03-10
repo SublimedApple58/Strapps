@@ -208,18 +208,18 @@ export function ProductScreen({ variant, rimasti }: { variant: ProductVariant; r
           </div>
 
           {/* 4. Card estensione — pill nera stile Figma */}
-          <div className="mt-[14px] w-full rounded-[40px] bg-[#111111] px-4 pb-3 pt-3">
-            <p className="font-impact text-center text-[10px] leading-snug tracking-[-0.333px] text-white">
+          <div className="mt-[20px] mx-auto w-fit rounded-[52px] bg-[#111111] px-8 pb-5 pt-4">
+            <p className="font-impact text-center text-[12px] leading-snug tracking-[-0.333px] text-white">
               Blocca questo prezzo per 30 giorni
             </p>
             <a
               href={`/checkout/estendi/${variant}?scarpa=${shoeColor}&strappo=${strapColor}`}
               onClick={() => fbqTrack("InitiateCheckout")}
-              className="font-impact mx-auto mt-[8px] flex h-[23px] w-[115px] items-center justify-center rounded-[20px] bg-[#f00707] text-[9px] tracking-[-0.333px] text-white"
+              className="font-impact mx-auto mt-[12px] flex h-[27px] w-[129px] items-center justify-center rounded-[20px] bg-[#f00707] text-[10px] tracking-[-0.333px] text-white"
             >
               ESTENDI&nbsp;&nbsp;49,00€
             </a>
-            <p className="font-averia mt-[4px] text-center text-[7px] font-normal tracking-[-0.333px] text-white/50">
+            <p className="font-averia mt-[6px] text-center text-[7px] font-normal tracking-[-0.333px] text-white/50">
               Scalati dal saldo finale*
             </p>
           </div>
