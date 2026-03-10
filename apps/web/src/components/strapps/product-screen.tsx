@@ -203,7 +203,7 @@ export function ProductScreen({ variant, rimasti }: { variant: ProductVariant; r
             {rimasti !== undefined && (
               <p className="font-azeret text-center text-[11px] font-medium tracking-[-0.333px]">
                 <span className="text-[#f00707]">● {rimasti}</span>
-                <span className="text-white"> Rimasti</span>
+                <span className="text-white"> rimasti</span>
               </p>
             )}
           </div>
