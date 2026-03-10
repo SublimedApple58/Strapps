@@ -13,9 +13,9 @@ export type RemainingTime = {
 };
 
 const FIRST_OPEN = new Date("2026-03-06T00:00:00+01:00").getTime();
-const SECOND_OPEN = new Date("2026-03-14T00:00:00+01:00").getTime();
-const THIRD_OPEN = new Date("2026-03-21T00:00:00+01:00").getTime();
-const LAST_CLOSE = new Date("2026-03-25T00:00:00+01:00").getTime();
+const SECOND_OPEN = new Date("2026-03-17T00:00:00+01:00").getTime();
+const THIRD_OPEN = new Date("2026-03-24T00:00:00+01:00").getTime();
+const LAST_CLOSE = new Date("2026-03-28T00:00:00+01:00").getTime();
 
 export function getActiveTier(now: number): TierId | null {
   if (now >= FIRST_OPEN && now < SECOND_OPEN) {
