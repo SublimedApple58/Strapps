@@ -209,7 +209,7 @@ export function ProductScreen({ variant, rimasti }: { variant: ProductVariant; r
           </div>
 
           {/* 4. Card estensione — pill nera stile Figma */}
-          <div className="mt-[36px] mx-auto w-fit rounded-[52px] bg-[#111111] px-8 pb-5 pt-4">
+          <div className="mt-[36px] mx-auto w-fit rounded-[52px] bg-[#111111] px-8 pb-3 pt-4">
             <p className="font-impact text-center text-[12px] leading-snug tracking-[-0.333px] text-white">
               Blocca questo prezzo per 30 giorni
             </p>
