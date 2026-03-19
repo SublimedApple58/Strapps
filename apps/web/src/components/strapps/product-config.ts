@@ -52,30 +52,26 @@ export const PRODUCT_IMAGES: Record<ShoeColor, Record<StrapColor, [string, strin
 export const PRODUCT_PAGE_IMAGES: Record<ShoeColor, Record<StrapColor, string[]>> = {
   bianco: {
     bianco: [
-      "/product/bianco_bianco_first.jpg",
-      "/product/bianco_bianco_right.jpg",
-      "/product/bianco_bianco_left.jpg",
-      "/product/bianco_bianco_front.jpg",
+      "/product/bianco_bianco_1.jpg",
+      "/product/bianco_bianco_2.jpg",
+      "/product/bianco_bianco_3.jpg",
     ],
     nero: [
-      "/product/bianco_nero_first.jpg",
-      "/product/bianco_nero_right.jpg",
-      "/product/bianco_nero_left.jpg",
-      "/product/bianco_nero_front.jpg",
+      "/product/bianco_nero_1.jpg",
+      "/product/bianco_nero_2.jpg",
+      "/product/bianco_nero_3.jpg",
     ],
   },
   nero: {
     bianco: [
-      "/product/nero_bianco_first.jpg",
-      "/product/nero_bianco_right.jpg",
-      "/product/nero_bianco_left.jpg",
-      "/product/nero_bianco_front.jpg",
+      "/product/nero_bianco_1.jpg",
+      "/product/nero_bianco_2.jpg",
+      "/product/nero_bianco_3.jpg",
     ],
     nero: [
-      "/product/nero_nero_first.jpg",
-      "/product/nero_nero_right.jpg",
-      "/product/nero_nero_left.jpg",
-      "/product/nero_nero_front.jpg",
+      "/product/nero_nero_1.jpg",
+      "/product/nero_nero_2.jpg",
+      "/product/nero_nero_3.jpg",
     ],
   },
 };
