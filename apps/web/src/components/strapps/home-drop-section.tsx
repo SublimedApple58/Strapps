@@ -6,6 +6,7 @@ import Link from "next/link";
 import { PRODUCT_IMAGES, type ShoeColor, type StrapColor } from "@/components/strapps/product-config";
 import {
   getActiveTier,
+  getDropLinkTier,
   getCountdownView,
   getRemainingTime,
 } from "@/components/strapps/access-tier-schedule";
@@ -48,6 +49,7 @@ export function HomeDropSection({
   }, []);
 
   const activeTier = useMemo(() => (now !== null ? getActiveTier(now) : null), [now]);
+  const dropLinkTier = useMemo(() => (now !== null ? getDropLinkTier(now) : null), [now]);
   const countdownView = useMemo(() => (now !== null ? getCountdownView(now) : null), [now]);
   const countdownRemaining = useMemo(
     () => (countdownView && now !== null ? getRemainingTime(countdownView.target, now) : null),
@@ -163,9 +165,9 @@ export function HomeDropSection({
         </div>
 
         {/* ENTRA */}
-        {activeTier ? (
+        {dropLinkTier ? (
           <Link
-            href={`/prodotto/${activeTier}`}
+            href={`/prodotto/${dropLinkTier}`}
             className="font-azeret flex h-[38px] w-[100px] items-center justify-between rounded-[20px] bg-[#f00707] pl-[14px] pr-[5px] text-[13px] font-black italic tracking-[-0.333px] text-white"
           >
             ENTRA
@@ -175,19 +177,7 @@ export function HomeDropSection({
               </svg>
             </span>
           </Link>
-        ) : (
-          <span
-            aria-disabled="true"
-            className="font-azeret flex h-[38px] w-[100px] cursor-not-allowed select-none items-center justify-between rounded-[20px] bg-[#f00707] pl-[14px] pr-[5px] text-[13px] font-black italic tracking-[-0.333px] text-white opacity-40"
-          >
-            ENTRA
-            <span className="flex h-[28px] w-[28px] items-center justify-center rounded-full bg-black/30">
-              <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M3 11L11 3M11 3H5.5M11 3V8.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
-          </span>
-        )}
+        ) : null}
       </div>
 
       {/* Tutti i tier in griglia 3 colonne, senza divider */}

@@ -34,6 +34,12 @@ export function isTierActive(tier: TierId, now: number): boolean {
   return getActiveTier(now) === tier;
 }
 
+/** Tier da linkare nel bottone: "first" se il drop non è ancora aperto, null se è finito tutto. */
+export function getDropLinkTier(now: number): TierId | null {
+  if (now >= LAST_CLOSE) return null;
+  return getActiveTier(now) ?? "first";
+}
+
 export function getCountdownView(now: number): CountdownView | null {
   if (now < FIRST_OPEN) {
     return { tier: "first", label: "Apre tra", target: FIRST_OPEN };

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SiteNavMenu } from "@/components/strapps/site-nav-menu";
-import { getActiveTier } from "@/components/strapps/access-tier-schedule";
+import { getDropLinkTier } from "@/components/strapps/access-tier-schedule";
 import { ScrollCta } from "@/components/strapps/scroll-cta";
 
 const HERO_IMAGE = "/home/hero_new.jpg";
@@ -10,7 +10,7 @@ const DARK_IMAGE = "/home/dark_editorial.jpg";
 export const revalidate = 60;
 
 export default async function Home() {
-  const activeTier = getActiveTier(Date.now());
+  const activeTier = getDropLinkTier(Date.now());
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-black text-white">
