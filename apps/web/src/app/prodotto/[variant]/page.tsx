@@ -27,16 +27,26 @@ export default async function ProductVariantPage({ params }: ProductPageProps) {
   }
 
   let rimasti: number | undefined;
-  if (variant === "first") {
-    try {
-      await initSalesTable();
-      const sold = await getSaleCount("acquisto", "first");
-      const cap = TIER_CAP[variant] ?? TIER_CAPACITY[variant];
-      rimasti = Math.min(cap, Math.max(0, TIER_CAPACITY[variant] - sold));
-    } catch {
-      // fallback: non mostrare il contatore
+  const allRimasti: Partial<Record<ProductVariant, number>> = {};
+
+  try {
+    await initSalesTable();
+    for (const t of ["first", "early", "last"] as ProductVariant[]) {
+      const sold = await getSaleCount("acquisto", t);
+      const cap = TIER_CAP[t] ?? TIER_CAPACITY[t];
+      const r = Math.min(cap, Math.max(0, TIER_CAPACITY[t] - sold));
+      allRimasti[t] = r;
+      if (t === (variant as ProductVariant)) rimasti = r;
     }
+  } catch {
+    // fallback: non mostrare i contatori
   }
 
-  return <ProductScreen variant={variant as ProductVariant} rimasti={rimasti} />;
+  return (
+    <ProductScreen
+      variant={variant as ProductVariant}
+      rimasti={rimasti}
+      allRimasti={allRimasti}
+    />
+  );
 }

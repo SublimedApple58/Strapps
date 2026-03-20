@@ -199,7 +199,7 @@ export function ProductScreen({
             <div className="mt-[16px] flex flex-wrap items-center justify-center gap-x-[14px] gap-y-[4px]">
               {rimasti !== undefined && (
                 <p className="font-azeret text-[11px] font-medium tracking-[-0.333px]">
-                  <span className="text-[#f00707]">● {rimasti}</span>
+                  <span className="animate-pulse text-[#f00707]">● {rimasti}</span>
                   <span className="text-white"> rimasti</span>
                 </p>
               )}
@@ -243,7 +243,7 @@ export function ProductScreen({
                     </p>
                     {tierRimasti !== undefined && (
                       <p className="font-azeret text-[11px] font-light tracking-[-0.333px] text-white">
-                        rimasti: <span className="text-[#f00707]">{tierRimasti}</span>
+                        rimasti: <span className="animate-pulse text-[#f00707]">{tierRimasti}</span>
                       </p>
                     )}
                   </div>
