@@ -217,7 +217,7 @@ export function ProductScreen({
             <Link
               href={checkoutHref}
               onClick={() => fbqTrack("InitiateCheckout")}
-              className="font-impact flex h-[52px] w-[260px] items-center justify-center rounded-[26px] bg-[#f00707] text-[18px] tracking-[-0.333px] text-white"
+              className="font-impact flex h-[52px] w-[260px] items-center justify-center rounded-[15px] bg-[#f00707] text-[18px] tracking-[-0.333px] text-white"
             >
               ACQUISTA&nbsp;&nbsp;{cfg.price}
             </Link>
@@ -270,14 +270,14 @@ export function ProductScreen({
           </div>
 
           {/* 4. Card estensione */}
-          <div className="mt-[36px] mx-auto w-fit rounded-[52px] bg-[#111111] px-8 pb-3 pt-4">
+          <div className="mt-[36px] mx-auto w-fit rounded-[52px] bg-[#111111] px-8 pb-3 pt-4 flex flex-col items-center">
             <p className="font-impact text-center text-[12px] leading-snug tracking-[-0.333px] text-white">
               Blocca questo prezzo per 30 giorni
             </p>
             <a
               href={`/checkout/estendi/${variant}?scarpa=${shoeColor}&strappo=${strapColor}`}
               onClick={() => fbqTrack("InitiateCheckout")}
-              className="font-impact mx-auto mt-[12px] flex h-[27px] w-[129px] items-center justify-center rounded-[20px] bg-[#f00707] text-[10px] tracking-[-0.333px] text-white"
+              className="font-impact mt-[12px] flex h-[27px] w-[129px] items-center justify-center rounded-[20px] bg-[#f00707] text-[10px] tracking-[-0.333px] text-white"
             >
               ESTENDI&nbsp;&nbsp;49,99€
             </a>
