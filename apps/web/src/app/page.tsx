@@ -147,7 +147,7 @@ export default async function Home() {
       </div>
 
       {/* ── DIVIDER ───────────────────────────────────────────────── */}
-      <div className="mx-auto mt-[48px] w-[calc(100vw-52px)] max-w-[660px]">
+      <div className="mx-auto mb-[48px] w-[calc(100vw-52px)] max-w-[660px]">
         <div className="h-[3px] w-full rounded-full bg-[#f00707]" />
       </div>
     </main>
