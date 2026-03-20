@@ -124,7 +124,7 @@ export default async function Home() {
           className="w-full h-auto"
         />
         {activeTier && (
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 flex items-end justify-center pb-[32px]">
             <Link
               href={`/prodotto/${activeTier}`}
               className="font-alumni inline-flex h-[42px] items-center gap-[8px] rounded-[40px] bg-[#f00707] pl-5 pr-3 text-[20px] font-black leading-none tracking-[-0.333px] text-white"
