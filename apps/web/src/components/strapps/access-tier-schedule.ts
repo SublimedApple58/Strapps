@@ -34,6 +34,13 @@ export function isTierActive(tier: TierId, now: number): boolean {
   return getActiveTier(now) === tier;
 }
 
+/** Data di chiusura di ogni tier (indipendente dall'ora corrente). */
+export function getTierCloseTarget(tier: TierId): number {
+  if (tier === "first") return SECOND_OPEN;
+  if (tier === "early") return THIRD_OPEN;
+  return LAST_CLOSE;
+}
+
 /** Tier da linkare nel bottone: "first" se il drop non è ancora aperto, null se è finito tutto. */
 export function getDropLinkTier(now: number): TierId | null {
   if (now >= LAST_CLOSE) return null;

@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { type ProductVariant, PRODUCT_CONFIGS } from "@/components/strapps/product-config";
 import { ProductScreen } from "@/components/strapps/product-screen";
 import { getSaleCount, initSalesTable } from "@/lib/sales-counter";
-import { getCountdownView, getRemainingTime } from "@/components/strapps/access-tier-schedule";
+import { getTierCloseTarget, getRemainingTime } from "@/components/strapps/access-tier-schedule";
 
 const TIER_CAPACITY: Record<string, number> = {
   first: 60,
@@ -45,15 +45,13 @@ export default async function ProductVariantPage({ params }: ProductPageProps) {
   }
 
   const now = Date.now();
-  const countdown = getCountdownView(now);
+  const closeTarget = getTierCloseTarget(variant as "first" | "early" | "last");
+  const rt = getRemainingTime(closeTarget, now);
   let chiudeTra: string | undefined;
-  if (countdown && countdown.tier === variant && countdown.label === "Chiude tra") {
-    const rt = getRemainingTime(countdown.target, now);
-    if (rt) {
-      if (rt.days > 0) chiudeTra = `${rt.days}g ${rt.hours}h ${rt.minutes}m`;
-      else if (rt.hours > 0) chiudeTra = `${rt.hours}h ${rt.minutes}m`;
-      else chiudeTra = `${rt.minutes}m`;
-    }
+  if (rt) {
+    if (rt.days > 0) chiudeTra = `${rt.days}g ${rt.hours}h ${rt.minutes}m`;
+    else if (rt.hours > 0) chiudeTra = `${rt.hours}h ${rt.minutes}m`;
+    else chiudeTra = `${rt.minutes}m`;
   }
 
   return (
