@@ -37,7 +37,7 @@ export default async function Home() {
             />
           </div>
 
-          <div className="relative z-10 -mt-[110px]">
+          <div className="relative z-10 mt-[16px]">
             <p className="font-alumni text-center text-[33.5px] font-extrabold leading-none tracking-[-0.1px] text-white">
               STRAPPS V1
             </p>
@@ -66,18 +66,14 @@ export default async function Home() {
       {/* ── COS'È STRAPPS ─────────────────────────────────────────── */}
       <section
         id="cos-e-strapps"
-        className="relative mx-auto mt-[46px] w-full max-w-[390px] scroll-mt-10 overflow-hidden pb-[48px]"
+        className="mx-auto mt-[46px] w-full max-w-[390px] scroll-mt-10 pb-[48px] px-[22px]"
       >
-        {/* Barra rossa verticale destra */}
-        <div className="absolute right-0 top-0 h-full w-[58px] bg-[#f00707] rounded-l-none" />
-
-        <div className="relative z-10 px-[22px]">
           <h2 className="font-alumni text-center text-[28px] font-black italic tracking-[-0.333px] text-[#f00707]">
             COS&apos;È&nbsp;&nbsp;STRAPPS
           </h2>
 
           {/* 2 colonne */}
-          <div className="mt-[36px] flex gap-[18px] pr-[66px]">
+          <div className="mt-[36px] flex gap-[18px]">
             {/* Colonna sinistra */}
             <div className="flex-1">
               <h3 className="font-azeret text-[13px] font-black italic tracking-[-0.333px] text-white">
@@ -103,7 +99,7 @@ export default async function Home() {
           </div>
 
           {/* PAGAMENTI VERIFICATI */}
-          <div className="mt-[48px] pr-[66px] text-center">
+          <div className="mt-[48px] text-center">
             <h3 className="font-azeret text-[13px] font-black italic tracking-[-0.333px] text-white">
               PAGAMENTI VERIFICATI + CONSEGNA RAPIDA
             </h3>
@@ -115,7 +111,6 @@ export default async function Home() {
               Consegna in 5 giorni dal nostro magazzino
             </p>
           </div>
-        </div>
       </section>
 
       {/* ── DARK IMAGE + VAI AL DROP ──────────────────────────────── */}
@@ -152,7 +147,7 @@ export default async function Home() {
       </div>
 
       {/* ── DIVIDER ───────────────────────────────────────────────── */}
-      <div className="mx-auto w-[calc(100vw-52px)] max-w-[660px]">
+      <div className="mx-auto mt-[48px] w-[calc(100vw-52px)] max-w-[660px]">
         <div className="h-[3px] w-full rounded-full bg-[#f00707]" />
       </div>
     </main>
