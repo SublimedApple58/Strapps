@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Azeret_Mono, Averia_Serif_Libre, Alumni_Sans } from "next/font/google";
+import Script from "next/script";
 import { SiteFooter } from "@/components/strapps/site-footer";
 import "./globals.css";
 
@@ -47,6 +48,19 @@ export default function RootLayout({
         <noscript dangerouslySetInnerHTML={{ __html: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1966122067585580&ev=PageView&noscript=1" />` }} />
       </head>
       <body className={`${azeretMono.variable} ${averiaSerifLibre.variable} ${alumniSans.variable} antialiased`}>
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-VQS3GX5R3H"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-VQS3GX5R3H');
+          `}
+        </Script>
         {children}
         <SiteFooter />
       </body>
