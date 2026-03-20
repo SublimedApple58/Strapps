@@ -12,15 +12,13 @@ const TIER_LABEL: Record<EstendiTier, string> = {
   last: "LAST 90",
 };
 
-const PRICE = "49,00€";
+const PRICE = "49,99€";
 
 type EstendiCheckoutScreenProps = {
   tier: EstendiTier;
   scarpa?: string;
   strappo?: string;
 };
-
-type PaymentMethod = "carta" | "apple" | "google";
 
 interface CustomerFields {
   email: string;
@@ -29,29 +27,25 @@ interface CustomerFields {
   telefono: string;
 }
 
-async function redirectToStripe(tier: EstendiTier, fields: CustomerFields): Promise<void> {
-  const res = await fetch("/api/stripe/create-session", {
+async function saveFakeEstendi(tier: EstendiTier, fields: CustomerFields, scarpa?: string, strappo?: string): Promise<void> {
+  const res = await fetch("/api/checkout/fake", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      type: "estendi",
       tier,
       email: fields.email.trim().toLowerCase(),
       nome: fields.nome.trim(),
       cognome: fields.cognome.trim(),
       telefono: fields.telefono.trim(),
-      cancelPath: `/checkout/estendi/${tier}`,
+      scarpa: scarpa ?? null,
+      strappo: strappo ?? null,
     }),
   });
 
   if (!res.ok) {
     const data = (await res.json()) as { error?: string };
-    throw new Error(data.error ?? "Errore nel creare la sessione di pagamento");
+    throw new Error(data.error ?? "Errore. Riprova.");
   }
-
-  const { url } = (await res.json()) as { url: string };
-  fbqTrack("InitiateCheckout");
-  window.location.href = url;
 }
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -61,12 +55,6 @@ function inputClass(hasError?: boolean) {
     hasError ? "border-[#f00707]" : "border-white/30"
   } bg-transparent px-4 text-[12px] font-light tracking-[-0.333px] text-white placeholder:text-white/30 outline-none focus:border-[#f00707] transition-colors`;
 }
-
-const PAYMENT_METHODS: { id: PaymentMethod; label: string }[] = [
-  { id: "carta", label: "Carta" },
-  { id: "apple", label: "Apple Pay" },
-  { id: "google", label: "Google Pay" },
-];
 
 export function EstendiCheckoutScreen({ tier, scarpa, strappo }: EstendiCheckoutScreenProps) {
   const tierLabel = TIER_LABEL[tier];
@@ -78,7 +66,6 @@ export function EstendiCheckoutScreen({ tier, scarpa, strappo }: EstendiCheckout
     telefono: "",
   });
 
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("carta");
   const [errors, setErrors] = useState<Partial<Record<keyof CustomerFields, string>>>({});
   const [globalError, setGlobalError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -93,12 +80,10 @@ export function EstendiCheckoutScreen({ tier, scarpa, strappo }: EstendiCheckout
 
   function validate(): boolean {
     const newErrors: Partial<Record<keyof CustomerFields, string>> = {};
-
     if (!EMAIL_REGEX.test(fields.email.trim())) newErrors.email = "Email non valida";
     if (!fields.nome.trim()) newErrors.nome = "Campo obbligatorio";
     if (!fields.cognome.trim()) newErrors.cognome = "Campo obbligatorio";
     if (!fields.telefono.trim()) newErrors.telefono = "Campo obbligatorio";
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }
@@ -109,7 +94,9 @@ export function EstendiCheckoutScreen({ tier, scarpa, strappo }: EstendiCheckout
     setGlobalError(null);
     setLoading(true);
     try {
-      await redirectToStripe(tier, fields);
+      fbqTrack("InitiateCheckout");
+      await saveFakeEstendi(tier, fields, scarpa, strappo);
+      window.location.href = "/checkout/grazie";
     } catch (err) {
       setGlobalError(err instanceof Error ? err.message : "Errore imprevisto. Riprova.");
       setLoading(false);
@@ -164,7 +151,7 @@ export function EstendiCheckoutScreen({ tier, scarpa, strappo }: EstendiCheckout
           </div>
 
           <p className="font-azeret mt-[16px] text-[10px] font-light tracking-[-0.333px] text-white/40">
-            * I 49,00€ verranno scalati dal prezzo finale della scarpa al completamento dell&apos;acquisto.
+            * I 49,99€ verranno scalati dal prezzo finale della scarpa al completamento dell&apos;acquisto.
           </p>
         </section>
 
@@ -182,14 +169,11 @@ export function EstendiCheckoutScreen({ tier, scarpa, strappo }: EstendiCheckout
             }
           }}
         >
-
-          {/* ── DATI PERSONALI ── */}
           <p className="font-impact text-[13px] tracking-[-0.333px] text-white/60">
             DATI PERSONALI
           </p>
 
           <div className="mt-[20px] flex flex-col gap-[20px]">
-
             <div>
               <p className="font-azeret text-[12px] font-light tracking-[-0.333px]">Email*</p>
               <input
@@ -252,34 +236,11 @@ export function EstendiCheckoutScreen({ tier, scarpa, strappo }: EstendiCheckout
             </div>
           </div>
 
-          {/* ── METODO DI PAGAMENTO ── */}
-          <p className="font-impact mt-[36px] text-[13px] tracking-[-0.333px] text-white/60">
-            METODO DI PAGAMENTO
-          </p>
-
-          {/* Selector a pillole */}
-          <div className="mt-[16px] flex gap-[8px]">
-            {PAYMENT_METHODS.map((m) => (
-              <button
-                key={m.id}
-                type="button"
-                onClick={() => setPaymentMethod(m.id)}
-                className={`font-azeret flex-1 rounded-[20px] border py-[10px] text-[11px] font-light tracking-[-0.333px] transition-colors ${
-                  paymentMethod === m.id
-                    ? "border-[#f00707] bg-[#f00707] text-white"
-                    : "border-white/20 bg-transparent text-white/60"
-                }`}
-              >
-                {m.label}
-              </button>
-            ))}
-          </div>
-
-          {/* CTA unica */}
+          {/* CTA */}
           <button
             type="submit"
             disabled={loading}
-            className="font-azeret mt-[20px] h-[48px] w-full rounded-[24px] bg-[#f00707] text-[15px] font-black tracking-[-0.333px] text-white disabled:opacity-50"
+            className="font-azeret mt-[36px] h-[48px] w-full rounded-[15px] bg-[#f00707] text-[15px] font-black tracking-[-0.333px] text-white disabled:opacity-50"
           >
             {loading ? "Attendere..." : `Paga ${PRICE}`}
           </button>
@@ -289,9 +250,8 @@ export function EstendiCheckoutScreen({ tier, scarpa, strappo }: EstendiCheckout
           )}
 
           <p className="font-azeret mt-[14px] text-center text-[9px] font-light tracking-[-0.333px] text-white/30">
-            Pagamento sicuro · I 49€ verranno scalati dall&apos;acquisto finale*
+            Pagamento sicuro · I 49,99€ verranno scalati dall&apos;acquisto finale*
           </p>
-
         </form>
       </div>
     </main>
