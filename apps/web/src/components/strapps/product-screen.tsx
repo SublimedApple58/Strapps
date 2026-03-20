@@ -277,7 +277,7 @@ export function ProductScreen({
             <a
               href={`/checkout/estendi/${variant}?scarpa=${shoeColor}&strappo=${strapColor}`}
               onClick={() => fbqTrack("InitiateCheckout")}
-              className="font-impact mt-[12px] flex h-[27px] w-[129px] items-center justify-center rounded-[20px] bg-[#f00707] text-[10px] tracking-[-0.333px] text-white"
+              className="font-impact mt-[12px] flex h-[27px] w-[129px] items-center justify-center rounded-[15px] bg-[#f00707] text-[10px] tracking-[-0.333px] text-white"
             >
               ESTENDI&nbsp;&nbsp;49,99€
             </a>

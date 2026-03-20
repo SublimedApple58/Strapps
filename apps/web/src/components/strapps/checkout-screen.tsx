@@ -33,8 +33,6 @@ type CheckoutScreenProps = {
   defaultEmail?: string;
 };
 
-type PaymentMethod = "carta" | "apple" | "google";
-
 interface CustomerFields {
   email: string;
   nome: string;
@@ -47,23 +45,19 @@ interface CustomerFields {
   paese: string;
 }
 
-async function redirectToStripe(
+async function saveFakeCheckout(
   variant: CheckoutVariant,
   fields: CustomerFields,
   scarpa: string,
   strappo: string,
   taglia: string,
 ): Promise<void> {
-  const res = await fetch("/api/stripe/create-session", {
+  const res = await fetch("/api/checkout/fake", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      type: "acquisto",
       tier: variant,
       email: fields.email.trim().toLowerCase(),
-      scarpa,
-      strappo,
-      taglia,
       nome: fields.nome.trim(),
       cognome: fields.cognome.trim(),
       telefono: fields.telefono.trim(),
@@ -72,17 +66,16 @@ async function redirectToStripe(
       regione: fields.regione.trim(),
       cap: fields.cap.trim(),
       paese: fields.paese.trim(),
-      cancelPath: `/checkout/${variant}?scarpa=${scarpa}&strappo=${strappo}${taglia ? `&taglia=${taglia}` : ""}`,
+      scarpa,
+      strappo,
+      taglia,
     }),
   });
 
   if (!res.ok) {
     const data = (await res.json()) as { error?: string };
-    throw new Error(data.error ?? "Errore nel creare la sessione di pagamento");
+    throw new Error(data.error ?? "Errore. Riprova.");
   }
-
-  const { url } = (await res.json()) as { url: string };
-  window.location.href = url;
 }
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -119,7 +112,6 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
     paese: "Italia",
   });
 
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("carta");
   const [errors, setErrors] = useState<Partial<Record<keyof CustomerFields, string>>>({});
   const [globalError, setGlobalError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -155,18 +147,13 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
     setLoading(true);
     try {
       fbqTrack("InitiateCheckout");
-      await redirectToStripe(variant, fields, shoeColor, strapColor, taglia ?? "");
+      await saveFakeCheckout(variant, fields, shoeColor, strapColor, taglia ?? "");
+      window.location.href = "/checkout/grazie";
     } catch (err) {
       setGlobalError(err instanceof Error ? err.message : "Errore imprevisto. Riprova.");
       setLoading(false);
     }
   }
-
-  const PAYMENT_METHODS: { id: PaymentMethod; label: string }[] = [
-    { id: "carta", label: "Carta" },
-    { id: "apple", label: "Apple Pay" },
-    { id: "google", label: "Google Pay" },
-  ];
 
   return (
     <main className="min-h-screen bg-black text-white">
@@ -388,30 +375,7 @@ export function CheckoutScreen({ variant, scarpa, strappo, taglia, defaultEmail 
             </div>
           </div>
 
-          {/* ── METODO DI PAGAMENTO ── */}
-          <p className="font-impact mt-[36px] text-[13px] tracking-[-0.333px] text-white/60">
-            METODO DI PAGAMENTO
-          </p>
-
-          {/* Selector a pillole */}
-          <div className="mt-[16px] flex gap-[8px]">
-            {PAYMENT_METHODS.map((m) => (
-              <button
-                key={m.id}
-                type="button"
-                onClick={() => setPaymentMethod(m.id)}
-                className={`font-azeret flex-1 rounded-[20px] border py-[10px] text-[11px] font-light tracking-[-0.333px] transition-colors ${
-                  paymentMethod === m.id
-                    ? "border-[#f00707] bg-[#f00707] text-white"
-                    : "border-white/20 bg-transparent text-white/60"
-                }`}
-              >
-                {m.label}
-              </button>
-            ))}
-          </div>
-
-          {/* CTA unica */}
+          {/* CTA */}
           <button
             type="submit"
             disabled={loading}
