@@ -13,12 +13,6 @@ import {
 } from "@/components/strapps/product-config";
 import { fbqTrack } from "@/lib/meta-pixel";
 
-const TIER_PRICE_NUM: Record<ProductVariant, number> = {
-  first: 189.99,
-  early: 219.99,
-  last: 239.99,
-};
-
 const shoeColors: { id: ShoeColor; label: string; bg: string }[] = [
   { id: "bianco", label: "Bianco", bg: "#d9d9d9" },
   { id: "nero", label: "Nero", bg: "#1e1e1e" },
@@ -31,7 +25,19 @@ const strapColors: { id: StrapColor; label: string; bg: string }[] = [
 
 const sizes = ["38", "39", "40", "41", "42", "43", "44"];
 
-export function ProductScreen({ variant, rimasti }: { variant: ProductVariant; rimasti?: number }) {
+const TIER_ORDER: ProductVariant[] = ["first", "early", "last"];
+
+export function ProductScreen({
+  variant,
+  rimasti,
+  chiudeTra,
+  allRimasti = {},
+}: {
+  variant: ProductVariant;
+  rimasti?: number;
+  chiudeTra?: string;
+  allRimasti?: Partial<Record<ProductVariant, number>>;
+}) {
   const cfg = PRODUCT_CONFIGS[variant];
 
   const [shoeColor, setShoeColor] = useState<ShoeColor>("bianco");
@@ -188,8 +194,26 @@ export function ProductScreen({ variant, rimasti }: { variant: ProductVariant; r
             </Link>
           </div>
 
-          {/* 3. CTA acquisto con prezzo dentro il bottone */}
-          <div className="mt-[36px] flex flex-col items-center gap-[10px]">
+          {/* rimasti + chiude tra */}
+          {(rimasti !== undefined || chiudeTra) && (
+            <div className="mt-[16px] flex flex-wrap items-center justify-center gap-x-[14px] gap-y-[4px]">
+              {rimasti !== undefined && (
+                <p className="font-azeret text-[11px] font-medium tracking-[-0.333px]">
+                  <span className="text-[#f00707]">● {rimasti}</span>
+                  <span className="text-white"> rimasti</span>
+                </p>
+              )}
+              {chiudeTra && (
+                <p className="font-azeret text-[11px] tracking-[-0.333px]">
+                  <span className="font-bold text-white">Chiude tra: </span>
+                  <span className="font-light text-[#f00707]">{chiudeTra}</span>
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* 3. CTA acquisto */}
+          <div className="mt-[16px] flex flex-col items-center gap-[8px]">
             <Link
               href={checkoutHref}
               onClick={() => fbqTrack("InitiateCheckout")}
@@ -198,17 +222,45 @@ export function ProductScreen({ variant, rimasti }: { variant: ProductVariant; r
               ACQUISTA&nbsp;&nbsp;{cfg.price}
             </Link>
             <p className="font-azeret text-center text-[6px] tracking-[-0.333px] text-white/50">
-              Rimborso garantito entro 14 giorni dalla consegna*
+              Consegna in 5 giorni, reso entro 14 giorni dalla consegna
             </p>
-            {rimasti !== undefined && (
-              <p className="font-azeret text-center text-[11px] font-medium tracking-[-0.333px]">
-                <span className="text-[#f00707]">● {rimasti}</span>
-                <span className="text-white"> rimasti</span>
-              </p>
-            )}
           </div>
 
-          {/* 4. Card estensione — pill nera stile Figma */}
+          {/* Drop tiers */}
+          <div className="mt-[28px] flex items-start justify-between px-[4px]">
+            {TIER_ORDER.map((t, idx) => {
+              const tierCfg = PRODUCT_CONFIGS[t];
+              const isActive = t === variant;
+              const tierRimasti = allRimasti[t] ?? (t === variant ? rimasti : undefined);
+              return (
+                <div key={t} className="flex items-start gap-[6px]">
+                  <div className={isActive ? "opacity-100" : "opacity-40"}>
+                    <p className="font-azeret text-[11px] font-black italic tracking-[-0.333px] text-white">
+                      {tierCfg.tier}
+                    </p>
+                    <p className="font-azeret mt-[4px] text-[12px] font-light tracking-[-0.333px] text-white">
+                      {tierCfg.price}
+                    </p>
+                    {tierRimasti !== undefined && (
+                      <p className="font-azeret text-[11px] font-light tracking-[-0.333px] text-white">
+                        rimasti: <span className="text-[#f00707]">{tierRimasti}</span>
+                      </p>
+                    )}
+                  </div>
+                  {/* Freccia → tra i tier */}
+                  {idx < 2 && (
+                    <div className="mt-[3px] shrink-0">
+                      <svg width="16" height="8" viewBox="0 0 16 8" fill="none">
+                        <path d="M1 4H15M15 4L11 1M15 4L11 7" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.5"/>
+                      </svg>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* 4. Card estensione */}
           <div className="mt-[36px] mx-auto w-fit rounded-[52px] bg-[#111111] px-8 pb-3 pt-4">
             <p className="font-impact text-center text-[12px] leading-snug tracking-[-0.333px] text-white">
               Blocca questo prezzo per 30 giorni
@@ -218,7 +270,7 @@ export function ProductScreen({ variant, rimasti }: { variant: ProductVariant; r
               onClick={() => fbqTrack("InitiateCheckout")}
               className="font-impact mx-auto mt-[12px] flex h-[27px] w-[129px] items-center justify-center rounded-[20px] bg-[#f00707] text-[10px] tracking-[-0.333px] text-white"
             >
-              ESTENDI&nbsp;&nbsp;49,00€
+              ESTENDI&nbsp;&nbsp;49,99€
             </a>
             <p className="font-averia mt-[6px] text-center text-[7px] font-normal tracking-[-0.333px] text-white/50">
               Scalati dal saldo finale*
