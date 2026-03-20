@@ -44,7 +44,7 @@ export default async function Home() {
             <p className="font-azeret mt-[3px] text-center text-[11px] font-medium tracking-[0.5px] text-white">
               290 SCARPE NUMERATE
             </p>
-            <div className="mt-[6px] flex justify-center">
+            <div className="mt-[2px] flex justify-center">
               <ScrollCta targetId="cos-e-strapps" />
             </div>
             <div className="mt-[10px] flex items-center justify-center gap-[5px]">
