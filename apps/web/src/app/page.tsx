@@ -44,7 +44,7 @@ export default async function Home() {
             <p className="font-azeret mt-[3px] text-center text-[11px] font-medium tracking-[0.5px] text-white">
               290 SCARPE NUMERATE
             </p>
-            <div className="mt-[32px] flex justify-center">
+            <div className="mt-[14px] flex justify-center">
               <ScrollCta targetId="cos-e-strapps" />
             </div>
             <div className="mt-[10px] flex items-center justify-center gap-[5px]">
@@ -147,7 +147,7 @@ export default async function Home() {
       </div>
 
       {/* ── DIVIDER ───────────────────────────────────────────────── */}
-      <div className="mx-auto mb-[48px] w-[calc(100vw-52px)] max-w-[660px]">
+      <div className="mx-auto mt-[12px] mb-[48px] w-[calc(100vw-52px)] max-w-[660px]">
         <div className="h-[3px] w-full rounded-full bg-[#f00707]" />
       </div>
     </main>
