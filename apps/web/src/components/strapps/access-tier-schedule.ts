@@ -12,10 +12,10 @@ export type RemainingTime = {
   minutes: number;
 };
 
-const FIRST_OPEN = new Date("2026-03-20T12:00:00+01:00").getTime();
-const SECOND_OPEN = new Date("2026-03-31T12:00:00+01:00").getTime();
-const THIRD_OPEN = new Date("2026-04-07T12:00:00+01:00").getTime();
-const LAST_CLOSE = new Date("2026-04-11T12:00:00+01:00").getTime();
+const FIRST_OPEN  = new Date("2026-03-20T12:00:00+01:00").getTime(); // FIRST apre
+const SECOND_OPEN = new Date("2026-03-24T12:00:00+01:00").getTime(); // FIRST chiude / EARLY apre (+4g)
+const THIRD_OPEN  = new Date("2026-03-31T12:00:00+01:00").getTime(); // EARLY chiude / LAST apre (+7g)
+const LAST_CLOSE  = new Date("2026-04-04T12:00:00+01:00").getTime(); // LAST chiude (+4g)
 
 export function getActiveTier(now: number): TierId | null {
   if (now >= FIRST_OPEN && now < SECOND_OPEN) {
