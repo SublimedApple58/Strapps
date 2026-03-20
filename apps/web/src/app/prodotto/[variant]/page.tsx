@@ -13,6 +13,25 @@ const TIER_CAP: Record<string, number> = {
   first: 29,
 };
 
+// ─── Data di chiusura per ogni tier (aggiorna qui) ──────────────────────────
+const TIER_CLOSE_AT: Partial<Record<string, Date>> = {
+  first: new Date("2026-04-01T23:59:00+02:00"),
+  early: new Date("2026-05-01T23:59:00+02:00"),
+  last:  new Date("2026-06-01T23:59:00+02:00"),
+};
+
+function calcChiudeTra(closeAt: Date): string | undefined {
+  const diffMs = closeAt.getTime() - Date.now();
+  if (diffMs <= 0) return undefined;
+  const totalMin = Math.floor(diffMs / 60_000);
+  const days  = Math.floor(totalMin / 1440);
+  const hours = Math.floor((totalMin % 1440) / 60);
+  const mins  = totalMin % 60;
+  if (days > 0)  return `${days}g ${hours}h ${mins}m`;
+  if (hours > 0) return `${hours}h ${mins}m`;
+  return `${mins}m`;
+}
+
 export const revalidate = 60;
 
 type ProductPageProps = {
@@ -42,11 +61,15 @@ export default async function ProductVariantPage({ params }: ProductPageProps) {
     // fallback: non mostrare i contatori
   }
 
+  const closeAt = TIER_CLOSE_AT[variant];
+  const chiudeTra = closeAt ? calcChiudeTra(closeAt) : undefined;
+
   return (
     <ProductScreen
       variant={variant as ProductVariant}
       rimasti={rimasti}
       allRimasti={allRimasti}
+      chiudeTra={chiudeTra}
     />
   );
 }
