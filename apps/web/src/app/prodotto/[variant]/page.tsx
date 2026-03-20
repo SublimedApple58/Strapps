@@ -13,11 +13,11 @@ const TIER_CAP: Record<string, number> = {
   first: 29,
 };
 
-// ─── Data di chiusura per ogni tier (aggiorna qui) ──────────────────────────
+// ─── Data di chiusura per ogni tier (aggiorna qui con le date reali) ────────
 const TIER_CLOSE_AT: Partial<Record<string, Date>> = {
-  first: new Date("2026-04-01T23:59:00+02:00"),
-  early: new Date("2026-05-01T23:59:00+02:00"),
-  last:  new Date("2026-06-01T23:59:00+02:00"),
+  // first: new Date("2026-04-01T23:59:00+02:00"),
+  // early: new Date("2026-05-01T23:59:00+02:00"),
+  // last:  new Date("2026-06-01T23:59:00+02:00"),
 };
 
 function calcChiudeTra(closeAt: Date): string | undefined {
