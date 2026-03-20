@@ -230,8 +230,10 @@ export function ProductScreen({
           <div className="mt-[28px] flex items-start justify-between px-[4px]">
             {TIER_ORDER.map((t, idx) => {
               const tierCfg = PRODUCT_CONFIGS[t];
+              const activeIdx = TIER_ORDER.indexOf(variant);
               const isActive = t === variant;
-              const tierRimasti = allRimasti[t] ?? (t === variant ? rimasti : undefined);
+              const isPast = idx < activeIdx;
+              const tierRimasti = isPast ? 0 : (allRimasti[t] ?? (isActive ? rimasti : undefined));
               return (
                 <div key={t} className="flex items-start gap-[6px]">
                   <div className={isActive ? "opacity-100" : "opacity-40"}>
@@ -243,7 +245,14 @@ export function ProductScreen({
                     </p>
                     {tierRimasti !== undefined && (
                       <p className="font-azeret text-[11px] font-light tracking-[-0.333px] text-white">
-                        rimasti: <span className="animate-pulse text-[#f00707]">{tierRimasti}</span>
+                        rimasti:{" "}
+                        {isActive ? (
+                          <span className="animate-pulse text-[#f00707]">{tierRimasti}</span>
+                        ) : isPast ? (
+                          <span className="text-[#f00707]">0</span>
+                        ) : (
+                          <span className="text-white">{tierRimasti}</span>
+                        )}
                       </p>
                     )}
                   </div>
